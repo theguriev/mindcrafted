@@ -1,26 +1,24 @@
-import { useState } from "react";
-import TelegramLoginButton from "./components/telegram-bot-button";
-import isValidTelegramHash, { TelegramUser } from "@/lib/isValidTelegramHash";
+import { lazy, Suspense } from "react";
+import { BrowserRouter, Routes, Navigate, Route } from "react-router";
+import LoadingSpinner from "./components/loading-spinner";
 
-function App() {
-  const [user, setUser] = useState<TelegramUser>();
-  const handleTelegramAuth = (receivedUser: TelegramUser) => {
-    console.log("log: ", receivedUser);
-    setUser(receivedUser);
-  };
+const LoginPage = lazy(() => import("./login/page"));
+const DashboardPage = lazy(() => import("./dashboard/page"));
+const ErrorPage = lazy(() => import("./error/page"));
 
+const App = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
-      <TelegramLoginButton
-        botName="mindcrafted_bot"
-        onAuth={handleTelegramAuth}
-        buttonSize="large"
-        cornerRadius={20}
-        requestAccess="write"
-      />
-      {isValidTelegramHash(user, import.meta.env.VITE_BOT_TOKEN) ? "OK" : "NO"}
-    </div>
+    <BrowserRouter>
+      <Suspense fallback={<LoadingSpinner />}>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/error" element={<ErrorPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;
