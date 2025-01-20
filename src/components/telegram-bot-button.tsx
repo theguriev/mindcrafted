@@ -1,15 +1,6 @@
+import { TelegramUser } from "@/lib/isValidTelegramHash";
 import type { FC } from "react";
 import { useEffect, useRef } from "react";
-
-interface TelegramUser {
-  id: number;
-  first_name: string;
-  last_name?: string;
-  username?: string;
-  photo_url?: string;
-  auth_date: number;
-  hash: string;
-}
 
 declare global {
   interface Window {
