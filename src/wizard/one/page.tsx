@@ -10,7 +10,7 @@ import {
   FormMessage,
   Form,
 } from "@/components/ui/form";
-import { cn } from "@/lib/utils";
+import EnterHint from "../components/EnterHint";
 
 const OnePage = () => {
   const form = useForm<FormSchema>({
@@ -53,14 +53,7 @@ const OnePage = () => {
           />
           <div className="flex flex-col gap-1 px-3 w-full sm:w-auto">
             <Button disabled={!form.formState.isValid}>Продовжуйте</Button>
-            <div
-              className={cn(
-                "flex gap-1 text-sm transition-opacity",
-                form.formState.isValid ? "opacity-100" : "opacity-0"
-              )}
-            >
-              нажміть <strong>Enter</strong>
-            </div>
+            <EnterHint valid={form.formState.isValid} />
           </div>
         </form>
       </Form>
