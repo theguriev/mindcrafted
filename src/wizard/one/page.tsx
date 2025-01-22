@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import { FormSchema, formSchema } from "./zod";
 import {
   FormField,
@@ -14,8 +13,6 @@ import {
 import { cn } from "@/lib/utils";
 
 const OnePage = () => {
-  const navigate = useNavigate();
-
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
