@@ -13,19 +13,19 @@ import {
 import EnterHint from "../components/enter-hint";
 import { useNavigate } from "react-router";
 
-const OnePage = () => {
+const TwoPage = () => {
   const navigate = useNavigate();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      firstName: "",
+      lastName: "",
     },
   });
 
   const handleSubmit = async (body: FormSchema) => {
     console.log("log: submit", body);
-    navigate("/wizard/two");
+    navigate("/wizard/three");
   };
 
   return (
@@ -37,7 +37,7 @@ const OnePage = () => {
         >
           <FormField
             control={form.control}
-            name="firstName"
+            name="lastName"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -45,7 +45,7 @@ const OnePage = () => {
                     <Input
                       autoFocus
                       className="w-80 border-none shadow-none focus-visible:ring-0"
-                      placeholder="Введіть ваше ім'я"
+                      placeholder="Введіть вашу фамілію"
                       {...field}
                     />
                   </div>
@@ -64,4 +64,4 @@ const OnePage = () => {
   );
 };
 
-export default OnePage;
+export default TwoPage;
