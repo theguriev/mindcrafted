@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "prepare": "husky"
+    "prepare": "husky",
+    "copy-paste-check": "jscpd  --ignore 'node_modules,.next,.vscode' ."
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -45,6 +46,7 @@
     "tailwindcss": "^3.4.17",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.18.2",
+    "jscpd": "^4.0.5",
     "vite": "^6.0.5"
   }
 }
