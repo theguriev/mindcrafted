@@ -49,13 +49,13 @@ const ThreePage = () => {
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <div className="w-full sm:w-auto flex items-center">
+                  <div className="w-full px-3 sm:w-auto flex items-center">
                     <Popover>
                       <PopoverTrigger asChild>
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-[240px] justify-start text-left font-normal",
+                            "w-full sm:w-80 justify-start text-left font-normal",
                             !field.value && "text-muted-foreground"
                           )}
                         >
