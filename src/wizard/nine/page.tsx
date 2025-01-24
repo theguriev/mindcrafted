@@ -13,19 +13,19 @@ import {
 import EnterHint from "../components/enter-hint";
 import { useNavigate } from "react-router";
 
-const SevenPage = () => {
+const NinePage = () => {
   const navigate = useNavigate();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      shoulderVolumeMeasurement: undefined,
+      hipMeasurement: undefined,
     },
   });
 
   const handleSubmit = async (body: FormSchema) => {
     console.log("log: submit", body);
-    navigate("/wizard/eight");
+    navigate("/wizard/three");
   };
 
   return (
@@ -37,7 +37,7 @@ const SevenPage = () => {
         >
           <FormField
             control={form.control}
-            name="shoulderVolumeMeasurement"
+            name="hipMeasurement"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -45,7 +45,7 @@ const SevenPage = () => {
                     <Input
                       autoFocus
                       className="w-80 border-none shadow-none focus-visible:ring-0"
-                      placeholder="Обхват плеча (см)"
+                      placeholder="Обхват стегон (см)"
                       type="number"
                       {...field}
                     />
@@ -65,4 +65,4 @@ const SevenPage = () => {
   );
 };
 
-export default SevenPage;
+export default NinePage;

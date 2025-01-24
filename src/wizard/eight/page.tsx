@@ -13,7 +13,7 @@ import {
 import EnterHint from "../components/enter-hint";
 import { useNavigate } from "react-router";
 
-const SixPage = () => {
+const EightPage = () => {
   const navigate = useNavigate();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -25,7 +25,7 @@ const SixPage = () => {
 
   const handleSubmit = async (body: FormSchema) => {
     console.log("log: submit", body);
-    navigate("/wizard/three");
+    navigate("/wizard/nine");
   };
 
   return (
@@ -65,4 +65,4 @@ const SixPage = () => {
   );
 };
 
-export default SixPage;
+export default EightPage;
