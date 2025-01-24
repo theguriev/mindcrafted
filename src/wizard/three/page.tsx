@@ -33,7 +33,7 @@ const ThreePage = () => {
 
   const handleSubmit = async (body: FormSchema) => {
     console.log("log: submit", body);
-    navigate("/wizard/three");
+    navigate("/wizard/four");
   };
 
   return (

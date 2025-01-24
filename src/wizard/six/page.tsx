@@ -13,19 +13,19 @@ import {
 import EnterHint from "../components/enter-hint";
 import { useNavigate } from "react-router";
 
-const FourPage = () => {
+const SixPage = () => {
   const navigate = useNavigate();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      height: undefined,
+      waistMeasurement: undefined,
     },
   });
 
   const handleSubmit = async (body: FormSchema) => {
     console.log("log: submit", body);
-    navigate("/wizard/five");
+    navigate("/wizard/three");
   };
 
   return (
@@ -37,7 +37,7 @@ const FourPage = () => {
         >
           <FormField
             control={form.control}
-            name="height"
+            name="waistMeasurement"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -45,7 +45,7 @@ const FourPage = () => {
                     <Input
                       autoFocus
                       className="w-80 border-none shadow-none focus-visible:ring-0"
-                      placeholder="Ваш зріст (см)"
+                      placeholder="Обхват талії (см)"
                       type="number"
                       {...field}
                     />
@@ -65,4 +65,4 @@ const FourPage = () => {
   );
 };
 
-export default FourPage;
+export default SixPage;
