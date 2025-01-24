@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const shoulderVolumeMeasurement = z.number();
+export const shoulderVolumeMeasurement = z.string();
 
 export const formSchema = z.object({
   shoulderVolumeMeasurement,

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const waistMeasurement = z.number();
+export const waistMeasurement = z.string();
 
 export const formSchema = z.object({
   waistMeasurement,
