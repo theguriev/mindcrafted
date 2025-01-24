@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { FormSchema, formSchema } from "./zod";
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/form";
 import EnterHint from "../components/enter-hint";
 import { useNavigate } from "react-router";
+import { Textarea } from "@/components/ui/textarea";
 
 const TenPage = () => {
   const navigate = useNavigate();
@@ -19,13 +19,13 @@ const TenPage = () => {
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      breastVolumeMeasurement: undefined,
+      contraindications: undefined,
     },
   });
 
   const handleSubmit = async (body: FormSchema) => {
     console.log("log: submit", body);
-    navigate("/wizard/eleven");
+    navigate("/wizard/three");
   };
 
   return (
@@ -37,16 +37,15 @@ const TenPage = () => {
         >
           <FormField
             control={form.control}
-            name="breastVolumeMeasurement"
+            name="contraindications"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
                   <div className="w-full sm:w-auto flex items-center">
-                    <Input
+                    <Textarea
                       autoFocus
                       className="w-80 border-none shadow-none focus-visible:ring-0"
-                      placeholder="Обхват грудей (см)"
-                      type="number"
+                      placeholder="Чи є якість протипоказання до вправ від лікаря?"
                       {...field}
                     />
                   </div>

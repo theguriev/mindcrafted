@@ -13,6 +13,9 @@ const FivePage = lazy(() => import("./wizard/five/page"));
 const SixPage = lazy(() => import("./wizard/six/page"));
 const SevenPage = lazy(() => import("./wizard/seven/page"));
 const EightPage = lazy(() => import("./wizard/eight/page"));
+const NinePage = lazy(() => import("./wizard/nine/page"));
+const TenPage = lazy(() => import("./wizard/ten/page"));
+const ElevenPage = lazy(() => import("./wizard/eleven/page"));
 
 const App = () => {
   return (
@@ -36,6 +39,9 @@ const App = () => {
           <Route path="/wizard/six" element={<SixPage />} />
           <Route path="/wizard/seven" element={<SevenPage />} />
           <Route path="/wizard/eight" element={<EightPage />} />
+          <Route path="/wizard/nine" element={<NinePage />} />
+          <Route path="/wizard/ten" element={<TenPage />} />
+          <Route path="/wizard/eleven" element={<ElevenPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
