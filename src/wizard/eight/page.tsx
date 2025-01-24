@@ -19,13 +19,13 @@ const SixPage = () => {
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      shoulderVolumeMeasurement: undefined,
+      hipMeasurement: undefined,
     },
   });
 
   const handleSubmit = async (body: FormSchema) => {
     console.log("log: submit", body);
-    navigate("/wizard/eight");
+    navigate("/wizard/three");
   };
 
   return (
@@ -37,7 +37,7 @@ const SixPage = () => {
         >
           <FormField
             control={form.control}
-            name="shoulderVolumeMeasurement"
+            name="hipMeasurement"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -45,7 +45,7 @@ const SixPage = () => {
                     <Input
                       autoFocus
                       className="w-80 border-none shadow-none focus-visible:ring-0"
-                      placeholder="Обхват плеча (см)"
+                      placeholder="Обхват стегна (сідниці см)"
                       type="number"
                       {...field}
                     />
