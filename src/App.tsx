@@ -11,6 +11,7 @@ const ThreePage = lazy(() => import("./wizard/three/page"));
 const FourPage = lazy(() => import("./wizard/four/page"));
 const FivePage = lazy(() => import("./wizard/five/page"));
 const SixPage = lazy(() => import("./wizard/six/page"));
+const SevenPage = lazy(() => import("./wizard/seven/page"));
 
 const App = () => {
   return (
@@ -32,6 +33,7 @@ const App = () => {
           <Route path="/wizard/four" element={<FourPage />} />
           <Route path="/wizard/five" element={<FivePage />} />
           <Route path="/wizard/six" element={<SixPage />} />
+          <Route path="/wizard/seven" element={<SevenPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
