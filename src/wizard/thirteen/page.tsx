@@ -13,19 +13,19 @@ import EnterHint from "../components/enter-hint";
 import { useNavigate } from "react-router";
 import { Textarea } from "@/components/ui/textarea";
 
-const TwelvePage = () => {
+const ThirteenPage = () => {
   const navigate = useNavigate();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      eatingDisorder: undefined,
+      spineIssues: undefined,
     },
   });
 
   const handleSubmit = async (body: FormSchema) => {
     console.log("log: submit", body);
-    navigate("/wizard/thirteen");
+    navigate("/wizard/three");
   };
 
   return (
@@ -37,7 +37,7 @@ const TwelvePage = () => {
         >
           <FormField
             control={form.control}
-            name="eatingDisorder"
+            name="spineIssues"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -45,7 +45,7 @@ const TwelvePage = () => {
                     <Textarea
                       autoFocus
                       className="w-80 border-none shadow-none focus-visible:ring-0"
-                      placeholder="Чи нема у вас діагностованого розладу харчової поведінки?"
+                      placeholder="Чи відсутні проблеми з хребтом, колінами, нирками, з тиском і т.д.?"
                       {...field}
                     />
                   </div>
@@ -64,4 +64,4 @@ const TwelvePage = () => {
   );
 };
 
-export default TwelvePage;
+export default ThirteenPage;
