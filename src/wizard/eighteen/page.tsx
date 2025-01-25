@@ -27,7 +27,7 @@ const EighteenPage = () => {
 
   const handleSubmit = async (body: FormSchema) => {
     console.log("log: submit", body);
-    navigate("/wizard/seventeen");
+    navigate("/wizard/nineteen");
   };
 
   return (
