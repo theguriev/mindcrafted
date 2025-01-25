@@ -6,7 +6,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const handleTelegramAuth = (receivedUser: TelegramUser) => {
     if (isValidTelegramHash(receivedUser, import.meta.env.VITE_BOT_TOKEN)) {
-      navigate("/dashboard");
+      navigate("/wizard/one");
       return;
     }
     navigate("/error");
