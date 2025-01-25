@@ -8,24 +8,26 @@ import {
   FormControl,
   FormMessage,
   Form,
+  FormLabel,
 } from "@/components/ui/form";
 import EnterHint from "../components/enter-hint";
 import { useNavigate } from "react-router";
-import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@radix-ui/react-label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
-const SeventeenPage = () => {
+const EighteenPage = () => {
   const navigate = useNavigate();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      goal: undefined,
+      whereDoSports: "home",
     },
   });
 
   const handleSubmit = async (body: FormSchema) => {
     console.log("log: submit", body);
-    navigate("/wizard/eighteen");
+    navigate("/wizard/seventeen");
   };
 
   return (
@@ -37,17 +39,25 @@ const SeventeenPage = () => {
         >
           <FormField
             control={form.control}
-            name="goal"
+            name="whereDoSports"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="w-60">
+                <FormLabel>Де ви будете займатись?</FormLabel>
                 <FormControl>
                   <div className="w-full sm:w-auto flex items-center">
-                    <Textarea
-                      autoFocus
-                      className="w-80 border-none shadow-none focus-visible:ring-0"
-                      placeholder="Яка ваша ціль?"
-                      {...field}
-                    />
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="home" id="r1" />
+                        <Label htmlFor="r1">Вдома</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="gym" id="r2" />
+                        <Label htmlFor="r2">В залі</Label>
+                      </div>
+                    </RadioGroup>
                   </div>
                 </FormControl>
                 <FormMessage className="px-3" />
@@ -64,4 +74,4 @@ const SeventeenPage = () => {
   );
 };
 
-export default SeventeenPage;
+export default EighteenPage;
