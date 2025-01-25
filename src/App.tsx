@@ -19,6 +19,7 @@ const ElevenPage = lazy(() => import("./wizard/eleven/page"));
 const TwelvePage = lazy(() => import("./wizard/twelve/page"));
 const ThirteenPage = lazy(() => import("./wizard/thirteen/page"));
 const FourteenPage = lazy(() => import("./wizard/fourteen/page"));
+const FifteenPage = lazy(() => import("./wizard/fifteen/page"));
 
 const App = () => {
   return (
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/wizard/twelve" element={<TwelvePage />} />
           <Route path="/wizard/thirteen" element={<ThirteenPage />} />
           <Route path="/wizard/fourteen" element={<FourteenPage />} />
+          <Route path="/wizard/fifteen" element={<FifteenPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
