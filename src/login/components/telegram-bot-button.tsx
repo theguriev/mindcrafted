@@ -41,10 +41,11 @@ const TelegramLoginButton: FC<{
     script.setAttribute("data-request-access", requestAccess);
     script.async = true;
 
-    buttonRef.current?.appendChild(script);
+    const currentButtonRef = buttonRef.current;
+    currentButtonRef?.appendChild(script);
 
     return () => {
-      buttonRef.current?.removeChild(script);
+      currentButtonRef?.removeChild(script);
     };
   }, [botName, onAuth, buttonSize, cornerRadius, requestAccess]);
 
