@@ -44,7 +44,7 @@ const ThirteenPage = () => {
                   <div className="w-full sm:w-auto flex items-center">
                     <Textarea
                       autoFocus
-                      className="w-80 border-none shadow-none focus-visible:ring-0"
+                      className="sm:w-80 w-full border-none shadow-none focus-visible:ring-0"
                       placeholder="Чи відсутні проблеми з хребтом, колінами, нирками, з тиском і т.д.?"
                       {...field}
                     />

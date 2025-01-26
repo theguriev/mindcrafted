@@ -41,7 +41,7 @@ const EighteenPage = () => {
             control={form.control}
             name="whereDoSports"
             render={({ field }) => (
-              <FormItem className="w-60">
+              <FormItem className="sm:w-80 w-full px-3 sm:px-0">
                 <FormLabel>Де ви будете займатись?</FormLabel>
                 <FormControl>
                   <div className="w-full sm:w-auto flex items-center">
