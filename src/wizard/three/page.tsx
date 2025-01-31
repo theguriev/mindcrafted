@@ -20,6 +20,7 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
 
 const ThreePage = () => {
   const navigate = useNavigate();
@@ -43,6 +44,26 @@ const ThreePage = () => {
           onSubmit={form.handleSubmit(handleSubmit)}
           className="flex flex-col w-full gap-4 sm:flex-row sm:items-start sm:justify-center"
         >
+          <FormField
+            control={form.control}
+            name="birthday"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <div className="w-full sm:w-auto flex items-center">
+                    <Input
+                      autoFocus
+                      className="sm:w-80 w-full focus-visible:ring-0"
+                      placeholder="День вашого народження"
+                      type="date"
+                      {...field}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage className="px-3" />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="birthday"
