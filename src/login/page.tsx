@@ -1,16 +1,30 @@
-import isValidTelegramHash, { TelegramUser } from "@/lib/isValidTelegramHash";
+import { TelegramUser } from "@/lib/isValidTelegramHash";
 import TelegramLoginButton from "./components/telegram-bot-button";
 import { useNavigate } from "react-router";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
+import { api } from "@/lib/openapi/apiClient";
 
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const handleTelegramAuth = (receivedUser: TelegramUser) => {
-    console.log("log: ", receivedUser);
+  const handleTelegramAuth = async (receivedUser: TelegramUser) => {
     setLoading(true);
-    if (isValidTelegramHash(receivedUser, import.meta.env.VITE_BOT_TOKEN)) {
+    const request = await api.authorization("/login", "post", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: {
+        id: receivedUser.id,
+        firstName: receivedUser.first_name,
+        lastName: receivedUser.last_name || "",
+        username: receivedUser.username || "",
+        photoUrl: receivedUser.photo_url || "",
+        authDate: receivedUser.auth_date,
+        hash: receivedUser.hash,
+      },
+    });
+    if (request.status === 200) {
       navigate("/wizard/one");
       return;
     }
