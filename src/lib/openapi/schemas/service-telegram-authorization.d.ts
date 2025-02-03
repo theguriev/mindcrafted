@@ -57,6 +57,39 @@ export interface paths {
       };
     };
   };
+  "/": {
+    /** Get user details */
+    get: {
+      responses: {
+        /** @description Successful operation */
+        200: {
+          content: {
+            "application/json": {
+              _id?: string;
+              id?: number;
+              firstName?: string;
+              lastName?: string;
+              username?: string;
+              photoUrl?: string;
+              authDate?: number;
+              hash?: string;
+              timestamp?: number;
+              meta?: Record<string, never>;
+            };
+          };
+        };
+        /** @description User not exists */
+        409: {
+          content: {
+            "application/json": {
+              /** @example User not exists! */
+              message?: string;
+            };
+          };
+        };
+      };
+    };
+  };
 }
 
 export type webhooks = Record<string, never>;
