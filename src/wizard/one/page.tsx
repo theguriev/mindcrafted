@@ -1,25 +1,29 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { FormSchema, formSchema } from "./zod";
+import { formSchema, FormSchema } from "./zod";
+import { useNavigate } from "react-router";
 import {
+  Form,
   FormField,
   FormItem,
   FormControl,
   FormMessage,
-  Form,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useMeSuspenseQuery } from "@/hooks/useMeQuery";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import { useForm } from "react-hook-form";
 import EnterHint from "../components/enter-hint";
-import { useNavigate } from "react-router";
 
 const OnePage = () => {
   const navigate = useNavigate();
+
+  const { data } = useMeSuspenseQuery();
+
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      firstName: "",
+      firstName: data.firstName,
     },
   });
 
