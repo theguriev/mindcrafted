@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const birthday = z.string();
+export const birthday = z.date();
 
 export const formSchema = z.object({
   birthday,
