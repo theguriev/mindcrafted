@@ -8,16 +8,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useMeSuspenseQuery } from "@/hooks/useMeQuery";
+import useMeQuery from "@/hooks/useMeQuery";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import EnterHint from "../components/enter-hint";
+import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
 
 const OnePage = () => {
   const navigate = useNavigate();
 
-  const { data } = useMeSuspenseQuery();
+  const { data } = useMeQuery();
+  const { mutate } = useUpdateMetaMutate();
 
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
@@ -28,6 +30,12 @@ const OnePage = () => {
   });
 
   const handleSubmit = async (body: FormSchema) => {
+    mutate({
+      meta: {
+        ...(data.meta || {}),
+        ...body,
+      },
+    });
     console.log("log: submit", body);
     navigate("/wizard/two");
   };

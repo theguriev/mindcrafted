@@ -1,8 +1,8 @@
-import { useMeSuspenseQuery } from "@/hooks/useMeQuery";
+import useMeQuery from "@/hooks/useMeQuery";
 import { FC, PropsWithChildren } from "react";
 
 const PrivateRoute: FC<PropsWithChildren> = ({ children }) => {
-  useMeSuspenseQuery();
+  useMeQuery();
   return children;
 };
 
