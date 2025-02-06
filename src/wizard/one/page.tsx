@@ -31,7 +31,7 @@ const OnePage = () => {
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      firstName: data.firstName,
+      firstName: data.meta?.firstName,
     },
   });
 
