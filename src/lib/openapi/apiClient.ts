@@ -1,8 +1,8 @@
 import createRequest from "./createRequest";
-import { telegramAuthorization } from "./schemas/";
+import { Paths } from "./types";
 
 export const api = {
-  authorization: createRequest<telegramAuthorization.paths>({
+  telegramAuthorization: createRequest<Paths["telegramAuthorization"]>({
     getBaseUrl: () => `${import.meta.env.VITE_API_URL}`,
   }),
 };

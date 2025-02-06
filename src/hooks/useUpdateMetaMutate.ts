@@ -1,19 +1,38 @@
-import { api } from "@/lib/openapi/apiClient";
-import { useMutation } from "@tanstack/react-query";
-import { Parameters as EndpointParameters } from "@/lib/openapi/types";
-import { telegramAuthorization } from "@/lib/openapi/schemas";
+import { UseMutationOptions } from "@tanstack/react-query";
+import {
+  ExtractFetchParams,
+  ExtractResponse,
+  useMutationRequest,
+} from "@/lib/openapi/hooks";
 
-const useUpdateMetaMutate = () =>
-  useMutation({
-    mutationFn: async (
-      body: EndpointParameters<
-        telegramAuthorization.paths["/update-meta"]["put"]
-      >["body"]
-    ) =>
-      api.authorization("/update-meta", "put", {
-        headers: { "Content-type": "application/json" },
-        body,
-      }),
+export type UpdateMetaResponse = ExtractResponse<
+  "telegramAuthorization",
+  "/update-meta",
+  "put"
+>;
+
+export type UpdateMetaFetchParams = ExtractFetchParams<
+  "telegramAuthorization",
+  "/update-meta",
+  "put"
+>;
+
+export const useUpdateMetaMutate = ({
+  queryOptions,
+}: {
+  queryOptions?: Omit<
+    UseMutationOptions<
+      UpdateMetaResponse,
+      unknown,
+      UpdateMetaFetchParams,
+      unknown
+    >,
+    "mutationKey" | "mutationFn"
+  >;
+} = {}) =>
+  useMutationRequest("telegramAuthorization", "/update-meta", {
+    method: "put",
+    queryOptions,
   });
 
 export default useUpdateMetaMutate;

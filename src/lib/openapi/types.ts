@@ -1,3 +1,5 @@
+import { telegramAuthorization } from "./schemas/";
+
 export type ExtractResponses<T> = ExtractKey<T, "responses">;
 
 export type ExtractKey<
@@ -55,3 +57,25 @@ export type GeneratorConfig = {
  * Possible content types what we allow to our api.
  */
 export type ContentType = "" | "application/json";
+
+export type Paths = {
+  telegramAuthorization: telegramAuthorization.paths;
+};
+
+export type ExtractSchema<T> = T extends { schema: infer S }
+  ? unknown extends S
+    ? never
+    : S
+  : never;
+
+export type ExtractSuccessfulHTTPResponse<T> =
+  | ExtractKey<T, 200>
+  | ExtractKey<T, 201>
+  | ExtractKey<T, 202>
+  | ExtractKey<T, 203>
+  | ExtractKey<T, 204>
+  | ExtractKey<T, 205>
+  | ExtractKey<T, 206>
+  | ExtractKey<T, 207>
+  | ExtractKey<T, 208>
+  | ExtractKey<T, 226>;

@@ -10,7 +10,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const handleTelegramAuth = async (receivedUser: TelegramUser) => {
     setLoading(true);
-    const request = await api.authorization("/login", "post", {
+    const request = await api.telegramAuthorization("/login", "post", {
       headers: {
         "Content-Type": "application/json",
       },
