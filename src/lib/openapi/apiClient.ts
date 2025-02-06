@@ -1,5 +1,4 @@
 import { defu } from "defu";
-import Cookies from "js-cookie";
 
 import replacePathParameters from "./replacePathParameters";
 import { telegramAuthorization } from "./schemas/";
@@ -9,28 +8,9 @@ import type {
   ExtractResponses,
 } from "./types";
 import omit from "../omit";
-
-const stringifyOrUndefinedBody = (
-  body: BodyInit | undefined
-): undefined | string => {
-  if (!body) {
-    return;
-  }
-  return JSON.stringify(body);
-};
-
-const objectifyOrUndefinedCookie = (cookie: Record<string, string>) => {
-  if (!cookie) {
-    return;
-  }
-  return {
-    Cookie: Object.entries(cookie)
-      .map(([key, value]) => `${key}=${value}`)
-      .join("; "),
-  };
-};
-
-const getAccessToken = () => Cookies.get("accessToken");
+import stringifyOrUndefinedBody from "./stringifyOrUndefinedBody";
+import objectifyOrUndefinedCookie from "./objectifyOrUndefinedCookie";
+import getAccessToken from "./getAccessToken";
 
 const createRequest = <Paths>({ getBaseUrl }: { getBaseUrl: () => string }) => {
   return async <
