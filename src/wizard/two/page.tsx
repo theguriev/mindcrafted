@@ -12,20 +12,39 @@ import {
 } from "@/components/ui/form";
 import EnterHint from "../components/enter-hint";
 import { useNavigate } from "react-router";
+import useMeQuery from "@/hooks/useMeQuery";
+import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
 
 const TwoPage = () => {
   const navigate = useNavigate();
+
+  const { data } = useMeQuery();
+  const { mutate, isPending } = useUpdateMetaMutate({
+    queryOptions: {
+      onSuccess: () => {
+        navigate("/wizard/three");
+      },
+    },
+  });
+
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      lastName: "",
+      lastName: data.meta?.lastName,
     },
   });
 
   const handleSubmit = async (body: FormSchema) => {
-    console.log("log: submit", body);
-    navigate("/wizard/three");
+    mutate({
+      headers: { "Content-type": "application/json" },
+      body: {
+        meta: {
+          ...(data.meta || {}),
+          ...body,
+        },
+      },
+    });
   };
 
   return (
@@ -46,6 +65,7 @@ const TwoPage = () => {
                       autoFocus
                       className="sm:w-80 w-full border-none shadow-none focus-visible:ring-0"
                       placeholder="Введіть вашу фамілію"
+                      disabled={isPending}
                       {...field}
                     />
                   </div>
@@ -55,7 +75,9 @@ const TwoPage = () => {
             )}
           />
           <div className="flex flex-col gap-1 px-3 w-full sm:w-auto">
-            <Button disabled={!form.formState.isValid}>Продовжуйте</Button>
+            <Button disabled={!form.formState.isValid || isPending}>
+              Продовжуйте
+            </Button>
             <EnterHint valid={form.formState.isValid} />
           </div>
         </form>
