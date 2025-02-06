@@ -20,20 +20,40 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
+import useMeQuery from "@/hooks/useMeQuery";
+import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
 
 const ThreePage = () => {
+  const { data } = useMeQuery();
+  const { mutate, isPending } = useUpdateMetaMutate({
+    queryOptions: {
+      onSuccess: () => {
+        navigate("/wizard/four");
+      },
+    },
+  });
+
   const navigate = useNavigate();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      birthday: undefined,
+      birthday: data.meta?.birthday
+        ? new Date(Date.parse(data.meta.birthday))
+        : undefined,
     },
   });
 
   const handleSubmit = async (body: FormSchema) => {
-    console.log("log: submit", body);
-    navigate("/wizard/four");
+    mutate({
+      headers: { "Content-type": "application/json" },
+      body: {
+        meta: {
+          ...(data.meta || {}),
+          birthday: body.birthday.toISOString(),
+        },
+      },
+    });
   };
 
   return (
@@ -73,7 +93,7 @@ const ThreePage = () => {
                           captionLayout="dropdown"
                           selected={field.value}
                           onSelect={(value) => field.onChange(value)}
-                          fromYear={2000}
+                          fromYear={1950}
                           toYear={new Date().getFullYear()}
                           defaultMonth={field.value}
                         />
@@ -86,7 +106,9 @@ const ThreePage = () => {
             )}
           />
           <div className="flex flex-col gap-1 px-3 w-full sm:w-auto">
-            <Button disabled={!form.formState.isValid}>Продовжуйте</Button>
+            <Button disabled={!form.formState.isValid || isPending}>
+              Продовжуйте
+            </Button>
             <EnterHint valid={form.formState.isValid} />
           </div>
         </form>
