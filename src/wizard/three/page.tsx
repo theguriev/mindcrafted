@@ -1,7 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { FormSchema, formSchema } from "./zod";
 import {
   FormField,
   FormItem,
@@ -10,7 +7,6 @@ import {
   Form,
 } from "@/components/ui/form";
 import EnterHint from "../components/enter-hint";
-import { useNavigate } from "react-router";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
@@ -20,41 +16,20 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import useMeQuery from "@/hooks/useMeQuery";
-import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
+import useWizardStep from "../hooks/useWizardStep";
+import { formSchema } from "./zod";
 
 const ThreePage = () => {
-  const { data } = useMeQuery();
-  const { mutate, isPending } = useUpdateMetaMutate({
-    queryOptions: {
-      onSuccess: () => {
-        navigate("/wizard/four");
-      },
-    },
-  });
-
-  const navigate = useNavigate();
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
-    mode: "onBlur",
-    defaultValues: {
+  const { form, handleSubmit, isPending } = useWizardStep({
+    to: "/wizard/four",
+    getDefaultValues: (data) => ({
       birthday: data.meta?.birthday
         ? new Date(Date.parse(data.meta.birthday))
         : undefined,
-    },
+    }),
+    prepareBody: (body) => ({ birthday: body.birthday?.toISOString() }),
+    formSchema,
   });
-
-  const handleSubmit = async (body: FormSchema) => {
-    mutate({
-      headers: { "Content-type": "application/json" },
-      body: {
-        meta: {
-          ...(data.meta || {}),
-          birthday: body.birthday.toISOString(),
-        },
-      },
-    });
-  };
 
   return (
     <div className="min-h-screen flex items-center bg-white">

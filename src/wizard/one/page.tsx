@@ -1,5 +1,3 @@
-import { formSchema, FormSchema } from "./zod";
-import { useNavigate } from "react-router";
 import {
   Form,
   FormField,
@@ -8,44 +6,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import useMeQuery from "@/hooks/useMeQuery";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { useForm } from "react-hook-form";
 import EnterHint from "../components/enter-hint";
-import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
+import useWizardStep from "../hooks/useWizardStep";
+import { formSchema } from "./zod";
 
 const OnePage = () => {
-  const navigate = useNavigate();
-
-  const { data } = useMeQuery();
-  const { mutate, isPending } = useUpdateMetaMutate({
-    queryOptions: {
-      onSuccess: () => {
-        navigate("/wizard/two");
-      },
-    },
+  const { form, handleSubmit, isPending } = useWizardStep({
+    to: "/wizard/two",
+    getDefaultValues: (data) => ({ firstName: data.meta?.firstName }),
+    prepareBody: (body) => body,
+    formSchema,
   });
-
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
-    mode: "onBlur",
-    defaultValues: {
-      firstName: data.meta?.firstName,
-    },
-  });
-
-  const handleSubmit = async (body: FormSchema) => {
-    mutate({
-      headers: { "Content-type": "application/json" },
-      body: {
-        meta: {
-          ...(data.meta || {}),
-          ...body,
-        },
-      },
-    });
-  };
 
   return (
     <div className="min-h-screen flex items-center bg-white">

@@ -1,8 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { FormSchema, formSchema } from "./zod";
 import {
   FormField,
   FormItem,
@@ -11,39 +8,18 @@ import {
   Form,
 } from "@/components/ui/form";
 import EnterHint from "../components/enter-hint";
-import { useNavigate } from "react-router";
-import useMeQuery from "@/hooks/useMeQuery";
-import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
+import useWizardStep from "../hooks/useWizardStep";
+import { formSchema } from "./zod";
 
 const SixPage = () => {
-  const navigate = useNavigate();
-  const { data } = useMeQuery();
-  const { mutate, isPending } = useUpdateMetaMutate({
-    queryOptions: {
-      onSuccess: () => {
-        navigate("/wizard/seven");
-      },
-    },
-  });
-  const form = useForm<FormSchema>({
-    resolver: zodResolver(formSchema),
-    mode: "onBlur",
-    defaultValues: {
+  const { form, handleSubmit, isPending } = useWizardStep({
+    to: "/wizard/seven",
+    getDefaultValues: (data) => ({
       waistMeasurement: data.meta?.waistMeasurement,
-    },
+    }),
+    prepareBody: (body) => body,
+    formSchema,
   });
-
-  const handleSubmit = async (body: FormSchema) => {
-    mutate({
-      headers: { "Content-type": "application/json" },
-      body: {
-        meta: {
-          ...(data.meta || {}),
-          ...body,
-        },
-      },
-    });
-  };
 
   return (
     <div className="min-h-screen flex items-center bg-white">
