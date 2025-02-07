@@ -12,20 +12,37 @@ import {
 } from "@/components/ui/form";
 import EnterHint from "../components/enter-hint";
 import { useNavigate } from "react-router";
+import useMeQuery from "@/hooks/useMeQuery";
+import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
 
 const SixPage = () => {
   const navigate = useNavigate();
+  const { data } = useMeQuery();
+  const { mutate, isPending } = useUpdateMetaMutate({
+    queryOptions: {
+      onSuccess: () => {
+        navigate("/wizard/seven");
+      },
+    },
+  });
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      waistMeasurement: undefined,
+      waistMeasurement: data.meta?.waistMeasurement,
     },
   });
 
   const handleSubmit = async (body: FormSchema) => {
-    console.log("log: submit", body);
-    navigate("/wizard/seven");
+    mutate({
+      headers: { "Content-type": "application/json" },
+      body: {
+        meta: {
+          ...(data.meta || {}),
+          ...body,
+        },
+      },
+    });
   };
 
   return (
@@ -47,6 +64,7 @@ const SixPage = () => {
                       className="sm:w-80 w-full border-none shadow-none focus-visible:ring-0"
                       placeholder="Обхват талії (см)"
                       type="number"
+                      disabled={isPending}
                       {...field}
                     />
                   </div>
@@ -56,7 +74,9 @@ const SixPage = () => {
             )}
           />
           <div className="flex flex-col gap-1 px-3 w-full sm:w-auto">
-            <Button disabled={!form.formState.isValid}>Продовжуйте</Button>
+            <Button disabled={!form.formState.isValid || isPending}>
+              Продовжуйте
+            </Button>
             <EnterHint valid={form.formState.isValid} />
           </div>
         </form>
