@@ -1,9 +1,9 @@
 import { z } from "zod";
 
-export const hipMeasurement = z.string();
+export const hipsMeasurement = z.string();
 
 export const formSchema = z.object({
-  hipMeasurement,
+  hipsMeasurement,
 });
 
 export type FormSchema = z.infer<typeof formSchema>;
