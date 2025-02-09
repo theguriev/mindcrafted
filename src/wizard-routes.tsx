@@ -4,6 +4,7 @@ import PrivateBoundary from "./components/private-boundary";
 import useUpdateMetaMutate from "./hooks/useUpdateMetaMutate";
 import { FieldValues } from "react-hook-form";
 
+const ZeroPage = lazy(() => import("./wizard/zero/page"));
 const OnePage = lazy(() => import("./wizard/one/page"));
 const TwoPage = lazy(() => import("./wizard/two/page"));
 const ThreePage = lazy(() => import("./wizard/three/page"));
@@ -26,6 +27,7 @@ const NineteenPage = lazy(() => import("./wizard/nineteen/page"));
 const TwentyPage = lazy(() => import("./wizard/twenty/page"));
 
 const routes = [
+  ["/wizard/zero", ZeroPage],
   ["/wizard/one", OnePage],
   ["/wizard/two", TwoPage],
   ["/wizard/three", ThreePage],
