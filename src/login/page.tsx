@@ -25,7 +25,7 @@ const LoginPage = () => {
       },
     });
     if (request.status === 200) {
-      navigate("/wizard/one");
+      navigate("/wizard/zero");
       return;
     }
     navigate("/error");
