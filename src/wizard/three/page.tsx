@@ -17,6 +17,7 @@ import { Calendar } from "@/components/ui/calendar";
 import useWizardStep from "../hooks/useWizardStep";
 import { formSchema } from "./zod";
 import WizardForm from "../components/wizard-form";
+import WizardFormFooter from "../components/wizard-form-footer";
 
 const ThreePage = () => {
   const { form, handleSubmit, isPending } = useWizardStep({
