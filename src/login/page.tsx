@@ -24,7 +24,16 @@ const LoginPage = () => {
         hash: receivedUser.hash,
       },
     });
+    const response = await request.json();
     if (request.status === 200) {
+      if (
+        "meta" in response &&
+        response.meta?.firstName !== undefined &&
+        response.meta?.lastName !== undefined
+      ) {
+        navigate("/dashboard");
+        return;
+      }
       navigate("/wizard/zero");
       return;
     }

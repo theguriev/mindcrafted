@@ -12,7 +12,7 @@ const RoutingSystem: FC = () => {
     <BrowserRouter>
       <Providers>
         <Routes>
-          <Route path="/" element={<LoginPage />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/error" element={<ErrorPage />} />
           <Route path="/*" element={<WizardRoutes />} />
