@@ -9,10 +9,11 @@ import useWizardStep from "../hooks/useWizardStep";
 import { formSchema } from "./zod";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
+import { FC } from "react";
 
-const SevenPage = () => {
+const SevenPage: FC<{ to: string }> = ({ to }) => {
   const { form, handleSubmit, isPending } = useWizardStep({
-    to: "/wizard/eight",
+    to,
     getDefaultValues: (data) => ({
       shoulderVolumeMeasurement: data.meta?.shoulderVolumeMeasurement,
     }),

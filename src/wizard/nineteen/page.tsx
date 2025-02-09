@@ -18,10 +18,11 @@ import { Calendar } from "@/components/ui/calendar";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
 import useWizardStep from "../hooks/useWizardStep";
+import { FC } from "react";
 
-const NineteenPage = () => {
+const NineteenPage: FC<{ to: string }> = ({ to }) => {
   const { form, handleSubmit, isPending } = useWizardStep({
-    to: "/wizard/twenty",
+    to,
     getDefaultValues: (data) => ({
       gaveBirth: data.meta?.gaveBirth
         ? new Date(Date.parse(data.meta.gaveBirth))

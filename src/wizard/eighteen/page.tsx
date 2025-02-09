@@ -12,9 +12,9 @@ import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
 import useWizardStep from "../hooks/useWizardStep";
 
-const EighteenPage = () => {
+const EighteenPage: FC<{ to: string }> = ({ to }) => {
   const { form, handleSubmit, isPending } = useWizardStep({
-    to: "/wizard/nineteen",
+    to,
     getDefaultValues: (data) => ({
       whereDoSports: data.meta?.whereDoSports,
     }),

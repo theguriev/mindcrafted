@@ -9,10 +9,11 @@ import { Textarea } from "@/components/ui/textarea";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
 import useWizardStep from "../hooks/useWizardStep";
+import { FC } from "react";
 
-const ThirteenPage = () => {
+const ThirteenPage: FC<{ to: string }> = ({ to }) => {
   const { form, handleSubmit, isPending } = useWizardStep({
-    to: "/wizard/fourteen",
+    to,
     getDefaultValues: (data) => ({
       spineIssues: data.meta?.spineIssues,
     }),

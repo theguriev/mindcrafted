@@ -9,10 +9,11 @@ import {
 import useWizardStep from "../hooks/useWizardStep";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
+import { FC } from "react";
 
-const NinePage = () => {
+const NinePage: FC<{ to: string }> = ({ to }) => {
   const { form, handleSubmit, isPending } = useWizardStep({
-    to: "/wizard/ten",
+    to,
     getDefaultValues: (data) => ({
       hipsMeasurement: data.meta?.hipsMeasurement,
     }),

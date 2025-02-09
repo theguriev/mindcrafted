@@ -9,10 +9,11 @@ import useWizardStep from "../hooks/useWizardStep";
 import { formSchema } from "./zod";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
+import { FC } from "react";
 
-const FivePage = () => {
+const FivePage: FC<{ to: string }> = ({ to }) => {
   const { form, handleSubmit, isPending } = useWizardStep({
-    to: "/wizard/six",
+    to,
     getDefaultValues: (data) => ({
       weight: data.meta?.weight,
     }),

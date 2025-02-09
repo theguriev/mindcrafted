@@ -9,10 +9,11 @@ import useWizardStep from "../hooks/useWizardStep";
 import { formSchema } from "./zod";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
+import { FC } from "react";
 
-const FourPage = () => {
+const FourPage: FC<{ to: string }> = ({ to }) => {
   const { form, handleSubmit, isPending } = useWizardStep({
-    to: "/wizard/five",
+    to,
     getDefaultValues: (data) => ({
       height: data.meta?.height,
     }),

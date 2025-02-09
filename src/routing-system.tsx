@@ -27,6 +27,29 @@ const EighteenPage = lazy(() => import("./wizard/eighteen/page"));
 const NineteenPage = lazy(() => import("./wizard/nineteen/page"));
 const TwentyPage = lazy(() => import("./wizard/twenty/page"));
 
+const WizardRoutes = [
+  ["/wizard/one", OnePage],
+  ["/wizard/two", TwoPage],
+  ["/wizard/three", ThreePage],
+  ["/wizard/four", FourPage],
+  ["/wizard/five", FivePage],
+  ["/wizard/six", SixPage],
+  ["/wizard/seven", SevenPage],
+  ["/wizard/eight", EightPage],
+  ["/wizard/nine", NinePage],
+  ["/wizard/ten", TenPage],
+  ["/wizard/eleven", ElevenPage],
+  ["/wizard/twelve", TwelvePage],
+  ["/wizard/thirteen", ThirteenPage],
+  ["/wizard/fourteen", FourteenPage],
+  ["/wizard/fifteen", FifteenPage],
+  ["/wizard/sixteen", SixteenPage],
+  ["/wizard/seventeen", SeventeenPage],
+  ["/wizard/eighteen", EighteenPage],
+  ["/wizard/nineteen", NineteenPage],
+  ["/wizard/twenty", TwentyPage],
+] as const;
+
 const RoutingSystem: FC = () => {
   return (
     <BrowserRouter>
@@ -35,166 +58,17 @@ const RoutingSystem: FC = () => {
           <Route path="/" element={<LoginPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/error" element={<ErrorPage />} />
-          <Route
-            path="/wizard/one"
-            element={
-              <PrivateBoundary>
-                <OnePage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/two"
-            element={
-              <PrivateBoundary>
-                <TwoPage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/three"
-            element={
-              <PrivateBoundary>
-                <ThreePage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/four"
-            element={
-              <PrivateBoundary>
-                <FourPage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/five"
-            element={
-              <PrivateBoundary>
-                <FivePage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/six"
-            element={
-              <PrivateBoundary>
-                <SixPage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/seven"
-            element={
-              <PrivateBoundary>
-                <SevenPage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/eight"
-            element={
-              <PrivateBoundary>
-                <EightPage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/nine"
-            element={
-              <PrivateBoundary>
-                <NinePage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/ten"
-            element={
-              <PrivateBoundary>
-                <TenPage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/eleven"
-            element={
-              <PrivateBoundary>
-                <ElevenPage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/twelve"
-            element={
-              <PrivateBoundary>
-                <TwelvePage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/thirteen"
-            element={
-              <PrivateBoundary>
-                <ThirteenPage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/fourteen"
-            element={
-              <PrivateBoundary>
-                <FourteenPage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/fifteen"
-            element={
-              <PrivateBoundary>
-                <FifteenPage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/sixteen"
-            element={
-              <PrivateBoundary>
-                <SixteenPage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/seventeen"
-            element={
-              <PrivateBoundary>
-                <SeventeenPage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/eighteen"
-            element={
-              <PrivateBoundary>
-                <EighteenPage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/nineteen"
-            element={
-              <PrivateBoundary>
-                <NineteenPage />
-              </PrivateBoundary>
-            }
-          />
-          <Route
-            path="/wizard/twenty"
-            element={
-              <PrivateBoundary>
-                <TwentyPage />
-              </PrivateBoundary>
-            }
-          />
+          {WizardRoutes.map(([path, Component], index, array) => (
+            <Route
+              key={path}
+              path={path}
+              element={
+                <PrivateBoundary>
+                  <Component to={array[index + 1]?.[0] || "/"} />
+                </PrivateBoundary>
+              }
+            />
+          ))}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Providers>

@@ -9,10 +9,11 @@ import {
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
 import useWizardStep from "../hooks/useWizardStep";
+import { FC } from "react";
 
-const TenPage = () => {
+const TenPage: FC<{ to: string }> = ({ to }) => {
   const { form, handleSubmit, isPending } = useWizardStep({
-    to: "/wizard/eleven",
+    to,
     getDefaultValues: (data) => ({
       breastVolumeMeasurement: data.meta?.breastVolumeMeasurement,
     }),

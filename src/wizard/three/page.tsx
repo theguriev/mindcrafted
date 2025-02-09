@@ -18,10 +18,11 @@ import useWizardStep from "../hooks/useWizardStep";
 import { formSchema } from "./zod";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
+import { FC } from "react";
 
-const ThreePage = () => {
+const ThreePage: FC<{ to: string }> = ({ to }) => {
   const { form, handleSubmit, isPending } = useWizardStep({
-    to: "/wizard/four",
+    to,
     getDefaultValues: (data) => ({
       birthday: data.meta?.birthday
         ? new Date(Date.parse(data.meta.birthday))

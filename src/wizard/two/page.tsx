@@ -9,10 +9,11 @@ import useWizardStep from "../hooks/useWizardStep";
 import { formSchema } from "./zod";
 import WizardFormFooter from "../components/wizard-form-footer";
 import WizardForm from "../components/wizard-form";
+import { FC } from "react";
 
-const TwoPage = () => {
+const TwoPage: FC<{ to: string }> = ({ to }) => {
   const { form, handleSubmit, isPending } = useWizardStep({
-    to: "/wizard/three",
+    to,
     getDefaultValues: (data) => ({ lastName: data.meta?.lastName }),
     prepareBody: (body) => body,
     formSchema,
