@@ -55,17 +55,19 @@ const WizardRoutes: FC = () => {
   const { mutate, isPending } = useUpdateMetaMutate();
 
   const createSubmitHandle =
-    (path: string) => (body: { meta: FieldValues }) => {
+    (index: number) => (body: { meta: FieldValues }) => {
+      const routesList =
+        body.meta.sex === "male" ? routes.slice(0, routes.length - 2) : routes;
+      const path = routesList[index + 1]?.[0] || "/";
       mutate({
         headers: { "Content-type": "application/json" },
         body,
       });
-      console.log("body", body, path);
-      navigate("/wizard/two");
+      navigate(path);
     };
   return (
     <Routes>
-      {routes.map(([path, Component]) => (
+      {routes.map(([path, Component], index) => (
         <Route
           key={path}
           path={path}
@@ -73,7 +75,7 @@ const WizardRoutes: FC = () => {
             <PrivateBoundary>
               <Component
                 pending={isPending}
-                onSubmit={createSubmitHandle(path)}
+                onSubmit={createSubmitHandle(index)}
               />
             </PrivateBoundary>
           }
