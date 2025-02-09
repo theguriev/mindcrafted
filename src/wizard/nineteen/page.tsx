@@ -23,9 +23,11 @@ const NineteenPage = () => {
   const { form, handleSubmit, isPending } = useWizardStep({
     to: "/wizard/twenty",
     getDefaultValues: (data) => ({
-      gaveBirth: data.meta?.gaveBirth,
+      gaveBirth: data.meta?.gaveBirth
+        ? new Date(Date.parse(data.meta.gaveBirth))
+        : undefined,
     }),
-    prepareBody: (body) => body,
+    prepareBody: (body) => ({ gaveBirth: body.gaveBirth?.toISOString() }),
     formSchema,
   });
 
