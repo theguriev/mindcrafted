@@ -61,9 +61,12 @@ const NineteenPage: FC<{ to: string }> = ({ to }) => {
                   <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
                       mode="single"
+                      captionLayout="dropdown"
                       selected={field.value}
                       onSelect={(value) => field.onChange(value)}
-                      initialFocus
+                      fromYear={1990}
+                      toYear={new Date().getFullYear()}
+                      defaultMonth={field.value}
                     />
                   </PopoverContent>
                 </Popover>
