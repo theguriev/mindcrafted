@@ -5,20 +5,24 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import useWizardStep from "../hooks/useWizardStep";
 import { formSchema } from "./zod";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
 import { FC } from "react";
+import { FieldValues } from "react-hook-form";
+import useWizardStep from "../hooks/useWizardStep";
 
-const FourPage: FC<{ to: string }> = ({ to }) => {
-  const { form, handleSubmit, isPending } = useWizardStep({
-    to,
+const FourPage: FC<{
+  onSubmit: (body: { meta: FieldValues }) => void;
+  pending: boolean;
+}> = ({ onSubmit, pending }) => {
+  const { form, handleSubmit } = useWizardStep({
+    formSchema,
+    onSubmit,
+    prepareBody: (body) => body,
     getDefaultValues: (data) => ({
       height: data.meta?.height,
     }),
-    prepareBody: (body) => body,
-    formSchema,
   });
 
   return (
@@ -35,7 +39,7 @@ const FourPage: FC<{ to: string }> = ({ to }) => {
                   className="sm:w-80 w-full border-none shadow-none focus-visible:ring-0"
                   placeholder="Ваш зріст (см)"
                   type="number"
-                  disabled={isPending}
+                  disabled={pending}
                   {...field}
                 />
               </div>
@@ -44,7 +48,7 @@ const FourPage: FC<{ to: string }> = ({ to }) => {
           </FormItem>
         )}
       />
-      <WizardFormFooter valid={form.formState.isValid} pending={isPending} />
+      <WizardFormFooter valid={form.formState.isValid} pending={pending} />
     </WizardForm>
   );
 };

@@ -1,6 +1,8 @@
 import { api } from "@/lib/openapi/apiClient";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
+export type UseMeQueryData = ReturnType<typeof useMeQuery>["data"];
+
 const useMeQuery = () =>
   useSuspenseQuery({
     queryKey: ["me"],

@@ -5,18 +5,22 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import useWizardStep from "../hooks/useWizardStep";
 import { formSchema } from "./zod";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
 import { FC } from "react";
+import { FieldValues } from "react-hook-form";
+import useWizardStep from "../hooks/useWizardStep";
 
-const OnePage: FC<{ to: string }> = ({ to }) => {
-  const { form, handleSubmit, isPending } = useWizardStep({
-    to,
-    getDefaultValues: (data) => ({ firstName: data.meta?.firstName }),
-    prepareBody: (body) => body,
+const OnePage: FC<{
+  onSubmit: (body: { meta: FieldValues }) => void;
+  pending: boolean;
+}> = ({ onSubmit, pending }) => {
+  const { form, handleSubmit } = useWizardStep({
     formSchema,
+    onSubmit,
+    prepareBody: (body) => body,
+    getDefaultValues: (data) => ({ firstName: data.meta?.firstName }),
   });
 
   return (
@@ -32,7 +36,7 @@ const OnePage: FC<{ to: string }> = ({ to }) => {
                   autoFocus
                   className="sm:w-80 w-full border-none shadow-none focus-visible:ring-0"
                   placeholder="Введіть ваше ім'я"
-                  disabled={isPending}
+                  disabled={pending}
                   {...field}
                 />
               </div>
@@ -41,7 +45,7 @@ const OnePage: FC<{ to: string }> = ({ to }) => {
           </FormItem>
         )}
       />
-      <WizardFormFooter valid={form.formState.isValid} pending={isPending} />
+      <WizardFormFooter valid={form.formState.isValid} pending={pending} />
     </WizardForm>
   );
 };

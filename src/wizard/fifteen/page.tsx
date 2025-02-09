@@ -8,17 +8,21 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
-import useWizardStep from "../hooks/useWizardStep";
 import { FC } from "react";
+import { FieldValues } from "react-hook-form";
+import useWizardStep from "../hooks/useWizardStep";
 
-const FifteenPage: FC<{ to: string }> = ({ to }) => {
-  const { form, handleSubmit, isPending } = useWizardStep({
-    to,
+const FifteenPage: FC<{
+  onSubmit: (body: { meta: FieldValues }) => void;
+  pending: boolean;
+}> = ({ onSubmit, pending }) => {
+  const { form, handleSubmit } = useWizardStep({
+    formSchema,
+    onSubmit,
+    prepareBody: (body) => body,
     getDefaultValues: (data) => ({
       physicalActivity: data.meta?.physicalActivity,
     }),
-    prepareBody: (body) => body,
-    formSchema,
   });
 
   return (
@@ -34,6 +38,7 @@ const FifteenPage: FC<{ to: string }> = ({ to }) => {
                   autoFocus
                   className="sm:w-80 w-full border-none shadow-none focus-visible:ring-0"
                   placeholder="Яка у вас рухова активність за останній рік, включно з тренуваннями і роботою?"
+                  disabled={pending}
                   {...field}
                 />
               </div>
@@ -42,7 +47,7 @@ const FifteenPage: FC<{ to: string }> = ({ to }) => {
           </FormItem>
         )}
       />
-      <WizardFormFooter valid={form.formState.isValid} pending={isPending} />
+      <WizardFormFooter valid={form.formState.isValid} pending={pending} />
     </WizardForm>
   );
 };

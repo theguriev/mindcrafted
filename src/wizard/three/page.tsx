@@ -14,22 +14,26 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import useWizardStep from "../hooks/useWizardStep";
 import { formSchema } from "./zod";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
 import { FC } from "react";
+import { FieldValues } from "react-hook-form";
+import useWizardStep from "../hooks/useWizardStep";
 
-const ThreePage: FC<{ to: string }> = ({ to }) => {
-  const { form, handleSubmit, isPending } = useWizardStep({
-    to,
+const ThreePage: FC<{
+  onSubmit: (body: { meta: FieldValues }) => void;
+  pending: boolean;
+}> = ({ onSubmit, pending }) => {
+  const { form, handleSubmit } = useWizardStep({
+    formSchema,
+    onSubmit,
+    prepareBody: (body) => ({ birthday: body.birthday?.toISOString() }),
     getDefaultValues: (data) => ({
       birthday: data.meta?.birthday
         ? new Date(Date.parse(data.meta.birthday))
         : undefined,
     }),
-    prepareBody: (body) => ({ birthday: body.birthday?.toISOString() }),
-    formSchema,
   });
 
   return (
@@ -76,7 +80,7 @@ const ThreePage: FC<{ to: string }> = ({ to }) => {
           </FormItem>
         )}
       />
-      <WizardFormFooter valid={form.formState.isValid} pending={isPending} />
+      <WizardFormFooter valid={form.formState.isValid} pending={pending} />
     </WizardForm>
   );
 };
