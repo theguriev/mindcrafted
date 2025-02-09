@@ -1,4 +1,4 @@
-import { Route, useNavigate } from "react-router";
+import { Route, Routes, useNavigate } from "react-router";
 import { FC, lazy } from "react";
 import PrivateBoundary from "./components/private-boundary";
 import useUpdateMetaMutate from "./hooks/useUpdateMetaMutate";
@@ -63,17 +63,24 @@ const WizardRoutes: FC = () => {
       console.log("body", body, path);
       navigate("/wizard/two");
     };
-  return routes.map(([path, Component]) => (
-    <Route
-      key={path}
-      path={path}
-      element={
-        <PrivateBoundary>
-          <Component pending={isPending} onSubmit={createSubmitHandle(path)} />
-        </PrivateBoundary>
-      }
-    />
-  ));
+  return (
+    <Routes>
+      {routes.map(([path, Component]) => (
+        <Route
+          key={path}
+          path={path}
+          element={
+            <PrivateBoundary>
+              <Component
+                pending={isPending}
+                onSubmit={createSubmitHandle(path)}
+              />
+            </PrivateBoundary>
+          }
+        />
+      ))}
+    </Routes>
+  );
 };
 
 export default WizardRoutes;

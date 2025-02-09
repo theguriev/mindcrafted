@@ -15,7 +15,7 @@ const RoutingSystem: FC = () => {
           <Route path="/" element={<LoginPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/error" element={<ErrorPage />} />
-          <WizardRoutes />
+          <Route path="/*" element={<WizardRoutes />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Providers>
