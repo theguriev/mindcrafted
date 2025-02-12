@@ -2,10 +2,10 @@ import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { FC } from "react";
 import { ControllerRenderProps } from "react-hook-form";
-import { FirstNameFormSchema } from "../zod";
+import { LastNameFormSchema } from "../zod";
 
-const FirstNameStep: FC<{
-  field: ControllerRenderProps<FirstNameFormSchema, "firstName">;
+const LastNameStep: FC<{
+  field: ControllerRenderProps<LastNameFormSchema, "lastName">;
   pending?: boolean;
 }> = ({ field, pending }) => {
   return (
@@ -15,7 +15,7 @@ const FirstNameStep: FC<{
           <Input
             autoFocus
             className="sm:w-80 w-full border-none shadow-none focus-visible:ring-0"
-            placeholder="Введіть ваше ім'я"
+            placeholder="Введіть вашу фамілію"
             disabled={pending}
             {...field}
           />
@@ -26,4 +26,4 @@ const FirstNameStep: FC<{
   );
 };
 
-export default FirstNameStep;
+export default LastNameStep;
