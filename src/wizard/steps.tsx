@@ -12,6 +12,7 @@ import {
   hipsMeasurementFormSchema,
   breastVolumeMeasurementFormSchema,
   contraindicationsFormSchema,
+  eatingDisorderFormSchema,
 } from "./zod";
 import FirstNameStep from "./components/first-name-step";
 import LastNameStep from "./components/last-name.step";
@@ -26,6 +27,7 @@ import HipMeasurementStep from "./components/hip-measurement-step";
 import HipsMeasurementStep from "./components/hips-measurement-step";
 import BreastVolumeMeasurementStep from "./components/breast-volume-measurement-step";
 import ContraindicationsStep from "./components/contraindications-step";
+import EatingDisorderStep from "./components/eating-disorder-step";
 
 const steps = new Map([
   [
@@ -130,6 +132,14 @@ const steps = new Map([
       name: "contraindications",
       formSchema: contraindicationsFormSchema,
       control: ContraindicationsStep,
+    },
+  ],
+  [
+    "eatingDisorder",
+    {
+      name: "eatingDisorder",
+      formSchema: eatingDisorderFormSchema,
+      control: EatingDisorderStep,
     },
   ],
 ] as const);
