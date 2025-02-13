@@ -7,6 +7,7 @@ import WizardForm from "./components/wizard-form";
 import WizardFormFooter from "./components/wizard-form-footer";
 import { DefaultValues, FieldValues } from "react-hook-form";
 import useMeQuery from "@/hooks/useMeQuery";
+import { camelCase } from "scule";
 
 const getPrepareBodyFn = (
   stepObject: StepObject
@@ -43,10 +44,14 @@ const getDefaultValuesFn = (
 
 const Wizard2Page: FC = () => {
   const { step } = useParams<{ step: string }>();
-  if (!step || !hasStep(step)) {
-    throw new Error(`Invalid step: ${step}`);
+  if (!step) {
+    throw new Error("Step is required");
   }
-  const stepObject = steps.get(step);
+  const camelStep = camelCase(step);
+  if (!hasStep(camelStep)) {
+    throw new Error(`Invalid step: ${camelStep}`);
+  }
+  const stepObject = steps.get(camelStep);
   if (!stepObject) {
     throw new Error(`Invalid step: ${step}`);
   }
