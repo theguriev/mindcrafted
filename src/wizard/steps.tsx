@@ -18,6 +18,7 @@ import {
   physicalActivityFormSchema,
   foodIntolerancesFormSchema,
   goalFormSchema,
+  whereDoSportsFormSchema,
 } from "./zod";
 import FirstNameStep from "./components/first-name-step";
 import LastNameStep from "./components/last-name.step";
@@ -38,6 +39,7 @@ import EndocrineDisordersStep from "./components/endocrine-disorders-step";
 import PhysicalActivityStep from "./components/physical-activity-step";
 import FoodIntoIerancesStep from "./components/foodInto-ierances-step";
 import GoalStep from "./components/goal-step";
+import WhereDoSportsStep from "./components/where-do-sports-step";
 
 const steps = new Map([
   [
@@ -185,6 +187,14 @@ const steps = new Map([
     },
   ],
   ["goal", { name: "goal", formSchema: goalFormSchema, control: GoalStep }],
+  [
+    "whereDoSports",
+    {
+      name: "whereDoSports",
+      formSchema: whereDoSportsFormSchema,
+      control: WhereDoSportsStep,
+    },
+  ],
 ] as const);
 
 export default steps;
@@ -195,22 +205,6 @@ export type StepObject = ReturnType<(typeof steps)["get"]>;
 export const hasStep = (step: string): step is StepsKeys =>
   steps.has(step as StepsKeys);
 
-// {
-//   name: "whereDoSports",
-//   control: {
-//     controlType: "radio",
-//     options: [
-//       {
-//         label: "Вдома",
-//         value: "home",
-//       },
-//       {
-//         label: "В залі",
-//         value: "gym",
-//       },
-//     ],
-//   },
-// },
 // {
 //   name: "gaveBirth",
 //   control: {
