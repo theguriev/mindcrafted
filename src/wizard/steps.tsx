@@ -45,11 +45,10 @@ import WhereDoSportsStep from "./components/where-do-sports-step";
 import GaveBirthStep from "./components/gave-birth-step";
 import BreastfeedingStep from "./components/breastfeeding-step";
 
-const steps = new Map([
+const stepEntries = [
   [
     "sex",
     {
-      name: "sex",
       formSchema: sexFormSchema,
       control: SexStep,
     },
@@ -57,7 +56,6 @@ const steps = new Map([
   [
     "firstName",
     {
-      name: "firstName",
       formSchema: firstNameFormSchema,
       control: FirstNameStep,
     },
@@ -65,7 +63,6 @@ const steps = new Map([
   [
     "lastName",
     {
-      name: "lastName",
       formSchema: lastNameFormSchema,
       control: LastNameStep,
     },
@@ -73,7 +70,6 @@ const steps = new Map([
   [
     "birthday",
     {
-      name: "birthday",
       formSchema: birthdayFormSchema,
       control: BirthdayStep,
       prepareBody: (body: FieldValues) => ({
@@ -89,7 +85,6 @@ const steps = new Map([
   [
     "height",
     {
-      name: "height",
       formSchema: heightFormSchema,
       control: HeightStep,
     },
@@ -97,7 +92,6 @@ const steps = new Map([
   [
     "weight",
     {
-      name: "weight",
       formSchema: weightFormSchema,
       control: WeightStep,
     },
@@ -105,7 +99,6 @@ const steps = new Map([
   [
     "waistMeasurement",
     {
-      name: "waistMeasurement",
       formSchema: waistMeasurementFormSchema,
       control: WaistMeasurementStep,
     },
@@ -113,7 +106,6 @@ const steps = new Map([
   [
     "shoulderVolumeMeasurement",
     {
-      name: "shoulderVolumeMeasurement",
       formSchema: shoulderVolumeMeasurementFormSchema,
       control: ShoulderVolumeMeasurementStep,
     },
@@ -121,7 +113,6 @@ const steps = new Map([
   [
     "hipMeasurement",
     {
-      name: "hipMeasurement",
       formSchema: hipMeasurementFormSchema,
       control: HipMeasurementStep,
     },
@@ -129,7 +120,6 @@ const steps = new Map([
   [
     "hipsMeasurement",
     {
-      name: "hipsMeasurement",
       formSchema: hipsMeasurementFormSchema,
       control: HipsMeasurementStep,
     },
@@ -137,7 +127,6 @@ const steps = new Map([
   [
     "breastVolumeMeasurement",
     {
-      name: "breastVolumeMeasurement",
       formSchema: breastVolumeMeasurementFormSchema,
       control: BreastVolumeMeasurementStep,
     },
@@ -145,7 +134,6 @@ const steps = new Map([
   [
     "contraindications",
     {
-      name: "contraindications",
       formSchema: contraindicationsFormSchema,
       control: ContraindicationsStep,
     },
@@ -153,7 +141,6 @@ const steps = new Map([
   [
     "eatingDisorder",
     {
-      name: "eatingDisorder",
       formSchema: eatingDisorderFormSchema,
       control: EatingDisorderStep,
     },
@@ -161,7 +148,6 @@ const steps = new Map([
   [
     "spineIssues",
     {
-      name: "spineIssues",
       formSchema: spineIssuesFormSchema,
       control: SpineIssuesStep,
     },
@@ -169,7 +155,6 @@ const steps = new Map([
   [
     "endocrineDisorders",
     {
-      name: "endocrineDisorders",
       formSchema: endocrineDisordersFormSchema,
       control: EndocrineDisordersStep,
     },
@@ -177,7 +162,6 @@ const steps = new Map([
   [
     "physicalActivity",
     {
-      name: "physicalActivity",
       formSchema: physicalActivityFormSchema,
       control: PhysicalActivityStep,
     },
@@ -185,7 +169,6 @@ const steps = new Map([
   [
     "foodIntolerances",
     {
-      name: "foodIntolerances",
       formSchema: foodIntolerancesFormSchema,
       control: FoodIntoIerancesStep,
     },
@@ -194,7 +177,6 @@ const steps = new Map([
   [
     "whereDoSports",
     {
-      name: "whereDoSports",
       formSchema: whereDoSportsFormSchema,
       control: WhereDoSportsStep,
     },
@@ -202,7 +184,6 @@ const steps = new Map([
   [
     "gaveBirth",
     {
-      name: "gaveBirth",
       prepareBody: (body: FieldValues) => ({
         gaveBirth: body.gaveBirth?.toISOString(),
       }),
@@ -218,12 +199,17 @@ const steps = new Map([
   [
     "breastfeeding",
     {
-      name: "breastfeeding",
       formSchema: breastfeedingFormSchema,
       control: BreastfeedingStep,
     },
   ],
-] as const);
+] as const;
+
+export const stepEntriesWithNameAndIndex = stepEntries.map(
+  ([name, step], index) => [name, { ...step, name, index }] as const
+);
+
+const steps = new Map(stepEntriesWithNameAndIndex);
 
 export default steps;
 

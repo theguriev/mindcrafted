@@ -7,7 +7,9 @@ import WizardForm from "./components/wizard-form";
 import WizardFormFooter from "./components/wizard-form-footer";
 import { DefaultValues, FieldValues } from "react-hook-form";
 import useMeQuery from "@/hooks/useMeQuery";
-import { camelCase } from "scule";
+import { camelCase, kebabCase } from "scule";
+import { useNavigate } from "react-router";
+import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
 
 const getPrepareBodyFn = (
   stepObject: StepObject
@@ -55,10 +57,24 @@ const Wizard2Page: FC = () => {
   if (!stepObject) {
     throw new Error(`Invalid step: ${step}`);
   }
+  const navigate = useNavigate();
+  const { mutate, isPending } = useUpdateMetaMutate();
   const { form, handleSubmit } = useWizardStep({
     formSchema: stepObject?.formSchema,
-    onSubmit: (data) => {
-      console.log("log: Wizard2Page.tsx: data:", data);
+    onSubmit: (body: { meta: FieldValues }) => {
+      mutate({
+        headers: { "Content-type": "application/json" },
+        body,
+      });
+      const routes = Array.from(steps.values());
+      const routesList =
+        body.meta.sex === "male" ? routes.slice(0, routes.length - 2) : routes;
+      const nextStep = routesList[stepObject.index + 1]?.name;
+      if (!nextStep) {
+        navigate("/");
+      } else {
+        navigate(`/wizard/${kebabCase(nextStep)}`);
+      }
     },
     prepareBody: getPrepareBodyFn(stepObject),
     getDefaultValues: getDefaultValuesFn(stepObject),
@@ -69,7 +85,9 @@ const Wizard2Page: FC = () => {
       <FormField
         control={form.control}
         name={stepObject.name}
-        render={({ field }) => <Control field={field as never} />}
+        render={({ field }) => (
+          <Control field={field as never} pending={isPending} />
+        )}
       />
       <WizardFormFooter valid={form.formState.isValid} pending={false} />
     </WizardForm>
