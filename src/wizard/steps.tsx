@@ -4,12 +4,16 @@ import {
   sexFormSchema,
   lastNameFormSchema,
   birthdayFormSchema,
+  heightFormSchema,
+  weightFormSchema,
 } from "./zod";
 import FirstNameStep from "./components/first-name-step";
 import LastNameStep from "./components/last-name.step";
 import BirthdayStep from "./components/birthday-step";
 import useMeQuery from "@/hooks/useMeQuery";
 import { FieldValues } from "react-hook-form";
+import HeightStep from "./components/height-step";
+import WeightStep from "./components/weight-step";
 
 const steps = new Map([
   [
@@ -52,6 +56,22 @@ const steps = new Map([
       }),
     },
   ],
+  [
+    "height",
+    {
+      name: "height",
+      formSchema: heightFormSchema,
+      control: HeightStep,
+    },
+  ],
+  [
+    "weight",
+    {
+      name: "weight",
+      formSchema: weightFormSchema,
+      control: WeightStep,
+    },
+  ],
 ] as const);
 
 export default steps;
@@ -62,61 +82,6 @@ export type StepObject = ReturnType<(typeof steps)["get"]>;
 export const hasStep = (step: string): step is StepsKeys =>
   steps.has(step as StepsKeys);
 
-// export const steps = [
-//   {
-//     name: "sex",
-//     formSchema: sexFormSchema,
-//     control: SexStep,
-//   },
-//   {
-//     name: "firstName",
-//     formSchema: firstNameFormSchema,
-//     control: FirstNameStep,
-//   },
-// {
-//   name: "lastName",
-//   control: {
-//     controlType: "input",
-//     placeholder: "Введіть ваше прізвище",
-//   },
-// },
-// {
-//   name: "birthday",
-//   control: {
-//     controlType: "date",
-//     placeholder: "Оберіть вашу дату народження",
-//     fromYear: 1950,
-//     toYear: new Date().getFullYear(),
-//   },
-//   prepareBody: (body: FieldValues) => ({
-//     birthday: body.birthday?.toISOString(),
-//   }),
-//   getDefaultValues: (data: ReturnType<typeof useMeQuery>["data"]) => ({
-//     birthday: data.meta?.birthday
-//       ? new Date(Date.parse(data.meta.birthday))
-//       : undefined,
-//   }),
-// },
-// {
-//   name: "height",
-//   control: {
-//     controlType: "input",
-//     placeholder: "Введіть ваш зріст (см)",
-//     type: "number",
-//     min: 100,
-//     max: 250,
-//   },
-// },
-// {
-//   name: "weight",
-//   control: {
-//     controlType: "input",
-//     placeholder: "Введіть вашу вагу (кг)",
-//     type: "number",
-//     min: 30,
-//     max: 250,
-//   },
-// },
 // {
 //   name: "waistMeasurement",
 //   control: {
