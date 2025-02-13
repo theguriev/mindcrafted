@@ -16,6 +16,7 @@ import {
   spineIssuesFormSchema,
   endocrineDisordersFormSchema,
   physicalActivityFormSchema,
+  foodIntolerancesFormSchema,
 } from "./zod";
 import FirstNameStep from "./components/first-name-step";
 import LastNameStep from "./components/last-name.step";
@@ -34,6 +35,7 @@ import EatingDisorderStep from "./components/eating-disorder-step";
 import SpineIssuesStep from "./components/spine-issues-step";
 import EndocrineDisordersStep from "./components/endocrine-disorders-step";
 import PhysicalActivityStep from "./components/physical-activity-step";
+import FoodIntoIerancesStep from "./components/foodInto-ierances-step";
 
 const steps = new Map([
   [
@@ -172,6 +174,14 @@ const steps = new Map([
       control: PhysicalActivityStep,
     },
   ],
+  [
+    "foodIntolerances",
+    {
+      name: "foodIntolerances",
+      formSchema: foodIntolerancesFormSchema,
+      control: FoodIntoIerancesStep,
+    },
+  ],
 ] as const);
 
 export default steps;
@@ -182,13 +192,6 @@ export type StepObject = ReturnType<(typeof steps)["get"]>;
 export const hasStep = (step: string): step is StepsKeys =>
   steps.has(step as StepsKeys);
 
-// {
-//   name: "foodIntolerances",
-//   control: {
-//     controlType: "textarea",
-//     placeholder: "Чи є у вас непереносимість певних продуктів?",
-//   },
-// },
 // {
 //   name: "goal",
 //   control: {
