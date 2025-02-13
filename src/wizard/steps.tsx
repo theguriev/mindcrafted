@@ -8,6 +8,7 @@ import {
   weightFormSchema,
   waistMeasurementFormSchema,
   shoulderVolumeMeasurementFormSchema,
+  hipMeasurementFormSchema,
 } from "./zod";
 import FirstNameStep from "./components/first-name-step";
 import LastNameStep from "./components/last-name.step";
@@ -18,6 +19,7 @@ import HeightStep from "./components/height-step";
 import WeightStep from "./components/weight-step";
 import WaistMeasurementStep from "./components/waist-measurement-step";
 import ShoulderVolumeMeasurementStep from "./components/shoulder-volume-measurement-step";
+import HipMeasurementStep from "./components/hip-measurement-step";
 
 const steps = new Map([
   [
@@ -90,6 +92,14 @@ const steps = new Map([
       name: "shoulderVolumeMeasurement",
       formSchema: shoulderVolumeMeasurementFormSchema,
       control: ShoulderVolumeMeasurementStep,
+    },
+  ],
+  [
+    "hipMeasurement",
+    {
+      name: "hipMeasurement",
+      formSchema: hipMeasurementFormSchema,
+      control: HipMeasurementStep,
     },
   ],
 ] as const);
