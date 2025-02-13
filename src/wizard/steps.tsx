@@ -19,6 +19,7 @@ import {
   foodIntolerancesFormSchema,
   goalFormSchema,
   whereDoSportsFormSchema,
+  gaveBirthFormSchema,
 } from "./zod";
 import FirstNameStep from "./components/first-name-step";
 import LastNameStep from "./components/last-name.step";
@@ -40,6 +41,7 @@ import PhysicalActivityStep from "./components/physical-activity-step";
 import FoodIntoIerancesStep from "./components/foodInto-ierances-step";
 import GoalStep from "./components/goal-step";
 import WhereDoSportsStep from "./components/where-do-sports-step";
+import GaveBirthStep from "./components/gave-birth-step";
 
 const steps = new Map([
   [
@@ -195,6 +197,22 @@ const steps = new Map([
       control: WhereDoSportsStep,
     },
   ],
+  [
+    "gaveBirth",
+    {
+      name: "gaveBirth",
+      prepareBody: (body: FieldValues) => ({
+        gaveBirth: body.gaveBirth?.toISOString(),
+      }),
+      getDefaultValues: (data: ReturnType<typeof useMeQuery>["data"]) => ({
+        gaveBirth: data.meta?.gaveBirth
+          ? new Date(Date.parse(data.meta.gaveBirth))
+          : undefined,
+      }),
+      formSchema: gaveBirthFormSchema,
+      control: GaveBirthStep,
+    },
+  ],
 ] as const);
 
 export default steps;
@@ -205,23 +223,6 @@ export type StepObject = ReturnType<(typeof steps)["get"]>;
 export const hasStep = (step: string): step is StepsKeys =>
   steps.has(step as StepsKeys);
 
-// {
-//   name: "gaveBirth",
-//   control: {
-//     controlType: "date",
-//     placeholder: "Якщо народжували то коли?",
-//     fromYear: 1990,
-//     toYear: new Date().getFullYear(),
-//   },
-//   prepareBody: (body: FieldValues) => ({
-//     gaveBirth: body.gaveBirth?.toISOString(),
-//   }),
-//   getDefaultValues: (data: ReturnType<typeof useMeQuery>["data"]) => ({
-//     gaveBirth: data.meta?.gaveBirth
-//       ? new Date(Date.parse(data.meta.gaveBirth))
-//       : undefined,
-//   }),
-// },
 // {
 //   name: "breastfeeding",
 //   control: {
