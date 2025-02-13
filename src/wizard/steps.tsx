@@ -6,6 +6,7 @@ import {
   birthdayFormSchema,
   heightFormSchema,
   weightFormSchema,
+  waistMeasurementFormSchema,
 } from "./zod";
 import FirstNameStep from "./components/first-name-step";
 import LastNameStep from "./components/last-name.step";
@@ -14,6 +15,7 @@ import useMeQuery from "@/hooks/useMeQuery";
 import { FieldValues } from "react-hook-form";
 import HeightStep from "./components/height-step";
 import WeightStep from "./components/weight-step";
+import WaistMeasurementStep from "./components/waist-measurement-step";
 
 const steps = new Map([
   [
@@ -70,6 +72,14 @@ const steps = new Map([
       name: "weight",
       formSchema: weightFormSchema,
       control: WeightStep,
+    },
+  ],
+  [
+    "waistMeasurement",
+    {
+      name: "waistMeasurement",
+      formSchema: waistMeasurementFormSchema,
+      control: WaistMeasurementStep,
     },
   ],
 ] as const);
