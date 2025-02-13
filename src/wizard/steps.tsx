@@ -20,6 +20,7 @@ import {
   goalFormSchema,
   whereDoSportsFormSchema,
   gaveBirthFormSchema,
+  breastfeedingFormSchema,
 } from "./zod";
 import FirstNameStep from "./components/first-name-step";
 import LastNameStep from "./components/last-name.step";
@@ -42,6 +43,7 @@ import FoodIntoIerancesStep from "./components/foodInto-ierances-step";
 import GoalStep from "./components/goal-step";
 import WhereDoSportsStep from "./components/where-do-sports-step";
 import GaveBirthStep from "./components/gave-birth-step";
+import BreastfeedingStep from "./components/breastfeeding-step";
 
 const steps = new Map([
   [
@@ -213,6 +215,14 @@ const steps = new Map([
       control: GaveBirthStep,
     },
   ],
+  [
+    "breastfeeding",
+    {
+      name: "breastfeeding",
+      formSchema: breastfeedingFormSchema,
+      control: BreastfeedingStep,
+    },
+  ],
 ] as const);
 
 export default steps;
@@ -222,28 +232,3 @@ export type StepObject = ReturnType<(typeof steps)["get"]>;
 
 export const hasStep = (step: string): step is StepsKeys =>
   steps.has(step as StepsKeys);
-
-// {
-//   name: "breastfeeding",
-//   control: {
-//     controlType: "radio",
-//     options: [
-//       {
-//         label: "Так",
-//         value: "yes",
-//       },
-//       {
-//         label: "Ні",
-//         value: "no",
-//       },
-//     ],
-//   },
-// },
-// ] as const;
-
-// export const stepsDictionary = steps.reduce<
-//   Record<(typeof steps)[number]["name"], (typeof steps)[number]>
-// >(
-//   (acc, step) => ({ ...acc, [step.name]: step }),
-//   {} as Record<(typeof steps)[number]["name"], (typeof steps)[number]>
-// );
