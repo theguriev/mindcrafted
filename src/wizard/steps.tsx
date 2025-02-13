@@ -10,6 +10,7 @@ import {
   shoulderVolumeMeasurementFormSchema,
   hipMeasurementFormSchema,
   hipsMeasurementFormSchema,
+  breastVolumeMeasurementFormSchema,
 } from "./zod";
 import FirstNameStep from "./components/first-name-step";
 import LastNameStep from "./components/last-name.step";
@@ -22,6 +23,7 @@ import WaistMeasurementStep from "./components/waist-measurement-step";
 import ShoulderVolumeMeasurementStep from "./components/shoulder-volume-measurement-step";
 import HipMeasurementStep from "./components/hip-measurement-step";
 import HipsMeasurementStep from "./components/hips-measurement-step";
+import BreastVolumeMeasurementStep from "./components/breast-volume-measurement-step";
 
 const steps = new Map([
   [
@@ -112,6 +114,14 @@ const steps = new Map([
       control: HipsMeasurementStep,
     },
   ],
+  [
+    "breastVolumeMeasurement",
+    {
+      name: "breastVolumeMeasurement",
+      formSchema: breastVolumeMeasurementFormSchema,
+      control: BreastVolumeMeasurementStep,
+    },
+  ],
 ] as const);
 
 export default steps;
@@ -122,14 +132,6 @@ export type StepObject = ReturnType<(typeof steps)["get"]>;
 export const hasStep = (step: string): step is StepsKeys =>
   steps.has(step as StepsKeys);
 
-// {
-//   name: "breastVolumeMeasurement",
-//   control: {
-//     controlType: "input",
-//     placeholder: "Обхват грудей (см)",
-//     type: "number",
-//   },
-// },
 // {
 //   name: "contraindications",
 //   control: {
