@@ -1,48 +1,16 @@
 import { FC } from "react";
 import { useParams } from "react-router";
-import steps, { hasStep, StepObject } from "./steps";
+import steps, { hasStep } from "./steps";
 import useWizardStep from "./hooks/useWizardStep";
 import { FormField } from "@/components/ui/form";
 import WizardForm from "./components/wizard-form";
 import WizardFormFooter from "./components/wizard-form-footer";
-import { DefaultValues, FieldValues } from "react-hook-form";
-import useMeQuery from "@/hooks/useMeQuery";
+import { FieldValues } from "react-hook-form";
 import { camelCase, kebabCase } from "scule";
 import { useNavigate } from "react-router";
 import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
-
-const getPrepareBodyFn = (
-  stepObject: StepObject
-): ((body: FieldValues) => Record<string, unknown>) => {
-  if (
-    !stepObject ||
-    !("prepareBody" in stepObject) ||
-    !stepObject.prepareBody
-  ) {
-    return (body: FieldValues) => body;
-  }
-  return stepObject.prepareBody;
-};
-
-const getDefaultValuesFn = (
-  stepObject: StepObject
-): ((
-  data: ReturnType<typeof useMeQuery>["data"]
-) => DefaultValues<FieldValues>) => {
-  if (!stepObject?.name) {
-    throw new Error("Step name is required");
-  }
-  if (
-    !stepObject ||
-    !("getDefaultValues" in stepObject) ||
-    !stepObject.getDefaultValues
-  ) {
-    return (data: FieldValues) => ({
-      [stepObject?.name]: data[stepObject?.name],
-    });
-  }
-  return stepObject.getDefaultValues;
-};
+import getDefaultValuesFn from "./utils/getDefaultValuesFn";
+import getPrepareBodyFn from "./utils/getPrepareBodyFn";
 
 const Wizard2Page: FC = () => {
   const { step } = useParams<{ step: string }>();
