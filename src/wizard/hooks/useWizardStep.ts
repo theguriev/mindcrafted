@@ -34,6 +34,7 @@ const useWizardStep = <
         ...prepareBody(body),
       },
     });
+    // form.setValue();
   };
 
   return { form, handleSubmit };

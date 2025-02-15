@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useParams } from "react-router";
 import steps, { hasStep } from "./steps";
 import useWizardStep from "./hooks/useWizardStep";
@@ -48,6 +48,10 @@ const Wizard2Page: FC = () => {
     getDefaultValues: getDefaultValuesFn(stepObject),
   });
   const Control = stepObject.control;
+
+  useEffect(() => {
+    window.t = form;
+  }, [form]);
   return (
     <WizardForm onSubmit={form.handleSubmit(handleSubmit)} {...form}>
       <FormField
