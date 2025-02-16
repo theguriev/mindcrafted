@@ -1,5 +1,6 @@
 import useMeQuery from "@/hooks/useMeQuery";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { DefaultValues, FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -35,6 +36,10 @@ const useWizardStep = <
       },
     });
   };
+
+  useEffect(() => {
+    form.reset(getDefaultValues(data));
+  }, [getDefaultValues, form, data]);
 
   return { form, handleSubmit };
 };

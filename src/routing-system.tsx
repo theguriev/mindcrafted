@@ -1,8 +1,8 @@
 import { FC, lazy } from "react";
 import { BrowserRouter, Routes, Navigate, Route } from "react-router";
 import Providers from "./providers";
-import WizardRoutes from "./wizard-routes";
-import Wizard2Page from "./wizard/page";
+import WizardPage from "./wizard/page";
+import PrivateBoundary from "./components/private-boundary";
 
 const LoginPage = lazy(() => import("./login/page"));
 const DashboardPage = lazy(() => import("./dashboard/page"));
@@ -16,8 +16,14 @@ const RoutingSystem: FC = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/error" element={<ErrorPage />} />
-          <Route path="/*" element={<WizardRoutes />} />
-          <Route path="/wizard2/:step" element={<Wizard2Page />} />
+          <Route
+            path="/wizard/:step"
+            element={
+              <PrivateBoundary>
+                <WizardPage />
+              </PrivateBoundary>
+            }
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Providers>
