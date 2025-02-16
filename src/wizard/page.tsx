@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useCallback, useMemo } from "react";
 import { useParams } from "react-router";
 import steps, { hasStep } from "./steps";
 import useWizardStep from "./hooks/useWizardStep";
@@ -27,9 +27,13 @@ const Wizard2Page: FC = () => {
   }
   const navigate = useNavigate();
   const { mutate, isPending } = useUpdateMetaMutate();
-  const { form, handleSubmit } = useWizardStep({
-    formSchema: stepObject?.formSchema,
-    onSubmit: (body: { meta: FieldValues }) => {
+  const getDefaultValues = useMemo(
+    () => getDefaultValuesFn(stepObject),
+    [stepObject]
+  );
+  const prepareBody = useMemo(() => getPrepareBodyFn(stepObject), [stepObject]);
+  const onSubmit = useCallback(
+    (body: { meta: FieldValues }) => {
       mutate({
         headers: { "Content-type": "application/json" },
         body,
@@ -44,14 +48,16 @@ const Wizard2Page: FC = () => {
         navigate(`/wizard/${kebabCase(nextStep)}`);
       }
     },
-    prepareBody: getPrepareBodyFn(stepObject),
-    getDefaultValues: getDefaultValuesFn(stepObject),
+    [mutate, navigate, stepObject.index]
+  );
+  const { form, handleSubmit } = useWizardStep({
+    formSchema: stepObject?.formSchema,
+    onSubmit,
+    prepareBody,
+    getDefaultValues,
   });
-  const Control = stepObject.control;
+  const Control = useMemo(() => stepObject.control, [stepObject]);
 
-  useEffect(() => {
-    window.t = form;
-  }, [form]);
   return (
     <WizardForm onSubmit={form.handleSubmit(handleSubmit)} {...form}>
       <FormField
