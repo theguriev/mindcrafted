@@ -12,8 +12,8 @@ const EatingDisorderStep: FC<
       <FormControl>
         <div className="w-full sm:w-auto flex items-center">
           <WizardTextarea
-            placeholder="Чи нема у вас діагностованого розладу харчової поведінки?"
             disabled={pending}
+            placeholder="Чи нема у вас діагностованого розладу харчової поведінки?"
             {...field}
           />
         </div>
