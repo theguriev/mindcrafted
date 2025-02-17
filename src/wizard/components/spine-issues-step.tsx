@@ -2,7 +2,7 @@ import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
 import { ControllerRenderProps } from "react-hook-form";
 import { SpineIssuesFormSchema } from "../zod";
-import { Textarea } from "@/components/ui/textarea";
+import WizardTextarea from "./wizard-textarea";
 
 const SpineIssuesStep: FC<{
   field: ControllerRenderProps<SpineIssuesFormSchema, "spineIssues">;
@@ -12,9 +12,7 @@ const SpineIssuesStep: FC<{
     <FormItem>
       <FormControl>
         <div className="w-full sm:w-auto flex items-center">
-          <Textarea
-            autoFocus
-            className="sm:w-80 w-full border-none shadow-none focus-visible:ring-0"
+          <WizardTextarea
             placeholder="Чи нема у вас діагностованого розладу харчової поведінки?"
             disabled={pending}
             {...field}

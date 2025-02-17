@@ -2,7 +2,7 @@ import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
 import { ControllerRenderProps } from "react-hook-form";
 import { FoodIntolerancesFormSchema } from "../zod";
-import { Textarea } from "@/components/ui/textarea";
+import WizardTextarea from "./wizard-textarea";
 
 const FoodIntoIerancesStep: FC<{
   field: ControllerRenderProps<FoodIntolerancesFormSchema, "foodIntolerances">;
@@ -12,9 +12,7 @@ const FoodIntoIerancesStep: FC<{
     <FormItem>
       <FormControl>
         <div className="w-full sm:w-auto flex items-center">
-          <Textarea
-            autoFocus
-            className="sm:w-80 w-full border-none shadow-none focus-visible:ring-0"
+          <WizardTextarea
             placeholder="Чи є у вас непереносимість певних продуктів?"
             disabled={pending}
             {...field}
