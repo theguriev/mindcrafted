@@ -1,16 +1,12 @@
 import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { BreastVolumeMeasurementFormSchema } from "../zod";
 import WizardInput from "./wizard-input";
+import { WizardStepProps } from "../types";
 
-const BreastVolumeMeasurementStep: FC<{
-  field: ControllerRenderProps<
-    BreastVolumeMeasurementFormSchema,
-    "breastVolumeMeasurement"
-  >;
-  pending?: boolean;
-}> = ({ field, pending }) => {
+const BreastVolumeMeasurementStep: FC<
+  WizardStepProps<BreastVolumeMeasurementFormSchema, "breastVolumeMeasurement">
+> = ({ field, pending }) => {
   return (
     <FormItem>
       <FormControl>

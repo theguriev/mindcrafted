@@ -1,16 +1,12 @@
 import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { ContraindicationsFormSchema } from "../zod";
 import WizardTextarea from "./wizard-textarea";
+import { WizardStepProps } from "../types";
 
-const ContraindicationsStep: FC<{
-  field: ControllerRenderProps<
-    ContraindicationsFormSchema,
-    "contraindications"
-  >;
-  pending?: boolean;
-}> = ({ field, pending }) => {
+const ContraindicationsStep: FC<
+  WizardStepProps<ContraindicationsFormSchema, "contraindications">
+> = ({ field, pending }) => {
   return (
     <FormItem>
       <FormControl>

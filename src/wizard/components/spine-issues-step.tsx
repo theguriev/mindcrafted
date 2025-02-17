@@ -1,13 +1,12 @@
 import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { SpineIssuesFormSchema } from "../zod";
 import WizardTextarea from "./wizard-textarea";
+import { WizardStepProps } from "../types";
 
-const SpineIssuesStep: FC<{
-  field: ControllerRenderProps<SpineIssuesFormSchema, "spineIssues">;
-  pending?: boolean;
-}> = ({ field, pending }) => {
+const SpineIssuesStep: FC<
+  WizardStepProps<SpineIssuesFormSchema, "spineIssues">
+> = ({ field, pending }) => {
   return (
     <FormItem>
       <FormControl>

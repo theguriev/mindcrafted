@@ -1,13 +1,12 @@
 import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { FoodIntolerancesFormSchema } from "../zod";
 import WizardTextarea from "./wizard-textarea";
+import { WizardStepProps } from "../types";
 
-const FoodIntoIerancesStep: FC<{
-  field: ControllerRenderProps<FoodIntolerancesFormSchema, "foodIntolerances">;
-  pending?: boolean;
-}> = ({ field, pending }) => {
+const FoodIntoIerancesStep: FC<
+  WizardStepProps<FoodIntolerancesFormSchema, "foodIntolerances">
+> = ({ field, pending }) => {
   return (
     <FormItem>
       <FormControl>

@@ -1,6 +1,5 @@
 import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { GaveBirthFormSchema } from "../zod";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -12,10 +11,11 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
+import { WizardStepProps } from "../types";
 
-const GaveBirthStep: FC<{
-  field: ControllerRenderProps<GaveBirthFormSchema, "gaveBirth">;
-}> = ({ field }) => {
+const GaveBirthStep: FC<WizardStepProps<GaveBirthFormSchema, "gaveBirth">> = ({
+  field,
+}) => {
   return (
     <FormItem>
       <FormControl>

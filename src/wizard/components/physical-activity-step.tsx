@@ -1,13 +1,12 @@
 import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { PhysicalActivityFormSchema } from "../zod";
 import WizardTextarea from "./wizard-textarea";
+import { WizardStepProps } from "../types";
 
-const PhysicalActivityStep: FC<{
-  field: ControllerRenderProps<PhysicalActivityFormSchema, "physicalActivity">;
-  pending?: boolean;
-}> = ({ field, pending }) => {
+const PhysicalActivityStep: FC<
+  WizardStepProps<PhysicalActivityFormSchema, "physicalActivity">
+> = ({ field, pending }) => {
   return (
     <FormItem>
       <FormControl>

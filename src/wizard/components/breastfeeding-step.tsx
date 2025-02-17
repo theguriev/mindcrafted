@@ -5,14 +5,14 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { BreastfeedingFormSchema } from "../zod";
 import { Label } from "@radix-ui/react-label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { WizardStepProps } from "../types";
 
-const BreastfeedingStep: FC<{
-  field: ControllerRenderProps<BreastfeedingFormSchema, "breastfeeding">;
-}> = ({ field }) => {
+const BreastfeedingStep: FC<
+  WizardStepProps<BreastfeedingFormSchema, "breastfeeding">
+> = ({ field }) => {
   return (
     <FormItem className="sm:w-80 w-full px-3 sm:px-0">
       <FormLabel>Годуєте грудьми?</FormLabel>

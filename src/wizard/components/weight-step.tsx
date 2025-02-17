@@ -1,13 +1,13 @@
 import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { WeightFormSchema } from "../zod";
 import WizardInput from "./wizard-input";
+import { WizardStepProps } from "../types";
 
-const WeightStep: FC<{
-  field: ControllerRenderProps<WeightFormSchema, "weight">;
-  pending?: boolean;
-}> = ({ field, pending }) => {
+const WeightStep: FC<WizardStepProps<WeightFormSchema, "weight">> = ({
+  field,
+  pending,
+}) => {
   return (
     <FormItem>
       <FormControl>

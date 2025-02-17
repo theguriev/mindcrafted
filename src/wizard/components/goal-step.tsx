@@ -1,13 +1,13 @@
 import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { GoalFormSchema } from "../zod";
 import WizardTextarea from "./wizard-textarea";
+import { WizardStepProps } from "../types";
 
-const GoalStep: FC<{
-  field: ControllerRenderProps<GoalFormSchema, "goal">;
-  pending?: boolean;
-}> = ({ field, pending }) => {
+const GoalStep: FC<WizardStepProps<GoalFormSchema, "goal">> = ({
+  field,
+  pending,
+}) => {
   return (
     <FormItem>
       <FormControl>

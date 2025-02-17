@@ -5,14 +5,14 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { WhereDoSportsFormSchema } from "../zod";
 import { Label } from "@radix-ui/react-label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { WizardStepProps } from "../types";
 
-const WhereDoSportsStep: FC<{
-  field: ControllerRenderProps<WhereDoSportsFormSchema, "whereDoSports">;
-}> = ({ field }) => {
+const WhereDoSportsStep: FC<
+  WizardStepProps<WhereDoSportsFormSchema, "whereDoSports">
+> = ({ field }) => {
   return (
     <FormItem className="sm:w-80 w-full px-3 sm:px-0">
       <FormLabel>Де ви будете займатись?</FormLabel>

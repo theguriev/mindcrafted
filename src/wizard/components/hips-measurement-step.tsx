@@ -1,13 +1,12 @@
 import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { HipsMeasurementFormSchema } from "../zod";
 import WizardInput from "./wizard-input";
+import { WizardStepProps } from "../types";
 
-const HipsMeasurementStep: FC<{
-  field: ControllerRenderProps<HipsMeasurementFormSchema, "hipsMeasurement">;
-  pending?: boolean;
-}> = ({ field, pending }) => {
+const HipsMeasurementStep: FC<
+  WizardStepProps<HipsMeasurementFormSchema, "hipsMeasurement">
+> = ({ field, pending }) => {
   return (
     <FormItem>
       <FormControl>

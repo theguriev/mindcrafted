@@ -7,12 +7,10 @@ import {
 import { Label } from "@radix-ui/react-label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { SexFormSchema } from "../zod";
+import { WizardStepProps } from "../types";
 
-const SexStep: FC<{
-  field: ControllerRenderProps<SexFormSchema, "sex">;
-}> = ({ field }) => {
+const SexStep: FC<WizardStepProps<SexFormSchema, "sex">> = ({ field }) => {
   return (
     <FormItem className="sm:w-80 w-full px-3 sm:px-0">
       <FormLabel>Ваша стать?</FormLabel>

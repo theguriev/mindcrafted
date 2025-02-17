@@ -1,16 +1,12 @@
 import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { EndocrineDisordersFormSchema } from "../zod";
 import WizardTextarea from "./wizard-textarea";
+import { WizardStepProps } from "../types";
 
-const EndocrineDisordersStep: FC<{
-  field: ControllerRenderProps<
-    EndocrineDisordersFormSchema,
-    "endocrineDisorders"
-  >;
-  pending?: boolean;
-}> = ({ field, pending }) => {
+const EndocrineDisordersStep: FC<
+  WizardStepProps<EndocrineDisordersFormSchema, "endocrineDisorders">
+> = ({ field, pending }) => {
   return (
     <FormItem>
       <FormControl>

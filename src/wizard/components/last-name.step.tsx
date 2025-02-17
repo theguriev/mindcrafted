@@ -1,13 +1,13 @@
 import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { LastNameFormSchema } from "../zod";
 import WizardInput from "./wizard-input";
+import { WizardStepProps } from "../types";
 
-const LastNameStep: FC<{
-  field: ControllerRenderProps<LastNameFormSchema, "lastName">;
-  pending?: boolean;
-}> = ({ field, pending }) => {
+const LastNameStep: FC<WizardStepProps<LastNameFormSchema, "lastName">> = ({
+  field,
+  pending,
+}) => {
   return (
     <FormItem>
       <FormControl>

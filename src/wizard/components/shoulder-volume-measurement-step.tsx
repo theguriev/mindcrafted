@@ -1,16 +1,15 @@
 import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { ShoulderVolumeMeasurementFormSchema } from "../zod";
 import WizardInput from "./wizard-input";
+import { WizardStepProps } from "../types";
 
-const ShoulderVolumeMeasurementStep: FC<{
-  field: ControllerRenderProps<
+const ShoulderVolumeMeasurementStep: FC<
+  WizardStepProps<
     ShoulderVolumeMeasurementFormSchema,
     "shoulderVolumeMeasurement"
-  >;
-  pending?: boolean;
-}> = ({ field, pending }) => {
+  >
+> = ({ field, pending }) => {
   return (
     <FormItem>
       <FormControl>
