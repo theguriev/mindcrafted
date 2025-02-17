@@ -1,12 +1,12 @@
 import { FC, lazy } from "react";
 import { BrowserRouter, Routes, Navigate, Route } from "react-router";
 import Providers from "./providers";
-import WizardPage from "./wizard/page";
 import PrivateBoundary from "./components/private-boundary";
 
 const LoginPage = lazy(() => import("./login/page"));
 const DashboardPage = lazy(() => import("./dashboard/page"));
 const ErrorPage = lazy(() => import("./error/page"));
+const WizardPage = lazy(() => import("./wizard/page"));
 
 const RoutingSystem: FC = () => {
   return (
