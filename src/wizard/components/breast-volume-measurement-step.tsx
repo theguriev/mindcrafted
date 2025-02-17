@@ -2,7 +2,7 @@ import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
 import { ControllerRenderProps } from "react-hook-form";
 import { BreastVolumeMeasurementFormSchema } from "../zod";
-import { Input } from "@/components/ui/input";
+import WizardInput from "./wizard-input";
 
 const BreastVolumeMeasurementStep: FC<{
   field: ControllerRenderProps<
@@ -15,9 +15,7 @@ const BreastVolumeMeasurementStep: FC<{
     <FormItem>
       <FormControl>
         <div className="w-full sm:w-auto flex items-center">
-          <Input
-            autoFocus
-            className="sm:w-80 w-full border-none shadow-none focus-visible:ring-0"
+          <WizardInput
             placeholder="Обхват грудей (см)"
             type="number"
             disabled={pending}

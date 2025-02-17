@@ -2,7 +2,7 @@ import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
 import { ControllerRenderProps } from "react-hook-form";
 import { HipMeasurementFormSchema } from "../zod";
-import { Input } from "@/components/ui/input";
+import WizardInput from "./wizard-input";
 
 const HipMeasurementStep: FC<{
   field: ControllerRenderProps<HipMeasurementFormSchema, "hipMeasurement">;
@@ -12,9 +12,7 @@ const HipMeasurementStep: FC<{
     <FormItem>
       <FormControl>
         <div className="w-full sm:w-auto flex items-center">
-          <Input
-            autoFocus
-            className="sm:w-80 w-full border-none shadow-none focus-visible:ring-0"
+          <WizardInput
             placeholder="Обхват стегна (сідниці см)"
             type="number"
             disabled={pending}
