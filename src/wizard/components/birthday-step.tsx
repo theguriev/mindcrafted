@@ -1,6 +1,5 @@
 import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
-import { ControllerRenderProps } from "react-hook-form";
 import { BirthdayFormSchema } from "../zod";
 import { cn } from "@/lib/utils";
 import {
@@ -12,10 +11,11 @@ import { Calendar } from "@/components/ui/calendar";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
+import { WizardStepProps } from "../types";
 
-const BirthdayStep: FC<{
-  field: ControllerRenderProps<BirthdayFormSchema, "birthday">;
-}> = ({ field }) => {
+const BirthdayStep: FC<WizardStepProps<BirthdayFormSchema, "birthday">> = ({
+  field,
+}) => {
   return (
     <FormItem>
       <FormControl>
