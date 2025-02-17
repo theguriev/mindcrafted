@@ -17,6 +17,6 @@ const WizardTextarea = forwardRef<
     />
   );
 });
-WizardTextarea.displayName = "Textarea";
+WizardTextarea.displayName = "WizardTextarea";
 
 export default WizardTextarea;
