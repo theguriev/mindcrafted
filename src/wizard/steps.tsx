@@ -1,32 +1,7 @@
 import SexStep from "./components/sex-step";
-import {
-  firstNameFormSchema,
-  sexFormSchema,
-  lastNameFormSchema,
-  birthdayFormSchema,
-  heightFormSchema,
-  weightFormSchema,
-  waistMeasurementFormSchema,
-  shoulderVolumeMeasurementFormSchema,
-  hipMeasurementFormSchema,
-  hipsMeasurementFormSchema,
-  breastVolumeMeasurementFormSchema,
-  contraindicationsFormSchema,
-  eatingDisorderFormSchema,
-  spineIssuesFormSchema,
-  endocrineDisordersFormSchema,
-  physicalActivityFormSchema,
-  foodIntolerancesFormSchema,
-  goalFormSchema,
-  whereDoSportsFormSchema,
-  gaveBirthFormSchema,
-  breastfeedingFormSchema,
-} from "./zod";
 import FirstNameStep from "./components/first-name-step";
 import LastNameStep from "./components/last-name.step";
 import BirthdayStep from "./components/birthday-step";
-import useMeQuery from "@/hooks/useMeQuery";
-import { FieldValues } from "react-hook-form";
 import HeightStep from "./components/height-step";
 import WeightStep from "./components/weight-step";
 import WaistMeasurementStep from "./components/waist-measurement-step";
@@ -49,157 +24,121 @@ const stepEntries = [
   [
     "sex",
     {
-      formSchema: sexFormSchema,
       control: SexStep,
     },
   ],
   [
     "firstName",
     {
-      formSchema: firstNameFormSchema,
       control: FirstNameStep,
     },
   ],
   [
     "lastName",
     {
-      formSchema: lastNameFormSchema,
       control: LastNameStep,
     },
   ],
   [
     "birthday",
     {
-      formSchema: birthdayFormSchema,
       control: BirthdayStep,
-      prepareBody: (body: FieldValues) => ({
-        birthday: body.birthday?.toISOString(),
-      }),
-      getDefaultValues: (data: ReturnType<typeof useMeQuery>["data"]) => ({
-        birthday: data.meta?.birthday
-          ? new Date(Date.parse(data.meta.birthday))
-          : undefined,
-      }),
     },
   ],
   [
     "height",
     {
-      formSchema: heightFormSchema,
       control: HeightStep,
     },
   ],
   [
     "weight",
     {
-      formSchema: weightFormSchema,
       control: WeightStep,
     },
   ],
   [
     "waistMeasurement",
     {
-      formSchema: waistMeasurementFormSchema,
       control: WaistMeasurementStep,
     },
   ],
   [
     "shoulderVolumeMeasurement",
     {
-      formSchema: shoulderVolumeMeasurementFormSchema,
       control: ShoulderVolumeMeasurementStep,
     },
   ],
   [
     "hipMeasurement",
     {
-      formSchema: hipMeasurementFormSchema,
       control: HipMeasurementStep,
     },
   ],
   [
     "hipsMeasurement",
     {
-      formSchema: hipsMeasurementFormSchema,
       control: HipsMeasurementStep,
     },
   ],
   [
     "breastVolumeMeasurement",
     {
-      formSchema: breastVolumeMeasurementFormSchema,
       control: BreastVolumeMeasurementStep,
     },
   ],
   [
     "contraindications",
     {
-      formSchema: contraindicationsFormSchema,
       control: ContraindicationsStep,
     },
   ],
   [
     "eatingDisorder",
     {
-      formSchema: eatingDisorderFormSchema,
       control: EatingDisorderStep,
     },
   ],
   [
     "spineIssues",
     {
-      formSchema: spineIssuesFormSchema,
       control: SpineIssuesStep,
     },
   ],
   [
     "endocrineDisorders",
     {
-      formSchema: endocrineDisordersFormSchema,
       control: EndocrineDisordersStep,
     },
   ],
   [
     "physicalActivity",
     {
-      formSchema: physicalActivityFormSchema,
       control: PhysicalActivityStep,
     },
   ],
   [
     "foodIntolerances",
     {
-      formSchema: foodIntolerancesFormSchema,
       control: FoodIntoIerancesStep,
     },
   ],
-  ["goal", { name: "goal", formSchema: goalFormSchema, control: GoalStep }],
+  ["goal", { control: GoalStep }],
   [
     "whereDoSports",
     {
-      formSchema: whereDoSportsFormSchema,
       control: WhereDoSportsStep,
     },
   ],
   [
     "gaveBirth",
     {
-      prepareBody: (body: FieldValues) => ({
-        gaveBirth: body.gaveBirth?.toISOString(),
-      }),
-      getDefaultValues: (data: ReturnType<typeof useMeQuery>["data"]) => ({
-        gaveBirth: data.meta?.gaveBirth
-          ? new Date(Date.parse(data.meta.gaveBirth))
-          : undefined,
-      }),
-      formSchema: gaveBirthFormSchema,
       control: GaveBirthStep,
     },
   ],
   [
     "breastfeeding",
     {
-      formSchema: breastfeedingFormSchema,
       control: BreastfeedingStep,
     },
   ],

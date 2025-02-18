@@ -1,10 +1,9 @@
 import { FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import { FC } from "react";
-import { FirstNameFormSchema } from "../zod";
 import WizardInput from "./wizard-input";
 import { WizardStepProps } from "../types";
 
-const FirstNameStep: FC<WizardStepProps<FirstNameFormSchema, "firstName">> = ({
+const FirstNameStep: FC<WizardStepProps<FormSchema, "firstName">> = ({
   field,
   pending,
 }) => {
@@ -12,6 +11,7 @@ const FirstNameStep: FC<WizardStepProps<FirstNameFormSchema, "firstName">> = ({
     <FormItem>
       <FormControl>
         <div className="w-full sm:w-auto flex items-center">
+          {JSON.stringify(field)}
           <WizardInput
             placeholder="Введіть ваше ім'я"
             disabled={pending}

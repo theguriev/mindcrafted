@@ -1,16 +1,16 @@
-import { FC, useCallback, useMemo } from "react";
+import { FC } from "react";
 import { useParams } from "react-router";
 import steps, { hasStep } from "./steps";
-import useWizardStep from "./hooks/useWizardStep";
 import { FormField } from "@/components/ui/form";
 import WizardForm from "./components/wizard-form";
 import WizardFormFooter from "./components/wizard-form-footer";
-import { FieldValues } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { camelCase, kebabCase } from "scule";
 import { useNavigate } from "react-router";
 import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
-import getDefaultValuesFn from "./utils/getDefaultValuesFn";
-import getPrepareBodyFn from "./utils/getPrepareBodyFn";
+import { formSchema, FormSchema } from "./zod";
+import useMeQuery from "@/hooks/useMeQuery";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const Wizard2Page: FC = () => {
   const { step } = useParams<{ step: string }>();
@@ -27,47 +27,57 @@ const Wizard2Page: FC = () => {
   }
   const navigate = useNavigate();
   const { mutate, isPending } = useUpdateMetaMutate();
-  const getDefaultValues = useMemo(
-    () => getDefaultValuesFn(stepObject),
-    [stepObject]
-  );
-  const prepareBody = useMemo(() => getPrepareBodyFn(stepObject), [stepObject]);
-  const onSubmit = useCallback(
-    (body: { meta: FieldValues }) => {
-      mutate({
-        headers: { "Content-type": "application/json" },
-        body,
-      });
-      const routes = Array.from(steps.values());
-      const routesList =
-        body.meta.sex === "male" ? routes.slice(0, routes.length - 2) : routes;
-      const nextStep = routesList[stepObject.index + 1]?.name;
-      if (!nextStep) {
-        navigate("/");
-      } else {
-        navigate(`/wizard/${kebabCase(nextStep)}`);
-      }
+  const { data } = useMeQuery();
+
+  const form = useForm<FormSchema>({
+    shouldUnregister: true,
+    resolver: zodResolver(formSchema),
+    mode: "onBlur",
+    defaultValues: {
+      ...data.meta,
+      birthday: data.meta?.birthday ? new Date(data.meta.birthday) : undefined,
+      gaveBirth: data.meta?.gaveBirth
+        ? new Date(data.meta.gaveBirth)
+        : undefined,
     },
-    [mutate, navigate, stepObject.index]
-  );
-  const { form, handleSubmit } = useWizardStep({
-    formSchema: stepObject?.formSchema,
-    onSubmit,
-    prepareBody,
-    getDefaultValues,
   });
-  const Control = useMemo(() => stepObject.control, [stepObject]);
+
+  const handleSubmit = (body: FormSchema) => {
+    console.log("log: body", body);
+
+    mutate({
+      headers: { "Content-type": "application/json" },
+      body: {
+        meta: {
+          ...body,
+          birthday: body.birthday ? body.birthday?.toISOString() : undefined,
+          gaveBirth: body.gaveBirth ? body.gaveBirth?.toISOString() : undefined,
+        },
+      },
+    });
+    const routes = Array.from(steps.values());
+    const routesList =
+      body.sex === "male" ? routes.slice(0, routes.length - 2) : routes;
+    const nextStep = routesList[stepObject.index + 1]?.name;
+    form.reset(body);
+    if (!nextStep) {
+      navigate("/");
+    } else {
+      navigate(`/wizard/${kebabCase(nextStep)}`);
+    }
+  };
+
+  const Step = stepObject.control;
 
   return (
     <WizardForm onSubmit={form.handleSubmit(handleSubmit)} {...form}>
+      {stepObject.name}
       <FormField
         control={form.control}
         name={stepObject.name}
-        render={({ field }) => (
-          <Control field={field as never} pending={isPending} />
-        )}
+        render={({ field, fieldState }) => <Step field={field as never} />}
       />
-      <WizardFormFooter valid={form.formState.isValid} pending={false} />
+      <WizardFormFooter valid={true} pending={isPending} />
     </WizardForm>
   );
 };
