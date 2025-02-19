@@ -59,7 +59,6 @@ const Wizard2Page: FC = () => {
     const routesList =
       body.sex === "male" ? routes.slice(0, routes.length - 2) : routes;
     const nextStep = routesList[stepObject.index + 1]?.name;
-    form.reset(body);
     if (!nextStep) {
       navigate("/");
     } else {
@@ -75,7 +74,7 @@ const Wizard2Page: FC = () => {
       <FormField
         control={form.control}
         name={stepObject.name}
-        render={({ field, fieldState }) => <Step field={field as never} />}
+        render={({ field }) => <Step field={field as never} />}
       />
       <WizardFormFooter valid={true} pending={isPending} />
     </WizardForm>
