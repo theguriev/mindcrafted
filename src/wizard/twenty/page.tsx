@@ -21,7 +21,6 @@ const TwentyPage: FC<{
   const { form, handleSubmit } = useWizardStep({
     formSchema,
     onSubmit,
-    prepareBody: (body) => body,
     getDefaultValues: (data) => ({
       breastfeeding: data.meta?.breastfeeding,
     }),

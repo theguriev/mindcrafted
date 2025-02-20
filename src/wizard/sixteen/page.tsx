@@ -19,7 +19,6 @@ const SixteenPage: FC<{
   const { form, handleSubmit } = useWizardStep({
     formSchema,
     onSubmit,
-    prepareBody: (body) => body,
     getDefaultValues: (data) => ({
       foodIntolerances: data.meta?.foodIntolerances,
     }),

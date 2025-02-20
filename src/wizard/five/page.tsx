@@ -19,7 +19,6 @@ const FivePage: FC<{
   const { form, handleSubmit } = useWizardStep({
     formSchema,
     onSubmit,
-    prepareBody: (body) => body,
     getDefaultValues: (data) => ({
       weight: data.meta?.weight,
     }),

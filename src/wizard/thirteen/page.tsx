@@ -19,7 +19,6 @@ const ThirteenPage: FC<{
   const { form, handleSubmit } = useWizardStep({
     formSchema,
     onSubmit,
-    prepareBody: (body) => body,
     getDefaultValues: (data) => ({
       spineIssues: data.meta?.spineIssues,
     }),

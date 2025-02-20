@@ -19,7 +19,6 @@ const FifteenPage: FC<{
   const { form, handleSubmit } = useWizardStep({
     formSchema,
     onSubmit,
-    prepareBody: (body) => body,
     getDefaultValues: (data) => ({
       physicalActivity: data.meta?.physicalActivity,
     }),

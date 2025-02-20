@@ -19,7 +19,6 @@ const SevenPage: FC<{
   const { form, handleSubmit } = useWizardStep({
     formSchema,
     onSubmit,
-    prepareBody: (body) => body,
     getDefaultValues: (data) => ({
       shoulderVolumeMeasurement: data.meta?.shoulderVolumeMeasurement,
     }),

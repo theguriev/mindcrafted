@@ -19,7 +19,6 @@ const SixPage: FC<{
   const { form, handleSubmit } = useWizardStep({
     formSchema,
     onSubmit,
-    prepareBody: (body) => body,
     getDefaultValues: (data) => ({
       waistMeasurement: data.meta?.waistMeasurement,
     }),

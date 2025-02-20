@@ -19,7 +19,6 @@ const FourteenPage: FC<{
   const { form, handleSubmit } = useWizardStep({
     formSchema,
     onSubmit,
-    prepareBody: (body) => body,
     getDefaultValues: (data) => ({
       endocrineDisorders: data.meta?.endocrineDisorders,
     }),

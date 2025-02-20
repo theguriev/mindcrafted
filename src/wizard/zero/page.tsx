@@ -21,7 +21,6 @@ const ZeroPage: FC<{
   const { form, handleSubmit } = useWizardStep({
     formSchema,
     onSubmit,
-    prepareBody: (body) => body,
     getDefaultValues: (data) => ({
       sex: data.meta?.sex,
     }),

@@ -8,7 +8,7 @@ const useWizardStep = <
   T extends z.Schema = z.Schema
 >({
   getDefaultValues,
-  prepareBody,
+  prepareBody = (body) => body,
   formSchema,
   onSubmit,
 }: {
@@ -16,7 +16,7 @@ const useWizardStep = <
   getDefaultValues: (
     data: ReturnType<typeof useMeQuery>["data"]
   ) => DefaultValues<TFieldValues>;
-  prepareBody: (body: TFieldValues) => Record<string, unknown>;
+  prepareBody?: (body: TFieldValues) => Record<string, unknown>;
   formSchema: T;
 }) => {
   const { data } = useMeQuery();

@@ -19,7 +19,6 @@ const SeventeenPage: FC<{
   const { form, handleSubmit } = useWizardStep({
     formSchema,
     onSubmit,
-    prepareBody: (body) => body,
     getDefaultValues: (data) => ({
       goal: data.meta?.goal,
     }),

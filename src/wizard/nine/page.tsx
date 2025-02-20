@@ -19,7 +19,6 @@ const NinePage: FC<{
   const { form, handleSubmit } = useWizardStep({
     formSchema,
     onSubmit,
-    prepareBody: (body) => body,
     getDefaultValues: (data) => ({
       hipsMeasurement: data.meta?.hipsMeasurement,
     }),

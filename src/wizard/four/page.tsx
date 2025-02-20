@@ -19,7 +19,6 @@ const FourPage: FC<{
   const { form, handleSubmit } = useWizardStep({
     formSchema,
     onSubmit,
-    prepareBody: (body) => body,
     getDefaultValues: (data) => ({
       height: data.meta?.height,
     }),

@@ -19,7 +19,6 @@ const TenPage: FC<{
   const { form, handleSubmit } = useWizardStep({
     formSchema,
     onSubmit,
-    prepareBody: (body) => body,
     getDefaultValues: (data) => ({
       breastVolumeMeasurement: data.meta?.breastVolumeMeasurement,
     }),
