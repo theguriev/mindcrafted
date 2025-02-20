@@ -59,11 +59,17 @@ const WizardRoutes: FC = () => {
       const routesList =
         body.meta.sex === "male" ? routes.slice(0, routes.length - 2) : routes;
       const path = routesList[index + 1]?.[0] || "/";
-      mutate({
-        headers: { "Content-type": "application/json" },
-        body,
-      });
-      navigate(path);
+      mutate(
+        {
+          headers: { "Content-type": "application/json" },
+          body,
+        },
+        {
+          onSuccess: () => {
+            navigate(path);
+          },
+        }
+      );
     };
   return (
     <Routes>
