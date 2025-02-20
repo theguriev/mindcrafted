@@ -1,6 +1,3 @@
-"use client";
-
-import * as React from "react";
 import {
   Inbox,
   LayoutDashboard,
@@ -23,6 +20,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import useMeQuery from "@/hooks/useMeQuery";
+import { ComponentProps, useState, useMemo } from "react";
 
 // This is sample data
 const data = {
@@ -33,7 +32,7 @@ const data = {
   },
   navMain: [
     {
-      title: "Dashboard",
+      title: "Головна",
       url: "#",
       icon: LayoutDashboard,
       isActive: true,
@@ -77,10 +76,21 @@ const data = {
   ],
 };
 
-const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
+const AppSidebar = ({ ...props }: ComponentProps<typeof Sidebar>) => {
   // Note: I'm using state to show active item.
   // IRL you should use the url/router.
-  const [activeItem, setActiveItem] = React.useState(data.navMain[0]);
+  const [activeItem, setActiveItem] = useState(data.navMain[0]);
+
+  const { data: me } = useMeQuery();
+
+  const user = useMemo(
+    () => ({
+      name: me.meta?.firstName,
+      email: me.meta?.lastName,
+      avatar: me.photoUrl || "",
+    }),
+    [me]
+  );
 
   return (
     <Sidebar className="border-r" {...props}>
@@ -130,7 +140,7 @@ const AppSidebar = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
   );

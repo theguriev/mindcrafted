@@ -20,7 +20,7 @@ const DashboardPage: React.FC = () => {
       <SidebarInset>
         <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
           <SidebarTrigger className="-ml-1" />
-          <h1 className="text-xl font-semibold">Dashboard</h1>
+          <h1 className="text-xl font-semibold">Головна</h1>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
           <DashboardMetrics />
