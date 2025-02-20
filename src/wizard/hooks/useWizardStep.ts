@@ -1,6 +1,5 @@
 import useMeQuery from "@/hooks/useMeQuery";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useMemo } from "react";
 import { DefaultValues, FieldValues, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -25,7 +24,7 @@ const useWizardStep = <
   const form = useForm<TFieldValues>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
-    defaultValues: getDefaultValues(data.meta || {}),
+    defaultValues: getDefaultValues(data),
   });
 
   const handleSubmit = async (body: TFieldValues) => {
@@ -36,10 +35,6 @@ const useWizardStep = <
       },
     });
   };
-
-  // useEffect(() => {
-  //   form.reset(getDefaultValues(data));
-  // }, [getDefaultValues, form, data]);
 
   return { form, handleSubmit };
 };
