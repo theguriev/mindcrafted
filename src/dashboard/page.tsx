@@ -1,22 +1,40 @@
+import {
+  SidebarProvider,
+  SidebarInset,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 import type React from "react";
-import { Link } from "react-router";
+import AppSidebar from "./components/app-sidebar";
+import { DashboardMetrics } from "./components/dashboard-metrics";
 
 const DashboardPage: React.FC = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h1 className="text-2xl font-bold mb-6 text-center">Dashboard</h1>
-        <p className="text-center mb-4">
-          Welcome! You have successfully logged in.
-        </p>
-        <Link
-          to="/"
-          className="block text-center text-blue-500 hover:underline"
-        >
-          Logout
-        </Link>
-      </div>
-    </div>
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "250px",
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar />
+      <SidebarInset>
+        <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
+          <SidebarTrigger className="-ml-1" />
+          <h1 className="text-xl font-semibold">Dashboard</h1>
+        </header>
+        <div className="flex flex-1 flex-col gap-4 p-4">
+          <DashboardMetrics />
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <div
+                key={index}
+                className="aspect-video rounded-lg bg-muted/50"
+              />
+            ))}
+          </div>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 };
 
