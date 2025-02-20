@@ -1,4 +1,3 @@
-import { Input } from "@/components/ui/input";
 import {
   FormField,
   FormItem,
@@ -11,6 +10,7 @@ import WizardFormFooter from "../components/wizard-form-footer";
 import { FC } from "react";
 import { FieldValues } from "react-hook-form";
 import useWizardStep from "../hooks/useWizardStep";
+import WizardInput from "../components/wizard-input";
 
 const SixPage: FC<{
   onSubmit: (body: { meta: FieldValues }) => void;
@@ -34,9 +34,7 @@ const SixPage: FC<{
           <FormItem>
             <FormControl>
               <div className="w-full sm:w-auto flex items-center">
-                <Input
-                  autoFocus
-                  className="sm:w-80 w-full border-none shadow-none focus-visible:ring-0"
+                <WizardInput
                   placeholder="Обхват талії (см)"
                   type="number"
                   disabled={pending}

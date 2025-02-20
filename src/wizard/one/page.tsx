@@ -4,13 +4,13 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { formSchema } from "./zod";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
 import { FC } from "react";
 import { FieldValues } from "react-hook-form";
 import useWizardStep from "../hooks/useWizardStep";
+import WizardInput from "../components/wizard-input";
 
 const OnePage: FC<{
   onSubmit: (body: { meta: FieldValues }) => void;
@@ -32,9 +32,7 @@ const OnePage: FC<{
           <FormItem>
             <FormControl>
               <div className="w-full sm:w-auto flex items-center">
-                <Input
-                  autoFocus
-                  className="sm:w-80 w-full border-none shadow-none focus-visible:ring-0"
+                <WizardInput
                   placeholder="Введіть ваше ім'я"
                   disabled={pending}
                   {...field}
