@@ -1,9 +1,10 @@
-import { cn } from "@/lib/utils";
-import { forwardRef, ComponentProps } from "react";
+import * as React from "react";
 
-const WizardTextarea = forwardRef<
+import { cn } from "@/lib/utils";
+
+const WizardTextarea = React.forwardRef<
   HTMLTextAreaElement,
-  ComponentProps<"textarea">
+  React.ComponentProps<"textarea">
 >(({ className, ...props }, ref) => {
   return (
     <textarea
