@@ -5,12 +5,12 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
 import { FC } from "react";
 import { FieldValues } from "react-hook-form";
 import useWizardStep from "../hooks/useWizardStep";
+import WizardTextarea from "../components/wizard-textarea";
 
 const SeventeenPage: FC<{
   onSubmit: (body: { meta: FieldValues }) => void;
@@ -34,9 +34,7 @@ const SeventeenPage: FC<{
           <FormItem>
             <FormControl>
               <div className="w-full sm:w-auto flex items-center">
-                <Textarea
-                  autoFocus
-                  className="sm:w-80 w-full border-none shadow-none focus-visible:ring-0"
+                <WizardTextarea
                   placeholder="Яка ваша ціль?"
                   disabled={pending}
                   {...field}
