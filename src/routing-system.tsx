@@ -6,6 +6,7 @@ const LoginPage = lazy(() => import("./login/page"));
 const DashboardPage = lazy(() => import("./dashboard/page"));
 const ErrorPage = lazy(() => import("./error/page"));
 const WizardRoutes = lazy(() => import("./wizard-routes"));
+const WelcomePage = lazy(() => import("./welcome/page"));
 
 const RoutingSystem: FC = () => {
   return (
@@ -15,6 +16,7 @@ const RoutingSystem: FC = () => {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/error" element={<ErrorPage />} />
+          <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/*" element={<WizardRoutes />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
