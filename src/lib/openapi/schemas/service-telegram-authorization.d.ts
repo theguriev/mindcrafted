@@ -165,6 +165,22 @@ export interface paths {
       };
     };
   };
+  "/logout": {
+    /** Logout user */
+    get: {
+      responses: {
+        /** @description Successful logout */
+        200: {
+          content: {
+            "application/json": {
+              /** @example User logged out successfully */
+              message?: string;
+            };
+          };
+        };
+      };
+    };
+  };
 }
 
 export type webhooks = Record<string, never>;
