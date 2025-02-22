@@ -26,6 +26,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useNavigate } from "react-router";
+import useLogoutMutate from "@/hooks/useLogoutMutate";
 
 const NavUser = ({
   user,
@@ -39,8 +40,17 @@ const NavUser = ({
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
 
+  const { mutate: logout } = useLogoutMutate();
+
   const handleLogout = () => {
-    navigate("/login");
+    logout(
+      { headers: { "Content-type": "application/json" } },
+      {
+        onSuccess: () => {
+          navigate("/login");
+        },
+      }
+    );
   };
 
   return (
