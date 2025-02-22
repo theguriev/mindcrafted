@@ -58,7 +58,7 @@ const WizardRoutes: FC = () => {
     (index: number) => (body: { meta: FieldValues }) => {
       const routesList =
         body.meta.sex === "male" ? routes.slice(0, routes.length - 2) : routes;
-      const path = routesList[index + 1]?.[0] || "/";
+      const path = routesList[index + 1]?.[0] || "/welcome";
       mutate(
         {
           headers: { "Content-type": "application/json" },
