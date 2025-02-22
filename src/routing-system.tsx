@@ -1,6 +1,7 @@
 import { FC, lazy } from "react";
 import { BrowserRouter, Routes, Navigate, Route } from "react-router";
 import Providers from "./providers";
+import MainLayout from "./components/main-layout";
 
 const LoginPage = lazy(() => import("./login/page"));
 const DashboardPage = lazy(() => import("./dashboard/page"));
@@ -14,7 +15,14 @@ const RoutingSystem: FC = () => {
       <Providers>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <MainLayout title="Головна">
+                <DashboardPage />
+              </MainLayout>
+            }
+          />
           <Route path="/error" element={<ErrorPage />} />
           <Route path="/welcome" element={<WelcomePage />} />
           <Route path="/*" element={<WizardRoutes />} />
