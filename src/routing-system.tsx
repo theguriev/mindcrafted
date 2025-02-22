@@ -2,9 +2,11 @@ import { FC, lazy } from "react";
 import { BrowserRouter, Routes, Navigate, Route } from "react-router";
 import Providers from "./providers";
 import MainLayout from "./components/main-layout";
+import SimpleLayout from "./components/simple-page-layout";
 
 const LoginPage = lazy(() => import("./login/page"));
 const DashboardPage = lazy(() => import("./dashboard/page"));
+const StepsPage = lazy(() => import("./dashboard/steps/page"));
 const ErrorPage = lazy(() => import("./error/page"));
 const WizardRoutes = lazy(() => import("./wizard-routes"));
 const WelcomePage = lazy(() => import("./welcome/page"));
@@ -21,6 +23,14 @@ const RoutingSystem: FC = () => {
               <MainLayout title="Головна">
                 <DashboardPage />
               </MainLayout>
+            }
+          />
+          <Route
+            path="/dashboard/steps"
+            element={
+              <SimpleLayout title="Кроки">
+                <StepsPage />
+              </SimpleLayout>
             }
           />
           <Route path="/error" element={<ErrorPage />} />
