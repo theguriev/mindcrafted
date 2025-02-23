@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 
 const mainText = "Вітаємо!";
-const subText = "Очікуйте, на вашу персональну спортивну программу...";
+const subText = "Очікуйте, на вашу персональну программу...";
 
 const WelcomePage = () => {
   const container = {

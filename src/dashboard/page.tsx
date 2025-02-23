@@ -4,8 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import CircularProgress from "./components/circular-progress";
 
 const DashboardPage: React.FC = () => {
-  const todaySteps = 6789;
-  const goalSteps = 10000;
+  const todaySteps = 4789;
+  const goalSteps = 7000;
   const progress = (todaySteps / goalSteps) * 100;
   return (
     <div className="flex flex-1 flex-col gap-4 p-4">
