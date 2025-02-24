@@ -10,6 +10,7 @@ const StepsPage = lazy(() => import("./dashboard/steps/page"));
 const ErrorPage = lazy(() => import("./error/page"));
 const WizardRoutes = lazy(() => import("./wizard-routes"));
 const WelcomePage = lazy(() => import("./welcome/page"));
+const WeightPage = lazy(() => import("./dashboard/weight/page"));
 
 const RoutingSystem: FC = () => {
   return (
@@ -30,6 +31,14 @@ const RoutingSystem: FC = () => {
             element={
               <SimpleLayout title="Кроки">
                 <StepsPage />
+              </SimpleLayout>
+            }
+          />
+          <Route
+            path="/dashboard/weight"
+            element={
+              <SimpleLayout title="Вага">
+                <WeightPage />
               </SimpleLayout>
             }
           />
