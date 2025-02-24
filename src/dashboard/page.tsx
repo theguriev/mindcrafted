@@ -59,7 +59,7 @@ const DashboardPage: React.FC = () => {
                         <ArrowUp className="h-4 w-4" />
                       )}
                       <span className="text-sm">
-                        {Math.abs(weightChange).toFixed(1)} kg
+                        {Math.abs(weightChange).toFixed(1)} кг
                       </span>
                     </div>
                   )}
@@ -74,11 +74,6 @@ const DashboardPage: React.FC = () => {
           </CardContent>
         </Card>
       </Link>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {Array.from({ length: 6 }).map((_, index) => (
-          <div key={index} className="aspect-video rounded-lg bg-muted/50" />
-        ))}
-      </div>
     </div>
   );
 };

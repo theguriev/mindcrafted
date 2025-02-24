@@ -33,15 +33,15 @@ const WeightPage: FC = () => {
   const bmi = currentWeight / (height * height);
 
   const getBMICategory = (bmi: number) => {
-    if (bmi < 18.5) return "Underweight";
-    if (bmi < 25) return "Normal weight";
-    if (bmi < 30) return "Overweight";
+    if (bmi < 18.5) return "Недостатня вага";
+    if (bmi < 25) return "Нормальна вага";
+    if (bmi < 30) return "Надмірна вага";
     return "Obese";
   };
 
   const weightChange = data[0].weight - data[data.length - 1].weight;
   const trend =
-    weightChange > 0 ? "Lost" : weightChange < 0 ? "Gained" : "Maintained";
+    weightChange > 0 ? "Втрачено" : weightChange < 0 ? "Набуто" : "Збережено";
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4">
@@ -65,7 +65,7 @@ const WeightPage: FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">
-              {Math.abs(weightChange).toFixed(1)} kg
+              {Math.abs(weightChange).toFixed(1)} кг
             </div>
             <p className="text-sm text-muted-foreground">{trend}</p>
           </CardContent>
