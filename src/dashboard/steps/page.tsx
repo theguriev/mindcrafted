@@ -1,4 +1,4 @@
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, ReferenceLine, XAxis } from "recharts";
 import {
   Card,
   CardHeader,
@@ -22,24 +22,74 @@ const data = [
   { date: "2024-02-20", steps: 12345 },
   { date: "2024-02-21", steps: 8765 },
   { date: "2024-02-22", steps: 6789 },
+  { date: "2024-06-01", steps: 1234 },
+  { date: "2024-06-02", steps: 5678 },
+  { date: "2024-06-03", steps: 9012 },
+  { date: "2024-06-04", steps: 3456 },
+  { date: "2024-06-05", steps: 7890 },
+  { date: "2024-06-06", steps: 1234 },
+  { date: "2024-06-07", steps: 5678 },
+  { date: "2024-06-08", steps: 9012 },
+  { date: "2024-06-09", steps: 3456 },
+  { date: "2024-06-10", steps: 7890 },
+  { date: "2024-06-11", steps: 1234 },
+  { date: "2024-06-12", steps: 5678 },
+  { date: "2024-06-13", steps: 9012 },
+  { date: "2024-06-14", steps: 3456 },
+  { date: "2024-06-15", steps: 7890 },
+  { date: "2024-06-16", steps: 1234 },
+  { date: "2024-06-17", steps: 5678 },
+  { date: "2024-06-18", steps: 9012 },
+  { date: "2024-06-19", steps: 3456 },
+  { date: "2024-06-20", steps: 7890 },
+  { date: "2024-06-21", steps: 1234 },
+  { date: "2024-06-22", steps: 5678 },
+  { date: "2024-06-23", steps: 9012 },
+  { date: "2024-06-24", steps: 3456 },
+  { date: "2024-06-25", steps: 7890 },
+  { date: "2024-06-26", steps: 1234 },
+  { date: "2024-06-27", steps: 5678 },
+  { date: "2024-06-28", steps: 9012 },
+  { date: "2024-06-29", steps: 3456 },
+  { date: "2024-06-30", steps: 7890 },
+  // 50 more
+  { date: "2024-07-01", steps: 1234 },
+  { date: "2024-07-02", steps: 5678 },
+  { date: "2024-07-03", steps: 9012 },
+  { date: "2024-07-04", steps: 3456 },
+  { date: "2024-07-05", steps: 7890 },
+  { date: "2024-07-06", steps: 1234 },
+  { date: "2024-07-07", steps: 5678 },
+  { date: "2024-07-08", steps: 9012 },
+  { date: "2024-07-09", steps: 3456 },
+  { date: "2024-07-10", steps: 7890 },
+  { date: "2024-07-11", steps: 1234 },
+  { date: "2024-07-12", steps: 5678 },
+  { date: "2024-07-13", steps: 9012 },
+  { date: "2024-07-14", steps: 3456 },
+  { date: "2024-07-15", steps: 7890 },
+  { date: "2024-07-16", steps: 1234 },
+  { date: "2024-07-17", steps: 5678 },
+  { date: "2024-07-18", steps: 9012 },
+  { date: "2024-07-19", steps: 3456 },
+  { date: "2024-07-20", steps: 7890 },
+  { date: "2024-07-21", steps: 1234 },
+  { date: "2024-07-22", steps: 5678 },
+  { date: "2024-07-23", steps: 9012 },
+  { date: "2024-07-24", steps: 3456 },
+  { date: "2024-07-25", steps: 7890 },
+  { date: "2024-07-26", steps: 1234 },
+  { date: "2024-07-27", steps: 5678 },
+  { date: "2024-07-28", steps: 9012 },
 ];
 
 const averageSteps = Math.round(
   data.reduce((acc, day) => acc + day.steps, 0) / data.length
 );
 
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-];
-
 const chartConfig = {
   desktop: {
-    label: "Desktop",
+    label: "Steps",
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
@@ -83,11 +133,15 @@ const StepsPage: FC = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={chartConfig}>
-            <BarChart accessibilityLayer data={chartData}>
+          <ChartContainer
+            config={chartConfig}
+            className="aspect-auto h-[250px] w-full"
+          >
+            <BarChart accessibilityLayer data={data}>
+              <ReferenceLine y={7000} label="Ціль" stroke="red" />
               <CartesianGrid vertical={false} />
               <XAxis
-                dataKey="month"
+                dataKey="date"
                 tickLine={false}
                 tickMargin={10}
                 axisLine={false}
@@ -97,7 +151,7 @@ const StepsPage: FC = () => {
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
               />
-              <Bar dataKey="desktop" fill="var(--color-desktop)" radius={8} />
+              <Bar dataKey="steps" fill="var(--color-desktop)" />
             </BarChart>
           </ChartContainer>
         </CardContent>
