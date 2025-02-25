@@ -19,6 +19,62 @@ const currentShoulder = shoulderData[shoulderData.length - 1].value;
 const previousShoulder = shoulderData[shoulderData.length - 2].value;
 const shoulderChange = currentShoulder - previousShoulder;
 
+// Chest measurement data
+const chestData = [
+  { date: "2024-02-16", value: 95 },
+  { date: "2024-02-17", value: 95 },
+  { date: "2024-02-18", value: 96 },
+  { date: "2024-02-19", value: 96 },
+  { date: "2024-02-20", value: 97 },
+  { date: "2024-02-21", value: 97 },
+  { date: "2024-02-22", value: 98 },
+];
+const currentChest = chestData[chestData.length - 1].value;
+const previousChest = chestData[chestData.length - 2].value;
+const chestChange = currentChest - previousChest;
+
+// Waist measurement data
+const waistData = [
+  { date: "2024-02-16", value: 82 },
+  { date: "2024-02-17", value: 82 },
+  { date: "2024-02-18", value: 81 },
+  { date: "2024-02-19", value: 81 },
+  { date: "2024-02-20", value: 80 },
+  { date: "2024-02-21", value: 80 },
+  { date: "2024-02-22", value: 79 },
+];
+const currentWaist = waistData[waistData.length - 1].value;
+const previousWaist = waistData[waistData.length - 2].value;
+const waistChange = currentWaist - previousWaist;
+
+// Hips measurement data
+const hipsData = [
+  { date: "2024-02-16", value: 98 },
+  { date: "2024-02-17", value: 98 },
+  { date: "2024-02-18", value: 97 },
+  { date: "2024-02-19", value: 97 },
+  { date: "2024-02-20", value: 96 },
+  { date: "2024-02-21", value: 96 },
+  { date: "2024-02-22", value: 95 },
+];
+const currentHips = hipsData[hipsData.length - 1].value;
+const previousHips = hipsData[hipsData.length - 2].value;
+const hipsChange = currentHips - previousHips;
+
+// Hip measurement data
+const hipData = [
+  { date: "2024-02-16", value: 93 },
+  { date: "2024-02-17", value: 93 },
+  { date: "2024-02-18", value: 92 },
+  { date: "2024-02-19", value: 92 },
+  { date: "2024-02-20", value: 91 },
+  { date: "2024-02-21", value: 91 },
+  { date: "2024-02-22", value: 90 },
+];
+const currentHip = hipData[hipData.length - 1].value;
+const previousHip = hipData[hipData.length - 2].value;
+const hipChange = currentHip - previousHip;
+
 const DashboardPage: React.FC = () => {
   const todaySteps = 4789;
   const goalSteps = 7000;
@@ -98,7 +154,7 @@ const DashboardPage: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <Ruler className="h-5 w-5 text-muted-foreground" />
                   <h2 className="text-2xl font-bold">{currentShoulder}</h2>
-                  <span className="text-sm text-muted-foreground">cm</span>
+                  <span className="text-sm text-muted-foreground">см</span>
                   {shoulderChange !== 0 && (
                     <div
                       className={`flex items-center ${
@@ -111,15 +167,155 @@ const DashboardPage: React.FC = () => {
                         <ArrowDown className="h-4 w-4" />
                       )}
                       <span className="text-sm">
-                        {Math.abs(shoulderChange)} cm
+                        {Math.abs(shoulderChange)} см
                       </span>
                     </div>
                   )}
                 </div>
-                <p className="text-sm text-muted-foreground">Обхват плеча</p>
+                <p className="text-sm text-muted-foreground">обхват плеча</p>
               </div>
               <div className="h-[60px] w-[100px]">
                 <SparklineChart data={shoulderData} />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
+
+      <Link to="/dashboard/chest">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Ruler className="h-5 w-5 text-muted-foreground" />
+                  <h2 className="text-2xl font-bold">{currentChest}</h2>
+                  <span className="text-sm text-muted-foreground">см</span>
+                  {chestChange !== 0 && (
+                    <div
+                      className={`flex items-center ${
+                        chestChange > 0 ? "text-green-500" : "text-red-500"
+                      }`}
+                    >
+                      {chestChange > 0 ? (
+                        <ArrowUp className="h-4 w-4" />
+                      ) : (
+                        <ArrowDown className="h-4 w-4" />
+                      )}
+                      <span className="text-sm">
+                        {Math.abs(chestChange)} см
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground">обхват грудей</p>
+              </div>
+              <div className="h-[60px] w-[100px]">
+                <SparklineChart data={chestData} />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
+
+      <Link to="/dashboard/waist">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Ruler className="h-5 w-5 text-muted-foreground" />
+                  <h2 className="text-2xl font-bold">{currentWaist}</h2>
+                  <span className="text-sm text-muted-foreground">см</span>
+                  {waistChange !== 0 && (
+                    <div
+                      className={`flex items-center ${
+                        waistChange < 0 ? "text-green-500" : "text-red-500"
+                      }`}
+                    >
+                      {waistChange < 0 ? (
+                        <ArrowDown className="h-4 w-4" />
+                      ) : (
+                        <ArrowUp className="h-4 w-4" />
+                      )}
+                      <span className="text-sm">
+                        {Math.abs(waistChange)} см
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground">обхват талії</p>
+              </div>
+              <div className="h-[60px] w-[100px]">
+                <SparklineChart data={waistData} />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
+
+      <Link to="/dashboard/hips">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Ruler className="h-5 w-5 text-muted-foreground" />
+                  <h2 className="text-2xl font-bold">{currentHips}</h2>
+                  <span className="text-sm text-muted-foreground">см</span>
+                  {hipsChange !== 0 && (
+                    <div
+                      className={`flex items-center ${
+                        hipsChange < 0 ? "text-green-500" : "text-red-500"
+                      }`}
+                    >
+                      {hipsChange < 0 ? (
+                        <ArrowDown className="h-4 w-4" />
+                      ) : (
+                        <ArrowUp className="h-4 w-4" />
+                      )}
+                      <span className="text-sm">{Math.abs(hipsChange)} см</span>
+                    </div>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground">обхват стегон</p>
+              </div>
+              <div className="h-[60px] w-[100px]">
+                <SparklineChart data={hipsData} />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
+
+      <Link to="/dashboard/hip">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Ruler className="h-5 w-5 text-muted-foreground" />
+                  <h2 className="text-2xl font-bold">{currentHip}</h2>
+                  <span className="text-sm text-muted-foreground">см</span>
+                  {hipChange !== 0 && (
+                    <div
+                      className={`flex items-center ${
+                        hipChange < 0 ? "text-green-500" : "text-red-500"
+                      }`}
+                    >
+                      {hipChange < 0 ? (
+                        <ArrowDown className="h-4 w-4" />
+                      ) : (
+                        <ArrowUp className="h-4 w-4" />
+                      )}
+                      <span className="text-sm">{Math.abs(hipChange)} см</span>
+                    </div>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground">обхват стегна</p>
+              </div>
+              <div className="h-[60px] w-[100px]">
+                <SparklineChart data={hipData} />
               </div>
             </div>
           </CardContent>
