@@ -2,7 +2,22 @@ import type React from "react";
 import { Link } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import CircularProgress from "./components/circular-progress";
-import { ArrowDown, ArrowUp } from "lucide-react";
+import { ArrowDown, ArrowUp, Ruler } from "lucide-react";
+import SparklineChart from "./components/sparkline-chart";
+
+// Shoulder measurement data
+const shoulderData = [
+  { date: "2024-02-16", value: 113 },
+  { date: "2024-02-17", value: 113 },
+  { date: "2024-02-18", value: 114 },
+  { date: "2024-02-19", value: 114 },
+  { date: "2024-02-20", value: 114 },
+  { date: "2024-02-21", value: 115 },
+  { date: "2024-02-22", value: 115 },
+];
+const currentShoulder = shoulderData[shoulderData.length - 1].value;
+const previousShoulder = shoulderData[shoulderData.length - 2].value;
+const shoulderChange = currentShoulder - previousShoulder;
 
 const DashboardPage: React.FC = () => {
   const todaySteps = 4789;
@@ -70,6 +85,42 @@ const DashboardPage: React.FC = () => {
                 </div>
               </div>
               <CircularProgress value={weightProgress} />
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
+
+      <Link to="/dashboard/shoulder">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Ruler className="h-5 w-5 text-muted-foreground" />
+                  <h2 className="text-2xl font-bold">{currentShoulder}</h2>
+                  <span className="text-sm text-muted-foreground">cm</span>
+                  {shoulderChange !== 0 && (
+                    <div
+                      className={`flex items-center ${
+                        shoulderChange > 0 ? "text-green-500" : "text-red-500"
+                      }`}
+                    >
+                      {shoulderChange > 0 ? (
+                        <ArrowUp className="h-4 w-4" />
+                      ) : (
+                        <ArrowDown className="h-4 w-4" />
+                      )}
+                      <span className="text-sm">
+                        {Math.abs(shoulderChange)} cm
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground">Обхват плеча</p>
+              </div>
+              <div className="h-[60px] w-[100px]">
+                <SparklineChart data={shoulderData} />
+              </div>
             </div>
           </CardContent>
         </Card>
