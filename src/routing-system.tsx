@@ -12,6 +12,10 @@ const WizardRoutes = lazy(() => import("./wizard-routes"));
 const WelcomePage = lazy(() => import("./welcome/page"));
 const WeightPage = lazy(() => import("./dashboard/weight/page"));
 const ShoulderPage = lazy(() => import("./dashboard/shoulder/page"));
+const ChestPage = lazy(() => import("./dashboard/chest/page"));
+const WaistPage = lazy(() => import("./dashboard/waist/page"));
+const HipsPage = lazy(() => import("./dashboard/hips/page"));
+const HipPage = lazy(() => import("./dashboard/hip/page"));
 
 const RoutingSystem: FC = () => {
   return (
@@ -48,6 +52,38 @@ const RoutingSystem: FC = () => {
             element={
               <SimpleLayout title="Обхват плеча">
                 <ShoulderPage />
+              </SimpleLayout>
+            }
+          />
+          <Route
+            path="/dashboard/chest"
+            element={
+              <SimpleLayout title="Обхват грудей">
+                <ChestPage />
+              </SimpleLayout>
+            }
+          />
+          <Route
+            path="/dashboard/waist"
+            element={
+              <SimpleLayout title="Обхват талії">
+                <WaistPage />
+              </SimpleLayout>
+            }
+          />
+          <Route
+            path="/dashboard/hips"
+            element={
+              <SimpleLayout title="Обхват стегон">
+                <HipsPage />
+              </SimpleLayout>
+            }
+          />
+          <Route
+            path="/dashboard/hip"
+            element={
+              <SimpleLayout title="Обхват стегна">
+                <HipPage />
               </SimpleLayout>
             }
           />
