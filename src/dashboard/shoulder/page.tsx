@@ -6,15 +6,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { FC } from "react";
-import {
-  ResponsiveContainer,
-  LineChart,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Line,
-} from "recharts";
+import { ResponsiveContainer, LineChart, YAxis, Tooltip, Line } from "recharts";
 
 const shoulderData = [
   { date: "2024-02-16", value: 113 },
@@ -35,6 +27,10 @@ const getStats = (data: typeof shoulderData) => {
 };
 
 const shoulderStats = getStats(shoulderData);
+
+const minValue = Math.min(...shoulderData.map((d) => d.value));
+const maxValue = Math.max(...shoulderData.map((d) => d.value));
+const domain = [minValue - 1, maxValue + 1];
 
 const ShoulderPage: FC = () => {
   return (
@@ -79,19 +75,16 @@ const ShoulderPage: FC = () => {
         <CardContent>
           <ResponsiveContainer width="100%" height={300} className="h-[300px]">
             <LineChart data={shoulderData}>
-              <XAxis dataKey="date" />
-              <YAxis tickFormatter={(value: number) => `${value} см`} />
+              <YAxis domain={domain} hide />
               <Tooltip formatter={(value: number) => `${value} см`} />
-              <CartesianGrid strokeDasharray="3 3" vertical={false} />
-              {["value"].map((category, i) => (
-                <Line
-                  key={category}
-                  type="monotone"
-                  dataKey={category}
-                  stroke={["#2563eb"][i % ["#2563eb"].length]}
-                  activeDot={{ r: 8 }}
-                />
-              ))}
+              <Line
+                type="monotone"
+                dataKey="value"
+                stroke="hsl(var(--primary))"
+                strokeWidth={2}
+                dot={false}
+                isAnimationActive={false}
+              />
             </LineChart>
           </ResponsiveContainer>
         </CardContent>
