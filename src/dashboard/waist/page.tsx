@@ -6,7 +6,14 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { FC } from "react";
-import { ResponsiveContainer, LineChart, YAxis, Tooltip, Line } from "recharts";
+import {
+  ResponsiveContainer,
+  LineChart,
+  YAxis,
+  Tooltip,
+  Line,
+  ReferenceLine,
+} from "recharts";
 
 const chestData = [
   { date: "2024-02-16", value: 113 },
@@ -77,6 +84,7 @@ const WaistPage: FC = () => {
             <LineChart data={chestData}>
               <YAxis domain={domain} hide />
               <Tooltip formatter={(value: number) => `${value} см`} />
+              <ReferenceLine y={113} label="Рекомендована ціль" stroke="red" />
               <Line
                 type="monotone"
                 dataKey="value"

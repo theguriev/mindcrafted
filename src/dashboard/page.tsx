@@ -2,7 +2,7 @@ import type React from "react";
 import { Link } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import CircularProgress from "./components/circular-progress";
-import { ArrowDown, ArrowUp, Ruler } from "lucide-react";
+import { ArrowDown, ArrowUp, Ruler, Utensils } from "lucide-react";
 import SparklineChart from "./components/sparkline-chart";
 
 // Shoulder measurement data
@@ -75,6 +75,11 @@ const currentHip = hipData[hipData.length - 1].value;
 const previousHip = hipData[hipData.length - 2].value;
 const hipChange = currentHip - previousHip;
 
+// Nutrition data
+const totalMeals = 4;
+const completedMeals = 2;
+const nutritionProgress = (completedMeals / totalMeals) * 100;
+
 const DashboardPage: React.FC = () => {
   const todaySteps = 4789;
   const goalSteps = 7000;
@@ -90,6 +95,32 @@ const DashboardPage: React.FC = () => {
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4">
+      <Link to="/dashboard/nutrition">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Utensils className="h-5 w-5 text-muted-foreground" />
+                  <h2 className="text-2xl font-bold">
+                    {completedMeals}/{totalMeals}
+                  </h2>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  харчування сьогодні завершено
+                </p>
+                <div className="flex w-full h-2 bg-muted rounded-full overflow-hidden mt-2">
+                  <div
+                    className="bg-primary"
+                    style={{ width: `${nutritionProgress}%` }}
+                  />
+                </div>
+              </div>
+              <CircularProgress value={nutritionProgress} />
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
       <Link to="/dashboard/steps">
         <Card className="relative overflow-hidden transition-all hover:shadow-lg">
           <CardContent className="p-6">
