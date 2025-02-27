@@ -31,7 +31,7 @@ type IngredientInfo = {
 };
 
 const NutritionPage: FC = () => {
-  // In a real app, this would come from your API/database
+  // У реальному додатку це буде надходити з вашого API/бази даних
   const mealCategories = [
     {
       id: "a",
@@ -186,14 +186,16 @@ const NutritionPage: FC = () => {
     <div className="flex flex-1 flex-col gap-4 p-4">
       <Card>
         <CardHeader>
-          <CardTitle>Daily Meal Progress</CardTitle>
-          <CardDescription>Track your 4 meals per day</CardDescription>
+          <CardTitle>Прогрес щоденних прийомів їжі</CardTitle>
+          <CardDescription>
+            Відстежуйте свої 4 прийоми їжі на день
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
             <div className="flex justify-between">
               <span>
-                Progress: {completedMeals}/{totalMeals} meals
+                Прогрес: {completedMeals}/{totalMeals} прийомів їжі
               </span>
               <span>{progress.toFixed(0)}%</span>
             </div>
@@ -218,7 +220,7 @@ const NutritionPage: FC = () => {
                     variant="outline"
                     className="bg-green-50 text-green-700 border-green-200"
                   >
-                    <Check className="h-3 w-3 mr-1" /> Completed
+                    <Check className="h-3 w-3 mr-1" /> Завершено
                   </Badge>
                 )}
               </div>
@@ -226,25 +228,25 @@ const NutritionPage: FC = () => {
                 <CardDescription className="space-y-2 mt-2">
                   <div className="grid gap-1">
                     <div className="text-sm">
-                      Category A:{" "}
+                      Категорія A:{" "}
                       <span className="font-medium">
                         {meal.selections.a?.item}
                       </span>{" "}
-                      ({meal.selections.a?.grams}g)
+                      ({meal.selections.a?.grams}г)
                     </div>
                     <div className="text-sm">
-                      Category B:{" "}
+                      Категорія B:{" "}
                       <span className="font-medium">
                         {meal.selections.b?.item}
                       </span>{" "}
-                      ({meal.selections.b?.grams}g)
+                      ({meal.selections.b?.grams}г)
                     </div>
                     <div className="text-sm">
-                      Category C:{" "}
+                      Категорія C:{" "}
                       <span className="font-medium">
                         {meal.selections.c?.item}
                       </span>{" "}
-                      ({meal.selections.c?.grams}g)
+                      ({meal.selections.c?.grams}г)
                     </div>
                   </div>
                 </CardDescription>
@@ -257,13 +259,13 @@ const NutritionPage: FC = () => {
                     <div key={category.id}>
                       <div className="flex items-center justify-between mb-2">
                         <h3 className="font-medium">
-                          Category {category.id.toUpperCase()} -{" "}
+                          Категорія {category.id.toUpperCase()} -{" "}
                           {category.description}
                         </h3>
                         {meal.selections[category.id] && (
                           <Badge variant="secondary">
-                            Selected: {meal.selections[category.id]?.item} (
-                            {meal.selections[category.id]?.grams}g)
+                            Обрано: {meal.selections[category.id]?.item} (
+                            {meal.selections[category.id]?.grams}г)
                           </Badge>
                         )}
                       </div>
@@ -295,7 +297,7 @@ const NutritionPage: FC = () => {
                                 )}
                                 <span>{item.name}</span>
                                 <span className="ml-auto text-muted-foreground">
-                                  (recommended: {item.recommendedGrams}g)
+                                  (рекомендовано: {item.recommendedGrams}г)
                                 </span>
                               </Button>
                               {isSelected && (
@@ -319,7 +321,7 @@ const NutritionPage: FC = () => {
                                     min="0"
                                   />
                                   <span className="text-sm text-muted-foreground">
-                                    g
+                                    г
                                   </span>
                                 </div>
                               )}
@@ -337,7 +339,7 @@ const NutritionPage: FC = () => {
                   className="w-full"
                   onClick={() => resetMealSelections(meal.id)}
                 >
-                  Change Selections
+                  Змінити вибір
                 </Button>
               )}
             </CardContent>
