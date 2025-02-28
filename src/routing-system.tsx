@@ -17,6 +17,7 @@ const WaistPage = lazy(() => import("./dashboard/waist/page"));
 const HipsPage = lazy(() => import("./dashboard/hips/page"));
 const HipPage = lazy(() => import("./dashboard/hip/page"));
 const NutritionPage = lazy(() => import("./dashboard/nutrition/page"));
+const ExercisePage = lazy(() => import("./dashboard/exercise/page"));
 
 const RoutingSystem: FC = () => {
   return (
@@ -93,6 +94,14 @@ const RoutingSystem: FC = () => {
             element={
               <SimpleLayout title="Харчування">
                 <NutritionPage />
+              </SimpleLayout>
+            }
+          />
+          <Route
+            path="/dashboard/exercise"
+            element={
+              <SimpleLayout title="Тренування">
+                <ExercisePage />
               </SimpleLayout>
             }
           />
