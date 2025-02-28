@@ -2,10 +2,10 @@ import type React from "react";
 import { Link } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import CircularProgress from "./components/circular-progress";
-import { ArrowDown, ArrowUp, Ruler, Utensils } from "lucide-react";
+import { ArrowDown, ArrowUp, Dumbbell, Ruler, Utensils } from "lucide-react";
 import SparklineChart from "./components/sparkline-chart";
 
-// Shoulder measurement data
+// Дані вимірювання плечей
 const shoulderData = [
   { date: "2024-02-16", value: 113 },
   { date: "2024-02-17", value: 113 },
@@ -19,7 +19,7 @@ const currentShoulder = shoulderData[shoulderData.length - 1].value;
 const previousShoulder = shoulderData[shoulderData.length - 2].value;
 const shoulderChange = currentShoulder - previousShoulder;
 
-// Chest measurement data
+// Дані вимірювання грудей
 const chestData = [
   { date: "2024-02-16", value: 95 },
   { date: "2024-02-17", value: 95 },
@@ -33,7 +33,7 @@ const currentChest = chestData[chestData.length - 1].value;
 const previousChest = chestData[chestData.length - 2].value;
 const chestChange = currentChest - previousChest;
 
-// Waist measurement data
+// Дані вимірювання талії
 const waistData = [
   { date: "2024-02-16", value: 82 },
   { date: "2024-02-17", value: 82 },
@@ -47,7 +47,7 @@ const currentWaist = waistData[waistData.length - 1].value;
 const previousWaist = waistData[waistData.length - 2].value;
 const waistChange = currentWaist - previousWaist;
 
-// Hips measurement data
+// Дані вимірювання стегон
 const hipsData = [
   { date: "2024-02-16", value: 98 },
   { date: "2024-02-17", value: 98 },
@@ -61,7 +61,7 @@ const currentHips = hipsData[hipsData.length - 1].value;
 const previousHips = hipsData[hipsData.length - 2].value;
 const hipsChange = currentHips - previousHips;
 
-// Hip measurement data
+// Дані вимірювання стегна
 const hipData = [
   { date: "2024-02-16", value: 93 },
   { date: "2024-02-17", value: 93 },
@@ -75,7 +75,7 @@ const currentHip = hipData[hipData.length - 1].value;
 const previousHip = hipData[hipData.length - 2].value;
 const hipChange = currentHip - previousHip;
 
-// Nutrition data
+// Дані харчування
 const totalMeals = 4;
 const completedMeals = 2;
 const nutritionProgress = (completedMeals / totalMeals) * 100;
@@ -85,13 +85,20 @@ const DashboardPage: React.FC = () => {
   const goalSteps = 7000;
   const progress = (todaySteps / goalSteps) * 100;
 
-  // Weight tracking data
-  const currentWeight = 75.5; // kg
-  const previousWeight = 76.2; // kg
-  const goalWeight = 70; // kg
+  // Дані відстеження ваги
+  const currentWeight = 75.5; // кг
+  const previousWeight = 76.2; // кг
+  const goalWeight = 70; // кг
   const weightChange = currentWeight - previousWeight;
   const weightProgress =
     ((previousWeight - currentWeight) / (previousWeight - goalWeight)) * 100;
+
+  // Дані відстеження вправ
+  const totalExercises = 3;
+  const completedExercises = 2;
+  const exerciseProgress = (completedExercises / totalExercises) * 100;
+  const lastExercise = "Силове тренування";
+  const exerciseDuration = 45;
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4">
@@ -148,7 +155,7 @@ const DashboardPage: React.FC = () => {
                   <h2 className="text-2xl font-bold">
                     {currentWeight.toFixed(1)}
                   </h2>
-                  <span className="text-sm text-muted-foreground">kg</span>
+                  <span className="text-sm text-muted-foreground">кг</span>
                   {weightChange !== 0 && (
                     <div
                       className={`flex items-center ${
@@ -348,6 +355,28 @@ const DashboardPage: React.FC = () => {
               <div className="h-[60px] w-[100px]">
                 <SparklineChart data={hipData} />
               </div>
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
+
+      <Link to="/dashboard/exercise">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Dumbbell className="h-5 w-5 text-muted-foreground" />
+                  <h2 className="text-2xl font-bold">
+                    {completedExercises}/{totalExercises}
+                  </h2>
+                </div>
+                <p className="text-sm text-muted-foreground">вправ завершено</p>
+                <div className="text-sm text-muted-foreground">
+                  Остання: {lastExercise} ({exerciseDuration} хв)
+                </div>
+              </div>
+              <CircularProgress value={exerciseProgress} />
             </div>
           </CardContent>
         </Card>
