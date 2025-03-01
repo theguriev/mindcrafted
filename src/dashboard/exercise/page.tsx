@@ -20,15 +20,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-type Exercise = {
-  id: number;
-  type: string;
-  name: string;
-  duration: number;
-  intensity: string;
-  completed: boolean;
-};
-
 const ExercisePage: FC = () => {
   const exerciseTypes = {
     cardio: ["Біг", "Велосипед", "Плавання", "Ходьба", "Гребля", "Скакалка"],
@@ -42,7 +33,7 @@ const ExercisePage: FC = () => {
     flexibility: ["Йога", "Розтяжка", "Пілатес", "Мобільність"],
   };
 
-  const [exercises, setExercises] = useState<Exercise[]>([
+  const [exercises, setExercises] = useState([
     {
       id: 1,
       type: "strength",
