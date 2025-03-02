@@ -101,10 +101,10 @@ const DashboardPage: React.FC = () => {
   const exerciseDuration = 45;
 
   return (
-    <div className="flex flex-1 flex-col gap-4 p-4">
+    <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
       <Link to="/dashboard/nutrition">
-        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
-          <CardContent className="p-6">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
+          <CardContent className="p-6 flex-1">
             <div className="flex items-center justify-between">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -129,8 +129,8 @@ const DashboardPage: React.FC = () => {
         </Card>
       </Link>
       <Link to="/dashboard/steps">
-        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
-          <CardContent className="p-6">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
+          <CardContent className="p-6 flex-1">
             <div className="flex items-center justify-between">
               <div className="space-y-2">
                 <h2 className="text-2xl font-bold">
@@ -146,9 +146,30 @@ const DashboardPage: React.FC = () => {
           </CardContent>
         </Card>
       </Link>
+      <Link to="/dashboard/exercise">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
+          <CardContent className="p-6 flex-1">
+            <div className="flex items-center justify-between">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <Dumbbell className="h-5 w-5 text-muted-foreground" />
+                  <h2 className="text-2xl font-bold">
+                    {completedExercises}/{totalExercises}
+                  </h2>
+                </div>
+                <p className="text-sm text-muted-foreground">вправ завершено</p>
+                <div className="text-sm text-muted-foreground">
+                  Остання: {lastExercise} ({exerciseDuration} хв)
+                </div>
+              </div>
+              <CircularProgress value={exerciseProgress} />
+            </div>
+          </CardContent>
+        </Card>
+      </Link>
       <Link to="/dashboard/weight">
-        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
-          <CardContent className="p-6">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
+          <CardContent className="p-6 flex-1">
             <div className="flex items-center justify-between">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -185,8 +206,8 @@ const DashboardPage: React.FC = () => {
       </Link>
 
       <Link to="/dashboard/shoulder">
-        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
-          <CardContent className="p-6">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
+          <CardContent className="p-6 flex-1">
             <div className="flex items-center justify-between">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -221,8 +242,8 @@ const DashboardPage: React.FC = () => {
       </Link>
 
       <Link to="/dashboard/chest">
-        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
-          <CardContent className="p-6">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
+          <CardContent className="p-6 flex-1">
             <div className="flex items-center justify-between">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -257,8 +278,8 @@ const DashboardPage: React.FC = () => {
       </Link>
 
       <Link to="/dashboard/waist">
-        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
-          <CardContent className="p-6">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
+          <CardContent className="p-6 flex-1">
             <div className="flex items-center justify-between">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -293,8 +314,8 @@ const DashboardPage: React.FC = () => {
       </Link>
 
       <Link to="/dashboard/hips">
-        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
-          <CardContent className="p-6">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
+          <CardContent className="p-6 flex-1">
             <div className="flex items-center justify-between">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -327,8 +348,8 @@ const DashboardPage: React.FC = () => {
       </Link>
 
       <Link to="/dashboard/hip">
-        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
-          <CardContent className="p-6">
+        <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
+          <CardContent className="p-6 flex-1">
             <div className="flex items-center justify-between">
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -355,28 +376,6 @@ const DashboardPage: React.FC = () => {
               <div className="h-[60px] w-[100px]">
                 <SparklineChart data={hipData} />
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      </Link>
-
-      <Link to="/dashboard/exercise">
-        <Card className="relative overflow-hidden transition-all hover:shadow-lg">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Dumbbell className="h-5 w-5 text-muted-foreground" />
-                  <h2 className="text-2xl font-bold">
-                    {completedExercises}/{totalExercises}
-                  </h2>
-                </div>
-                <p className="text-sm text-muted-foreground">вправ завершено</p>
-                <div className="text-sm text-muted-foreground">
-                  Остання: {lastExercise} ({exerciseDuration} хв)
-                </div>
-              </div>
-              <CircularProgress value={exerciseProgress} />
             </div>
           </CardContent>
         </Card>
