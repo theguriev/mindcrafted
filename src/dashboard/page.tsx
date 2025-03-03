@@ -359,7 +359,7 @@ const DashboardPage: React.FC = () => {
                   {hipChange !== 0 && (
                     <div
                       className={`flex items-center ${
-                        hipChange < 0 ? "text-green-500" : "text-red-500"
+                        hipChange < 0 ? "text-green-500" : "text-red-400"
                       }`}
                     >
                       {hipChange < 0 ? (
