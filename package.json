@@ -77,6 +77,11 @@
       "input": "https://raw.githubusercontent.com/theguriev/service-telegram-authorization/refs/heads/master/swagger.json",
       "swagger": "./src/lib/openapi/schemas/service-telegram-authorization.json",
       "output": "./src/lib/openapi/schemas/service-telegram-authorization.d.ts"
+    },
+    {
+      "input": "https://raw.githubusercontent.com/theguriev/service-measurements/refs/heads/master/swagger.json",
+      "swagger": "./src/lib/openapi/schemas/service-measurements.json",
+      "output": "./src/lib/openapi/schemas/service-measurements.d.ts"
     }
   ]
 }

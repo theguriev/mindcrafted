@@ -1,4 +1,4 @@
-import { telegramAuthorization } from "./schemas/";
+import { telegramAuthorization, serviceMeasurements } from "./schemas/";
 
 export type ExtractResponses<T> = ExtractKey<T, "responses">;
 
@@ -60,6 +60,7 @@ export type ContentType = "" | "application/json";
 
 export type Paths = {
   telegramAuthorization: telegramAuthorization.paths;
+  serviceMeasurements: serviceMeasurements.paths;
 };
 
 export type ExtractSchema<T> = T extends { schema: infer S }
