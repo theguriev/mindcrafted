@@ -1,34 +1,25 @@
 import { FC } from "react";
 import { useMeasurementQuery } from "@/hooks/useMeasurementQuery";
 import HipsCard from "./hips-card";
+import selectBodyMeasurement from "../utils/selectBodyMeasurement";
 
 const HipsCardLoader: FC = () => {
   const {
-    data: { hipChange, hipData, currentHip },
+    data: { change: hipsChange, data: hipsData, current: currentHips },
   } = useMeasurementQuery({
     fetchParams: {
       headers: { "Content-type": "application/json" },
       query: { type: "hips", limit: 100, offset: 0 },
     },
     queryOptions: {
-      select: (data) => {
-        const { measurements = [] } = data;
-        const hipData = measurements.map((measurement) => ({
-          date: new Date(Number(measurement.timestamp)).toISOString(),
-          value: Number(measurement.meta?.value) || 0,
-        }));
-        const currentHip = hipData[hipData.length - 1]?.value || 0;
-        const previousHip = hipData[hipData.length - 2]?.value || 0;
-        const hipChange = currentHip - previousHip;
-        return { hipData, currentHip, hipChange };
-      },
+      select: selectBodyMeasurement,
     },
   });
   return (
     <HipsCard
-      hipsChange={hipChange}
-      hipsData={hipData}
-      currentHips={currentHip}
+      hipsChange={hipsChange}
+      hipsData={hipsData}
+      currentHips={currentHips}
     />
   );
 };

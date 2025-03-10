@@ -9,6 +9,8 @@ import { Suspense } from "react";
 import HipCardLoader from "./components/hip-card-loader";
 import HipsCard from "./components/hips-card";
 import HipsCardLoader from "./components/hips-card-loader";
+import WaistCardLoader from "./components/waist-card-loader";
+import WaistCard from "./components/waist-card";
 
 // Дані вимірювання плечей
 const shoulderData = [
@@ -37,20 +39,6 @@ const chestData = [
 const currentChest = chestData[chestData.length - 1].value;
 const previousChest = chestData[chestData.length - 2].value;
 const chestChange = currentChest - previousChest;
-
-// Дані вимірювання талії
-const waistData = [
-  { date: "2024-02-16", value: 82 },
-  { date: "2024-02-17", value: 82 },
-  { date: "2024-02-18", value: 81 },
-  { date: "2024-02-19", value: 81 },
-  { date: "2024-02-20", value: 80 },
-  { date: "2024-02-21", value: 80 },
-  { date: "2024-02-22", value: 79 },
-];
-const currentWaist = waistData[waistData.length - 1].value;
-const previousWaist = waistData[waistData.length - 2].value;
-const waistChange = currentWaist - previousWaist;
 
 // Дані харчування
 const totalMeals = 4;
@@ -255,39 +243,9 @@ const DashboardPage: React.FC = () => {
       </Link>
 
       <Link to="/dashboard/waist">
-        <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
-          <CardContent className="p-6 flex-1">
-            <div className="flex items-center justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Ruler className="h-5 w-5 text-muted-foreground" />
-                  <h2 className="text-2xl font-bold">{currentWaist}</h2>
-                  <span className="text-sm text-muted-foreground">см</span>
-                  {waistChange !== 0 && (
-                    <div
-                      className={`flex items-center ${
-                        waistChange < 0 ? "text-green-500" : "text-red-500"
-                      }`}
-                    >
-                      {waistChange < 0 ? (
-                        <ArrowDown className="h-4 w-4" />
-                      ) : (
-                        <ArrowUp className="h-4 w-4" />
-                      )}
-                      <span className="text-sm">
-                        {Math.abs(waistChange)} см
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <p className="text-sm text-muted-foreground">обхват талії</p>
-              </div>
-              <div className="h-[60px] w-[100px]">
-                <SparklineChart data={waistData} />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <Suspense fallback={<WaistCard />}>
+          <WaistCardLoader />
+        </Suspense>
       </Link>
 
       <Link to="/dashboard/hips">
