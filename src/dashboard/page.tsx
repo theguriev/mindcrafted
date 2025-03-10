@@ -6,6 +6,7 @@ import { ArrowDown, ArrowUp, Dumbbell, Ruler, Utensils } from "lucide-react";
 import SparklineChart from "./components/sparkline-chart";
 import HipCard from "./components/hip-card";
 import { Suspense } from "react";
+import HipCardLoader from "./components/hip-card-loader";
 
 // Дані вимірювання плечей
 const shoulderData = [
@@ -336,8 +337,8 @@ const DashboardPage: React.FC = () => {
       </Link>
 
       <Link to="/dashboard/hip">
-        <Suspense fallback={<div>Loading...</div>}>
-          <HipCard />
+        <Suspense fallback={<HipCard />}>
+          <HipCardLoader />
         </Suspense>
       </Link>
     </div>

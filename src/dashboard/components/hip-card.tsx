@@ -2,30 +2,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Ruler, ArrowDown, ArrowUp } from "lucide-react";
 import { FC } from "react";
 import SparklineChart from "./sparkline-chart";
-import { useMeasurementQuery } from "@/hooks/useMeasurementQuery";
 
-const HipCard: FC = () => {
-  const {
-    data: { hipChange, hipData, currentHip },
-  } = useMeasurementQuery({
-    fetchParams: {
-      headers: { "Content-type": "application/json" },
-      query: { type: "hip", limit: 100, offset: 0 },
-    },
-    queryOptions: {
-      select: (data) => {
-        const { measurements = [] } = data;
-        const hipData = measurements.map((measurement) => ({
-          date: new Date(Number(measurement.timestamp)).toISOString(),
-          value: Number(measurement.meta?.value) || 0,
-        }));
-        const currentHip = hipData[hipData.length - 1]?.value || 0;
-        const previousHip = hipData[hipData.length - 2]?.value || 0;
-        const hipChange = currentHip - previousHip;
-        return { hipData, currentHip, hipChange };
-      },
-    },
-  });
+const HipCard: FC<{
+  hipChange?: number;
+  hipData?: Array<{ date: string; value: number }>;
+  currentHip?: number;
+}> = ({ hipChange = 0, hipData = [], currentHip = 0 }) => {
   return (
     <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
       <CardContent className="p-6 flex-1">
@@ -60,5 +42,7 @@ const HipCard: FC = () => {
     </Card>
   );
 };
+
+HipCard.displayName = "HipCard";
 
 export default HipCard;
