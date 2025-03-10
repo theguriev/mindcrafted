@@ -9,6 +9,7 @@ import { Suspense } from "react";
 import HipsCard from "./components/hips-card";
 import WaistCard from "./components/waist-card";
 import BodyMeasurementLoader from "./components/body-measurement-loader";
+import ChestCard from "./components/chest-card";
 
 // Дані вимірювання плечей
 const shoulderData = [
@@ -23,20 +24,6 @@ const shoulderData = [
 const currentShoulder = shoulderData[shoulderData.length - 1].value;
 const previousShoulder = shoulderData[shoulderData.length - 2].value;
 const shoulderChange = currentShoulder - previousShoulder;
-
-// Дані вимірювання грудей
-const chestData = [
-  { date: "2024-02-16", value: 95 },
-  { date: "2024-02-17", value: 95 },
-  { date: "2024-02-18", value: 96 },
-  { date: "2024-02-19", value: 96 },
-  { date: "2024-02-20", value: 97 },
-  { date: "2024-02-21", value: 97 },
-  { date: "2024-02-22", value: 98 },
-];
-const currentChest = chestData[chestData.length - 1].value;
-const previousChest = chestData[chestData.length - 2].value;
-const chestChange = currentChest - previousChest;
 
 // Дані харчування
 const totalMeals = 4;
@@ -205,39 +192,9 @@ const DashboardPage: React.FC = () => {
       </Link>
 
       <Link to="/dashboard/chest">
-        <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
-          <CardContent className="p-6 flex-1">
-            <div className="flex items-center justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Ruler className="h-5 w-5 text-muted-foreground" />
-                  <h2 className="text-2xl font-bold">{currentChest}</h2>
-                  <span className="text-sm text-muted-foreground">см</span>
-                  {chestChange !== 0 && (
-                    <div
-                      className={`flex items-center ${
-                        chestChange > 0 ? "text-green-500" : "text-red-500"
-                      }`}
-                    >
-                      {chestChange > 0 ? (
-                        <ArrowUp className="h-4 w-4" />
-                      ) : (
-                        <ArrowDown className="h-4 w-4" />
-                      )}
-                      <span className="text-sm">
-                        {Math.abs(chestChange)} см
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <p className="text-sm text-muted-foreground">обхват грудей</p>
-              </div>
-              <div className="h-[60px] w-[100px]">
-                <SparklineChart data={chestData} />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <Suspense fallback={<ChestCard />}>
+          <BodyMeasurementLoader Component={ChestCard} type="chest" />
+        </Suspense>
       </Link>
 
       <Link to="/dashboard/waist">
