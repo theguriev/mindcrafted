@@ -63,7 +63,9 @@ export type Paths = {
   serviceMeasurements: serviceMeasurements.paths;
 };
 
-export type ExtractSchema<T> = T extends { schema: infer S }
+export type ExtractSchema<T> = T extends {
+  content: { "application/json": infer S };
+}
   ? unknown extends S
     ? never
     : S

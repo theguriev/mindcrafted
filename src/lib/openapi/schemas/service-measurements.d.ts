@@ -20,10 +20,7 @@ export interface paths {
         /** @description Measurements retrieved successfully */
         200: {
           content: {
-            "application/json": {
-              success?: boolean;
-              measurements?: Record<string, never>[];
-            };
+            "application/json": components["schemas"]["MeasurementsResponse"];
           };
         };
         /** @description Validation error */
@@ -41,24 +38,14 @@ export interface paths {
       };
       requestBody: {
         content: {
-          "application/json": {
-            /** @description Timestamp of the measurement */
-            timestamp?: number;
-            /** @description Type of measurement */
-            type?: string;
-            /** @description Additional metadata for the measurement */
-            meta?: Record<string, never>;
-          };
+          "application/json": components["schemas"]["Measurement"];
         };
       };
       responses: {
         /** @description Measurement updated successfully */
         200: {
           content: {
-            "application/json": {
-              success?: boolean;
-              measurement?: Record<string, never>;
-            };
+            "application/json": components["schemas"]["MeasurementResponse"];
           };
         };
         /** @description Validation error */
@@ -75,26 +62,14 @@ export interface paths {
     post: {
       requestBody: {
         content: {
-          "application/json": {
-            /** @description Timestamp of the measurement (defaults to current time) */
-            timestamp?: number;
-            /** @description Type of measurement */
-            type: string;
-            /** @description Value of the measurement */
-            value: number;
-            /** @description Additional metadata for the measurement */
-            meta?: Record<string, never>;
-          };
+          "application/json": components["schemas"]["Measurement"];
         };
       };
       responses: {
         /** @description Measurement added successfully */
         200: {
           content: {
-            "application/json": {
-              success?: boolean;
-              measurement?: Record<string, never>;
-            };
+            "application/json": components["schemas"]["MeasurementResponse"];
           };
         };
         /** @description Unauthorized */
@@ -107,12 +82,60 @@ export interface paths {
         };
       };
     };
+    /** Delete a measurement */
+    delete: {
+      parameters: {
+        query: {
+          id: string;
+        };
+      };
+      responses: {
+        /** @description Measurement deleted successfully */
+        200: {
+          content: {
+            "application/json": components["schemas"]["DeleteResponse"];
+          };
+        };
+        /** @description Measurement not found or not authorized */
+        404: {
+          content: never;
+        };
+      };
+    };
   };
 }
 
 export type webhooks = Record<string, never>;
 
-export type components = Record<string, never>;
+export interface components {
+  schemas: {
+    Measurement: {
+      /** @description Timestamp of the measurement (defaults to current time) */
+      timestamp?: number;
+      /** @description Type of measurement */
+      type: string;
+      /** @description Additional metadata for the measurement */
+      meta?: Record<string, never>;
+    };
+    MeasurementResponse: {
+      success?: boolean;
+      measurement?: components["schemas"]["Measurement"];
+    };
+    MeasurementsResponse: {
+      success?: boolean;
+      measurements?: components["schemas"]["Measurement"][];
+    };
+    DeleteResponse: {
+      success?: boolean;
+      message?: string;
+    };
+  };
+  responses: never;
+  parameters: never;
+  requestBodies: never;
+  headers: never;
+  pathItems: never;
+}
 
 export type $defs = Record<string, never>;
 

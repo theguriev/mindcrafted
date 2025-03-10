@@ -17,7 +17,6 @@ const chestData = [
   { date: "2024-02-21", value: 115 },
   { date: "2024-02-22", value: 115 },
 ];
-
 const getStats = (data: typeof chestData) => {
   const currentMeasurement = data[data.length - 1].value;
   const initialMeasurement = data[0].value;
