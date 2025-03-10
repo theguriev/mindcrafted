@@ -7,6 +7,8 @@ import SparklineChart from "./components/sparkline-chart";
 import HipCard from "./components/hip-card";
 import { Suspense } from "react";
 import HipCardLoader from "./components/hip-card-loader";
+import HipsCard from "./components/hips-card";
+import HipsCardLoader from "./components/hips-card-loader";
 
 // Дані вимірювання плечей
 const shoulderData = [
@@ -49,20 +51,6 @@ const waistData = [
 const currentWaist = waistData[waistData.length - 1].value;
 const previousWaist = waistData[waistData.length - 2].value;
 const waistChange = currentWaist - previousWaist;
-
-// Дані вимірювання стегон
-const hipsData = [
-  { date: "2024-02-16", value: 98 },
-  { date: "2024-02-17", value: 98 },
-  { date: "2024-02-18", value: 97 },
-  { date: "2024-02-19", value: 97 },
-  { date: "2024-02-20", value: 96 },
-  { date: "2024-02-21", value: 96 },
-  { date: "2024-02-22", value: 95 },
-];
-const currentHips = hipsData[hipsData.length - 1].value;
-const previousHips = hipsData[hipsData.length - 2].value;
-const hipsChange = currentHips - previousHips;
 
 // Дані харчування
 const totalMeals = 4;
@@ -303,37 +291,9 @@ const DashboardPage: React.FC = () => {
       </Link>
 
       <Link to="/dashboard/hips">
-        <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
-          <CardContent className="p-6 flex-1">
-            <div className="flex items-center justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Ruler className="h-5 w-5 text-muted-foreground" />
-                  <h2 className="text-2xl font-bold">{currentHips}</h2>
-                  <span className="text-sm text-muted-foreground">см</span>
-                  {hipsChange !== 0 && (
-                    <div
-                      className={`flex items-center ${
-                        hipsChange < 0 ? "text-green-500" : "text-red-500"
-                      }`}
-                    >
-                      {hipsChange < 0 ? (
-                        <ArrowDown className="h-4 w-4" />
-                      ) : (
-                        <ArrowUp className="h-4 w-4" />
-                      )}
-                      <span className="text-sm">{Math.abs(hipsChange)} см</span>
-                    </div>
-                  )}
-                </div>
-                <p className="text-sm text-muted-foreground">обхват стегон</p>
-              </div>
-              <div className="h-[60px] w-[100px]">
-                <SparklineChart data={hipsData} />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <Suspense fallback={<HipsCard />}>
+          <HipsCardLoader />
+        </Suspense>
       </Link>
 
       <Link to="/dashboard/hip">
