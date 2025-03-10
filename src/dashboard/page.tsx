@@ -2,28 +2,14 @@ import type React from "react";
 import { Link } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import CircularProgress from "./components/circular-progress";
-import { ArrowDown, ArrowUp, Dumbbell, Ruler, Utensils } from "lucide-react";
-import SparklineChart from "./components/sparkline-chart";
+import { ArrowDown, ArrowUp, Dumbbell, Utensils } from "lucide-react";
 import HipCard from "./components/hip-card";
 import { Suspense } from "react";
 import HipsCard from "./components/hips-card";
 import WaistCard from "./components/waist-card";
 import BodyMeasurementLoader from "./components/body-measurement-loader";
 import ChestCard from "./components/chest-card";
-
-// Дані вимірювання плечей
-const shoulderData = [
-  { date: "2024-02-16", value: 113 },
-  { date: "2024-02-17", value: 113 },
-  { date: "2024-02-18", value: 114 },
-  { date: "2024-02-19", value: 114 },
-  { date: "2024-02-20", value: 114 },
-  { date: "2024-02-21", value: 115 },
-  { date: "2024-02-22", value: 115 },
-];
-const currentShoulder = shoulderData[shoulderData.length - 1].value;
-const previousShoulder = shoulderData[shoulderData.length - 2].value;
-const shoulderChange = currentShoulder - previousShoulder;
+import ShoulderCard from "./components/shoulder-card";
 
 // Дані харчування
 const totalMeals = 4;
@@ -156,39 +142,9 @@ const DashboardPage: React.FC = () => {
       </Link>
 
       <Link to="/dashboard/shoulder">
-        <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
-          <CardContent className="p-6 flex-1">
-            <div className="flex items-center justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <Ruler className="h-5 w-5 text-muted-foreground" />
-                  <h2 className="text-2xl font-bold">{currentShoulder}</h2>
-                  <span className="text-sm text-muted-foreground">см</span>
-                  {shoulderChange !== 0 && (
-                    <div
-                      className={`flex items-center ${
-                        shoulderChange > 0 ? "text-green-500" : "text-red-500"
-                      }`}
-                    >
-                      {shoulderChange > 0 ? (
-                        <ArrowUp className="h-4 w-4" />
-                      ) : (
-                        <ArrowDown className="h-4 w-4" />
-                      )}
-                      <span className="text-sm">
-                        {Math.abs(shoulderChange)} см
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <p className="text-sm text-muted-foreground">обхват плеча</p>
-              </div>
-              <div className="h-[60px] w-[100px]">
-                <SparklineChart data={shoulderData} />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <Suspense fallback={<ShoulderCard />}>
+          <BodyMeasurementLoader Component={ShoulderCard} type="shoulder" />
+        </Suspense>
       </Link>
 
       <Link to="/dashboard/chest">
