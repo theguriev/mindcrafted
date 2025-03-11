@@ -1,10 +1,9 @@
-import type React from "react";
 import { Link } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import CircularProgress from "./components/circular-progress";
 import { Dumbbell, Utensils } from "lucide-react";
 import HipCard from "./components/hip-card";
-import { Suspense } from "react";
+import { FC, Suspense } from "react";
 import HipsCard from "./components/hips-card";
 import WaistCard from "./components/waist-card";
 import BodyMeasurementLoader from "./components/body-measurement-loader";
@@ -18,7 +17,7 @@ const totalMeals = 4;
 const completedMeals = 2;
 const nutritionProgress = (completedMeals / totalMeals) * 100;
 
-const DashboardPage: React.FC = () => {
+const DashboardPage: FC = () => {
   const todaySteps = 4789;
   const goalSteps = 7000;
   const progress = (todaySteps / goalSteps) * 100;
