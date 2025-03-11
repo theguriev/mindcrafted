@@ -9,7 +9,7 @@ const selectBodyMeasurement = (data: UseMeasurementResponse) => {
   const current = bodyData[bodyData.length - 1]?.value || 0;
   const previous = bodyData[bodyData.length - 2]?.value || 0;
   const change = current - previous;
-  return { data: bodyData, current, change };
+  return { data: bodyData, current, change, previous };
 };
 
 export default selectBodyMeasurement;

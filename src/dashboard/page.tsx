@@ -2,7 +2,7 @@ import type React from "react";
 import { Link } from "react-router";
 import { Card, CardContent } from "@/components/ui/card";
 import CircularProgress from "./components/circular-progress";
-import { ArrowDown, ArrowUp, Dumbbell, Utensils } from "lucide-react";
+import { Dumbbell, Utensils } from "lucide-react";
 import HipCard from "./components/hip-card";
 import { Suspense } from "react";
 import HipsCard from "./components/hips-card";
@@ -10,6 +10,8 @@ import WaistCard from "./components/waist-card";
 import BodyMeasurementLoader from "./components/body-measurement-loader";
 import ChestCard from "./components/chest-card";
 import ShoulderCard from "./components/shoulder-card";
+import WeightCard from "./components/weight-card";
+import WeightCardLoader from "./components/weight-card-loader";
 
 // Дані харчування
 const totalMeals = 4;
@@ -20,14 +22,6 @@ const DashboardPage: React.FC = () => {
   const todaySteps = 4789;
   const goalSteps = 7000;
   const progress = (todaySteps / goalSteps) * 100;
-
-  // Дані відстеження ваги
-  const currentWeight = 75.5; // кг
-  const previousWeight = 76.2; // кг
-  const goalWeight = 70; // кг
-  const weightChange = currentWeight - previousWeight;
-  const weightProgress =
-    ((previousWeight - currentWeight) / (previousWeight - goalWeight)) * 100;
 
   // Дані відстеження вправ
   const totalExercises = 3;
@@ -103,42 +97,11 @@ const DashboardPage: React.FC = () => {
           </CardContent>
         </Card>
       </Link>
+
       <Link to="/dashboard/weight">
-        <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
-          <CardContent className="p-6 flex-1">
-            <div className="flex items-center justify-between">
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <h2 className="text-2xl font-bold">
-                    {currentWeight.toFixed(1)}
-                  </h2>
-                  <span className="text-sm text-muted-foreground">кг</span>
-                  {weightChange !== 0 && (
-                    <div
-                      className={`flex items-center ${
-                        weightChange < 0 ? "text-green-500" : "text-red-500"
-                      }`}
-                    >
-                      {weightChange < 0 ? (
-                        <ArrowDown className="h-4 w-4" />
-                      ) : (
-                        <ArrowUp className="h-4 w-4" />
-                      )}
-                      <span className="text-sm">
-                        {Math.abs(weightChange).toFixed(1)} кг
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <p className="text-sm text-muted-foreground">поточна вага</p>
-                <div className="text-sm text-muted-foreground">
-                  Ціль: {goalWeight.toFixed(1)} кг
-                </div>
-              </div>
-              <CircularProgress value={weightProgress} />
-            </div>
-          </CardContent>
-        </Card>
+        <Suspense fallback={<WeightCard />}>
+          <WeightCardLoader />
+        </Suspense>
       </Link>
 
       <Link to="/dashboard/shoulder">
