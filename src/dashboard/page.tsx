@@ -17,18 +17,18 @@ const totalMeals = 4;
 const completedMeals = 2;
 const nutritionProgress = (completedMeals / totalMeals) * 100;
 
+const todaySteps = 4789;
+const goalSteps = 7000;
+const progress = (todaySteps / goalSteps) * 100;
+
+// Дані відстеження вправ
+const totalExercises = 3;
+const completedExercises = 2;
+const exerciseProgress = (completedExercises / totalExercises) * 100;
+const lastExercise = "Силове тренування";
+const exerciseDuration = 45;
+
 const DashboardPage: FC = () => {
-  const todaySteps = 4789;
-  const goalSteps = 7000;
-  const progress = (todaySteps / goalSteps) * 100;
-
-  // Дані відстеження вправ
-  const totalExercises = 3;
-  const completedExercises = 2;
-  const exerciseProgress = (completedExercises / totalExercises) * 100;
-  const lastExercise = "Силове тренування";
-  const exerciseDuration = 45;
-
   return (
     <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
       <Link to="/dashboard/nutrition">
