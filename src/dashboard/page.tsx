@@ -11,15 +11,13 @@ import ChestCard from "./components/chest-card";
 import ShoulderCard from "./components/shoulder-card";
 import WeightCard from "./components/weight-card";
 import WeightCardLoader from "./components/weight-card-loader";
+import StepsCard from "./components/steps-card";
+import StepsCardLoader from "./components/steps-card-loader";
 
 // Дані харчування
 const totalMeals = 4;
 const completedMeals = 2;
 const nutritionProgress = (completedMeals / totalMeals) * 100;
-
-const todaySteps = 4789;
-const goalSteps = 7000;
-const progress = (todaySteps / goalSteps) * 100;
 
 // Дані відстеження вправ
 const totalExercises = 3;
@@ -57,24 +55,13 @@ const DashboardPage: FC = () => {
           </CardContent>
         </Card>
       </Link>
+
       <Link to="/dashboard/steps">
-        <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
-          <CardContent className="p-6 flex-1">
-            <div className="flex items-center justify-between">
-              <div className="space-y-2">
-                <h2 className="text-2xl font-bold">
-                  {todaySteps.toLocaleString()}
-                </h2>
-                <p className="text-sm text-muted-foreground">Кроків сьогодні</p>
-                <div className="text-sm text-muted-foreground">
-                  Ціль: {goalSteps.toLocaleString()} кроків
-                </div>
-              </div>
-              <CircularProgress value={progress} />
-            </div>
-          </CardContent>
-        </Card>
+        <Suspense fallback={<StepsCard />}>
+          <StepsCardLoader />
+        </Suspense>
       </Link>
+
       <Link to="/dashboard/exercise">
         <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
           <CardContent className="p-6 flex-1">
