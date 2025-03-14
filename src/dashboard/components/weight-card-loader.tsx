@@ -2,6 +2,7 @@ import { useMeasurementQuery } from "@/hooks/useMeasurementQuery";
 import { FC } from "react";
 import selectBodyMeasurement from "../utils/selectBodyMeasurement";
 import WeightCard from "./weight-card";
+import createGoalWeightSelector from "../utils/createGoalWeightSelector";
 
 const WeightCardLoader: FC = () => {
   const {
@@ -24,16 +25,7 @@ const WeightCardLoader: FC = () => {
       query: { type: "goal-weight", limit: 100, offset: 0 },
     },
     queryOptions: {
-      select: (data) => {
-        const { measurements = [] } = data;
-        const goal = measurements?.[0]?.meta?.value || 0;
-        const progress = ((previous - current) / (previous - goal)) * 100;
-        return {
-          goal,
-          progress: isNaN(progress) ? 0 : progress,
-          data: measurements,
-        };
-      },
+      select: createGoalWeightSelector({ current, previous }),
     },
   });
 
