@@ -1,6 +1,7 @@
 import { useMeasurementQuery } from "@/hooks/useMeasurementQuery";
 import { FC } from "react";
 import StepsCard from "./steps-card";
+import selectFirstMeasurementValue from "../utils/selectFirstMeasurementValue";
 
 const StepsCardLoader: FC = () => {
   const { data: steps } = useMeasurementQuery({
@@ -9,9 +10,7 @@ const StepsCardLoader: FC = () => {
       query: { type: "steps", limit: 100, offset: 0 },
     },
     queryOptions: {
-      select: (data) => {
-        return data.measurements?.[0]?.meta?.value || 0;
-      },
+      select: selectFirstMeasurementValue,
     },
   });
 
@@ -21,9 +20,7 @@ const StepsCardLoader: FC = () => {
       query: { type: "goal-steps", limit: 100, offset: 0 },
     },
     queryOptions: {
-      select: (data) => {
-        return data?.measurements?.[0]?.meta?.value || 0;
-      },
+      select: selectFirstMeasurementValue,
     },
   });
 
