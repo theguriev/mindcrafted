@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Navigate, Route } from "react-router";
 import Providers from "./providers";
 import MainLayout from "./components/main-layout";
 import SimpleLayout from "./components/simple-page-layout";
+import PrivateBoundary from "./components/private-boundary";
 
 const LoginPage = lazy(() => import("./login/page"));
 const DashboardPage = lazy(() => import("./dashboard/page"));
@@ -44,9 +45,11 @@ const RoutingSystem: FC = () => {
           <Route
             path="/dashboard/weight"
             element={
-              <SimpleLayout title="Вага">
-                <WeightPage />
-              </SimpleLayout>
+              <PrivateBoundary>
+                <SimpleLayout title="Вага">
+                  <WeightPage />
+                </SimpleLayout>
+              </PrivateBoundary>
             }
           />
           <Route

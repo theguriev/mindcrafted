@@ -5,7 +5,8 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import { FC } from "react";
+import { useMeasurementQuery } from "@/hooks/useMeasurementQuery";
+import { FC, useMemo } from "react";
 import {
   ResponsiveContainer,
   CartesianGrid,
@@ -15,33 +16,54 @@ import {
   LineChart,
   ReferenceLine,
 } from "recharts";
+import selectFirstMeasurementValue from "../utils/selectFirstMeasurementValue";
+import selectBodyMeasurement from "../utils/selectBodyMeasurement";
+import getBMICategory from "../utils/getBMICategory";
 
 const WeightPage: FC = () => {
-  // In a real app, this would come from your API/database
-  const data = [
-    { date: "2024-02-16", weight: 76.2 },
-    { date: "2024-02-17", weight: 76.0 },
-    { date: "2024-02-18", weight: 65.8 },
-    { date: "2024-02-19", weight: 75.9 },
-    { date: "2024-02-20", weight: 75.7 },
-    { date: "2024-02-21", weight: 75.6 },
-    { date: "2024-02-22", weight: 70.5 },
-  ];
+  const { data: height } = useMeasurementQuery({
+    fetchParams: {
+      headers: { "Content-type": "application/json" },
+      query: { type: "height", limit: 1, offset: 0 },
+    },
+    queryOptions: {
+      select: selectFirstMeasurementValue,
+    },
+  });
 
-  const height = 1.75; // meters
-  const currentWeight = data[data.length - 1].weight;
-  const bmi = currentWeight / (height * height);
+  const {
+    data: { data },
+  } = useMeasurementQuery({
+    fetchParams: {
+      headers: { "Content-type": "application/json" },
+      query: { type: "weight", limit: 100, offset: 0 },
+    },
+    queryOptions: {
+      select: selectBodyMeasurement,
+    },
+  });
 
-  const getBMICategory = (bmi: number) => {
-    if (bmi < 18.5) return "Недостатня вага";
-    if (bmi < 25) return "Нормальна вага";
-    if (bmi < 30) return "Надмірна вага";
-    return "Obese";
-  };
+  const { bmi, weightChange, trend } = useMemo(() => {
+    if (data.length === 0) {
+      return {
+        currentWeight: 0,
+        bmi: 0,
+        weightChange: 0,
+        trend: "Збережено",
+      };
+    }
+    const currentWeight = data[data.length - 1].value;
+    const bmi = currentWeight / (height * height);
 
-  const weightChange = data[0].weight - data[data.length - 1].weight;
-  const trend =
-    weightChange > 0 ? "Втрачено" : weightChange < 0 ? "Набуто" : "Збережено";
+    const weightChange = data[0].value - data[data.length - 1].value;
+    const trend =
+      weightChange > 0 ? "Втрачено" : weightChange < 0 ? "Набуто" : "Збережено";
+    return {
+      bmi,
+      weightChange,
+      trend,
+    };
+  }, [data, height]);
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4">
