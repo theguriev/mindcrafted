@@ -7,7 +7,7 @@ const StepsCardLoader: FC = () => {
   const { data: steps } = useMeasurementQuery({
     fetchParams: {
       headers: { "Content-type": "application/json" },
-      query: { type: "steps", limit: 100, offset: 0 },
+      query: { type: "steps", limit: 1, offset: 0 },
     },
     queryOptions: {
       select: selectFirstMeasurementValue,
@@ -17,7 +17,7 @@ const StepsCardLoader: FC = () => {
   const { data: goal } = useMeasurementQuery({
     fetchParams: {
       headers: { "Content-type": "application/json" },
-      query: { type: "goal-steps", limit: 100, offset: 0 },
+      query: { type: "goal-steps", limit: 1, offset: 0 },
     },
     queryOptions: {
       select: selectFirstMeasurementValue,
