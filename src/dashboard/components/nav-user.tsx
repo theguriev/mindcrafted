@@ -26,7 +26,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { useNavigate } from "react-router";
-import useLogoutMutate from "@/hooks/useLogoutMutate";
+import useLogoutMutate from "@/hooks/use-logout-mutate";
 
 const NavUser = ({
   user,
