@@ -5,7 +5,7 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import { useMeasurementQuery } from "@/hooks/useMeasurementQuery";
+import { useMeasurementQuery } from "@/hooks/use-measurement-query";
 import { FC, useMemo } from "react";
 import {
   ResponsiveContainer,

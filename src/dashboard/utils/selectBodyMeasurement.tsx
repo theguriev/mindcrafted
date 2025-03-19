@@ -1,4 +1,4 @@
-import { UseMeasurementResponse } from "@/hooks/useMeasurementQuery";
+import { UseMeasurementResponse } from "@/hooks/use-measurement-query";
 
 const selectBodyMeasurement = (data: UseMeasurementResponse) => {
   const { measurements = [] } = data;

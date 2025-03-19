@@ -1,4 +1,4 @@
-import { useMeasurementQuery } from "@/hooks/useMeasurementQuery";
+import { useMeasurementQuery } from "@/hooks/use-measurement-query";
 import { FC } from "react";
 import StepsCard from "./steps-card";
 import selectFirstMeasurementValue from "../utils/selectFirstMeasurementValue";

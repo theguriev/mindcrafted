@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { useMeasurementQuery } from "@/hooks/useMeasurementQuery";
+import { useMeasurementQuery } from "@/hooks/use-measurement-query";
 import selectBodyMeasurement from "../utils/selectBodyMeasurement";
 import { BodyMeasurement } from "../types";
 

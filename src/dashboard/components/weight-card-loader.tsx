@@ -1,4 +1,4 @@
-import { useMeasurementQuery } from "@/hooks/useMeasurementQuery";
+import { useMeasurementQuery } from "@/hooks/use-measurement-query";
 import { FC } from "react";
 import selectBodyMeasurement from "../utils/selectBodyMeasurement";
 import WeightCard from "./weight-card";
