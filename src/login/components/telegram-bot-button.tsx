@@ -1,4 +1,4 @@
-import { TelegramUser } from "@/lib/isValidTelegramHash";
+import { TelegramUser } from "@/lib/is-valid-telegram-hash";
 import type { FC } from "react";
 import { useEffect, useRef } from "react";
 

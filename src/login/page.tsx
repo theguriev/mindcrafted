@@ -1,4 +1,4 @@
-import { TelegramUser } from "@/lib/isValidTelegramHash";
+import { TelegramUser } from "@/lib/is-valid-telegram-hash";
 import TelegramLoginButton from "./components/telegram-bot-button";
 import { useNavigate } from "react-router";
 import { Loader2 } from "lucide-react";
