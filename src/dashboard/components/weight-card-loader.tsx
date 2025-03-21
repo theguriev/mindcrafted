@@ -2,7 +2,7 @@ import { useMeasurementQuery } from "@/hooks/use-measurement-query";
 import { FC } from "react";
 import selectBodyMeasurement from "../utils/selectBodyMeasurement";
 import WeightCard from "./weight-card";
-import createGoalWeightSelector from "../utils/createGoalWeightSelector";
+import createGoalWeightSelector from "../utils/create-goal-weight-selector";
 
 const WeightCardLoader: FC = () => {
   const {
