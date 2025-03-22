@@ -1,4 +1,4 @@
-import AppSidebar from "@/dashboard/components/app-sidebar";
+import AppSidebar from "@/components/app-sidebar";
 import { FC, PropsWithChildren } from "react";
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "./ui/sidebar";
 

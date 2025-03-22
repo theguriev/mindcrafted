@@ -31,7 +31,7 @@ const LoginPage = () => {
         response.meta?.firstName !== undefined &&
         response.meta?.lastName !== undefined
       ) {
-        navigate("/dashboard");
+        navigate("/");
         return;
       }
       navigate("/wizard/zero");

@@ -29,7 +29,7 @@ const exerciseDuration = 45;
 const DashboardPage: FC = () => {
   return (
     <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 lg:grid-cols-3">
-      <Link to="/dashboard/nutrition">
+      <Link to="/nutrition">
         <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
           <CardContent className="p-6 flex-1">
             <div className="flex items-center justify-between">
@@ -56,13 +56,13 @@ const DashboardPage: FC = () => {
         </Card>
       </Link>
 
-      <Link to="/dashboard/steps">
+      <Link to="/steps">
         <Suspense fallback={<StepsCard />}>
           <StepsCardLoader />
         </Suspense>
       </Link>
 
-      <Link to="/dashboard/exercise">
+      <Link to="/exercise">
         <Card className="relative overflow-hidden transition-all hover:shadow-lg flex flex-col h-full">
           <CardContent className="p-6 flex-1">
             <div className="flex items-center justify-between">
@@ -84,37 +84,37 @@ const DashboardPage: FC = () => {
         </Card>
       </Link>
 
-      <Link to="/dashboard/weight">
+      <Link to="/weight">
         <Suspense fallback={<WeightCard />}>
           <WeightCardLoader />
         </Suspense>
       </Link>
 
-      <Link to="/dashboard/shoulder">
+      <Link to="/shoulder">
         <Suspense fallback={<ShoulderCard />}>
           <BodyMeasurementLoader Component={ShoulderCard} type="shoulder" />
         </Suspense>
       </Link>
 
-      <Link to="/dashboard/chest">
+      <Link to="/chest">
         <Suspense fallback={<ChestCard />}>
           <BodyMeasurementLoader Component={ChestCard} type="chest" />
         </Suspense>
       </Link>
 
-      <Link to="/dashboard/waist">
+      <Link to="/waist">
         <Suspense fallback={<WaistCard />}>
           <BodyMeasurementLoader Component={WaistCard} type="waist" />
         </Suspense>
       </Link>
 
-      <Link to="/dashboard/hips">
+      <Link to="/hips">
         <Suspense fallback={<HipsCard />}>
           <BodyMeasurementLoader Component={HipsCard} type="hips" />
         </Suspense>
       </Link>
 
-      <Link to="/dashboard/hip">
+      <Link to="/hip">
         <Suspense fallback={<HipCard />}>
           <BodyMeasurementLoader Component={HipCard} type="hip" />
         </Suspense>

@@ -6,19 +6,19 @@ import SimpleLayout from "./components/simple-page-layout";
 import PrivateBoundary from "./components/private-boundary";
 
 const LoginPage = lazy(() => import("./login/page"));
-const DashboardPage = lazy(() => import("./dashboard/page"));
-const StepsPage = lazy(() => import("./dashboard/steps/page"));
+const DashboardPage = lazy(() => import("./page"));
+const StepsPage = lazy(() => import("./steps/page"));
 const ErrorPage = lazy(() => import("./error/page"));
 const WizardRoutes = lazy(() => import("./wizard-routes"));
 const WelcomePage = lazy(() => import("./welcome/page"));
-const WeightPage = lazy(() => import("./dashboard/weight/page"));
-const ShoulderPage = lazy(() => import("./dashboard/shoulder/page"));
-const ChestPage = lazy(() => import("./dashboard/chest/page"));
-const WaistPage = lazy(() => import("./dashboard/waist/page"));
-const HipsPage = lazy(() => import("./dashboard/hips/page"));
-const HipPage = lazy(() => import("./dashboard/hip/page"));
-const NutritionPage = lazy(() => import("./dashboard/nutrition/page"));
-const ExercisePage = lazy(() => import("./dashboard/exercise/page"));
+const WeightPage = lazy(() => import("./weight/page"));
+const ShoulderPage = lazy(() => import("./shoulder/page"));
+const ChestPage = lazy(() => import("./chest/page"));
+const WaistPage = lazy(() => import("./waist/page"));
+const HipsPage = lazy(() => import("./hips/page"));
+const HipPage = lazy(() => import("./hip/page"));
+const NutritionPage = lazy(() => import("./nutrition/page"));
+const ExercisePage = lazy(() => import("./exercise/page"));
 
 const RoutingSystem: FC = () => {
   return (
@@ -27,7 +27,7 @@ const RoutingSystem: FC = () => {
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route
-            path="/dashboard"
+            path="/"
             element={
               <MainLayout title="Головна">
                 <DashboardPage />
@@ -35,7 +35,7 @@ const RoutingSystem: FC = () => {
             }
           />
           <Route
-            path="/dashboard/steps"
+            path="/steps"
             element={
               <SimpleLayout title="Кроки">
                 <StepsPage />
@@ -43,7 +43,7 @@ const RoutingSystem: FC = () => {
             }
           />
           <Route
-            path="/dashboard/weight"
+            path="/weight"
             element={
               <PrivateBoundary>
                 <SimpleLayout title="Вага">
@@ -53,7 +53,7 @@ const RoutingSystem: FC = () => {
             }
           />
           <Route
-            path="/dashboard/shoulder"
+            path="/shoulder"
             element={
               <SimpleLayout title="Обхват плеча">
                 <ShoulderPage />
@@ -61,7 +61,7 @@ const RoutingSystem: FC = () => {
             }
           />
           <Route
-            path="/dashboard/chest"
+            path="/chest"
             element={
               <SimpleLayout title="Обхват грудей">
                 <ChestPage />
@@ -69,7 +69,7 @@ const RoutingSystem: FC = () => {
             }
           />
           <Route
-            path="/dashboard/waist"
+            path="/waist"
             element={
               <SimpleLayout title="Обхват талії">
                 <WaistPage />
@@ -77,7 +77,7 @@ const RoutingSystem: FC = () => {
             }
           />
           <Route
-            path="/dashboard/hips"
+            path="/hips"
             element={
               <SimpleLayout title="Обхват стегон">
                 <HipsPage />
@@ -85,7 +85,7 @@ const RoutingSystem: FC = () => {
             }
           />
           <Route
-            path="/dashboard/hip"
+            path="/hip"
             element={
               <SimpleLayout title="Обхват стегна">
                 <HipPage />
@@ -93,7 +93,7 @@ const RoutingSystem: FC = () => {
             }
           />
           <Route
-            path="/dashboard/nutrition"
+            path="/nutrition"
             element={
               <SimpleLayout title="Харчування">
                 <NutritionPage />
@@ -101,7 +101,7 @@ const RoutingSystem: FC = () => {
             }
           />
           <Route
-            path="/dashboard/exercise"
+            path="/exercise"
             element={
               <SimpleLayout title="Тренування">
                 <ExercisePage />
