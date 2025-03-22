@@ -24,7 +24,7 @@ export class PrivateErrorBoundary extends Component<
 
   render() {
     if (this.state.hasError) {
-      return <Navigate to="/" replace />;
+      return <Navigate to="/login" replace />;
     }
     return this.props.children;
   }

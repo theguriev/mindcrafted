@@ -29,17 +29,21 @@ const RoutingSystem: FC = () => {
           <Route
             path="/"
             element={
-              <MainLayout title="Головна">
-                <DashboardPage />
-              </MainLayout>
+              <PrivateBoundary>
+                <MainLayout title="Головна">
+                  <DashboardPage />
+                </MainLayout>
+              </PrivateBoundary>
             }
           />
           <Route
             path="/steps"
             element={
-              <SimpleLayout title="Кроки">
-                <StepsPage />
-              </SimpleLayout>
+              <PrivateBoundary>
+                <SimpleLayout title="Кроки">
+                  <StepsPage />
+                </SimpleLayout>
+              </PrivateBoundary>
             }
           />
           <Route
@@ -55,61 +59,82 @@ const RoutingSystem: FC = () => {
           <Route
             path="/shoulder"
             element={
-              <SimpleLayout title="Обхват плеча">
-                <ShoulderPage />
-              </SimpleLayout>
+              <PrivateBoundary>
+                <SimpleLayout title="Обхват плеча">
+                  <ShoulderPage />
+                </SimpleLayout>
+              </PrivateBoundary>
             }
           />
           <Route
             path="/chest"
             element={
-              <SimpleLayout title="Обхват грудей">
-                <ChestPage />
-              </SimpleLayout>
+              <PrivateBoundary>
+                <SimpleLayout title="Обхват грудей">
+                  <ChestPage />
+                </SimpleLayout>
+              </PrivateBoundary>
             }
           />
           <Route
             path="/waist"
             element={
-              <SimpleLayout title="Обхват талії">
-                <WaistPage />
-              </SimpleLayout>
+              <PrivateBoundary>
+                <SimpleLayout title="Обхват талії">
+                  <WaistPage />
+                </SimpleLayout>
+              </PrivateBoundary>
             }
           />
           <Route
             path="/hips"
             element={
-              <SimpleLayout title="Обхват стегон">
-                <HipsPage />
-              </SimpleLayout>
+              <PrivateBoundary>
+                <SimpleLayout title="Обхват стегон">
+                  <HipsPage />
+                </SimpleLayout>
+              </PrivateBoundary>
             }
           />
           <Route
             path="/hip"
             element={
-              <SimpleLayout title="Обхват стегна">
-                <HipPage />
-              </SimpleLayout>
+              <PrivateBoundary>
+                <SimpleLayout title="Обхват стегна">
+                  <HipPage />
+                </SimpleLayout>
+              </PrivateBoundary>
             }
           />
           <Route
             path="/nutrition"
             element={
-              <SimpleLayout title="Харчування">
-                <NutritionPage />
-              </SimpleLayout>
+              <PrivateBoundary>
+                <SimpleLayout title="Харчування">
+                  <NutritionPage />
+                </SimpleLayout>
+              </PrivateBoundary>
             }
           />
           <Route
             path="/exercise"
             element={
-              <SimpleLayout title="Тренування">
-                <ExercisePage />
-              </SimpleLayout>
+              <PrivateBoundary>
+                <SimpleLayout title="Тренування">
+                  <ExercisePage />
+                </SimpleLayout>
+              </PrivateBoundary>
             }
           />
           <Route path="/error" element={<ErrorPage />} />
-          <Route path="/welcome" element={<WelcomePage />} />
+          <Route
+            path="/welcome"
+            element={
+              <PrivateBoundary>
+                <WelcomePage />
+              </PrivateBoundary>
+            }
+          />
           <Route path="/*" element={<WizardRoutes />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
