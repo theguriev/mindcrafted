@@ -87,7 +87,7 @@ const NutritionPage: FC = () => {
   const [meals, setMeals] = useState<Meal[]>([
     {
       id: 1,
-      name: "Сніданок",
+      name: "Прийом їжі 1",
       selections: {
         a: { item: "Цільнозерновий хліб", grams: 50 },
         b: { item: "Кефір 1%", grams: 135 },
@@ -96,17 +96,17 @@ const NutritionPage: FC = () => {
     },
     {
       id: 2,
-      name: "Обід",
+      name: "Прийом їжі 2",
       selections: { a: null, b: null, c: null },
     },
     {
       id: 3,
-      name: "Перекус",
+      name: "Прийом їжі 3",
       selections: { a: null, b: null, c: null },
     },
     {
       id: 4,
-      name: "Вечеря",
+      name: "Прийом їжі 4",
       selections: { a: null, b: null, c: null },
     },
   ]);
