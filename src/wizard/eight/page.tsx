@@ -9,24 +9,19 @@ import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
 import { FC, useCallback } from "react";
 import WizardInput from "../components/wizard-input";
-import useMeQuery from "@/hooks/useMeQuery";
-import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import useNextWizardPath from "../hooks/use-next-wizard-path";
+import usePostMeasurementMutate from "@/hooks/use-post-measurement-mutate";
 
 const EightPage: FC = () => {
-  const { data } = useMeQuery();
-  const { mutate, isPending } = useUpdateMetaMutate();
+  const { mutate, isPending } = usePostMeasurementMutate();
   const navigate = useNavigate();
   const nextPath = useNextWizardPath();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
-    defaultValues: {
-      hipMeasurement: data.meta?.hipMeasurement,
-    },
   });
   const handleSuccess = useCallback(() => {
     navigate(nextPath);
@@ -34,22 +29,18 @@ const EightPage: FC = () => {
 
   const handleSubmit = useCallback(
     (body: FormSchema) => {
+      const hip = Number(body.hipMeasurement);
       mutate(
         {
+          body: { type: "hip", meta: { value: hip } },
           headers: { "Content-type": "application/json" },
-          body: {
-            meta: {
-              ...(data.meta || {}),
-              ...body,
-            },
-          },
         },
         {
           onSuccess: handleSuccess,
         }
       );
     },
-    [data.meta, handleSuccess, mutate]
+    [handleSuccess, mutate]
   );
 
   return (
