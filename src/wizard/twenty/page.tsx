@@ -1,4 +1,4 @@
-import { formSchema } from "./zod";
+import { FormSchema, formSchema } from "./zod";
 import {
   FormField,
   FormItem,
@@ -10,21 +10,49 @@ import { Label } from "@radix-ui/react-label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
-import { FC } from "react";
-import { FieldValues } from "react-hook-form";
-import useWizardStep from "../hooks/useWizardStep";
+import { FC, useCallback } from "react";
+import useMeQuery from "@/hooks/useMeQuery";
+import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import useNextWizardPath from "../hooks/use-next-wizard-path";
 
-const TwentyPage: FC<{
-  onSubmit: (body: { meta: FieldValues }) => void;
-  pending: boolean;
-}> = ({ onSubmit, pending }) => {
-  const { form, handleSubmit } = useWizardStep({
-    formSchema,
-    onSubmit,
-    getDefaultValues: (data) => ({
+const TwentyPage: FC = () => {
+  const { data } = useMeQuery();
+  const { mutate, isPending } = useUpdateMetaMutate();
+  const navigate = useNavigate();
+  const nextPath = useNextWizardPath();
+  const form = useForm<FormSchema>({
+    resolver: zodResolver(formSchema),
+    mode: "onBlur",
+    defaultValues: {
       breastfeeding: data.meta?.breastfeeding,
-    }),
+    },
   });
+  const handleSuccess = useCallback(() => {
+    navigate(nextPath);
+  }, [nextPath, navigate]);
+
+  const handleSubmit = useCallback(
+    (body: FormSchema) => {
+      mutate(
+        {
+          headers: { "Content-type": "application/json" },
+          body: {
+            meta: {
+              ...(data.meta || {}),
+              ...body,
+            },
+          },
+        },
+        {
+          onSuccess: handleSuccess,
+        }
+      );
+    },
+    [data.meta, handleSuccess, mutate]
+  );
 
   return (
     <WizardForm onSubmit={form.handleSubmit(handleSubmit)} {...form}>
@@ -55,7 +83,7 @@ const TwentyPage: FC<{
           </FormItem>
         )}
       />
-      <WizardFormFooter valid={form.formState.isValid} pending={pending} />
+      <WizardFormFooter valid={form.formState.isValid} pending={isPending} />
     </WizardForm>
   );
 };
