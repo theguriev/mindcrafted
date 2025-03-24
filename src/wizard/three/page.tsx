@@ -14,27 +14,54 @@ import {
   PopoverContent,
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { formSchema } from "./zod";
+import { FormSchema, formSchema } from "./zod";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
-import { FC } from "react";
-import { FieldValues } from "react-hook-form";
-import useWizardStep from "../hooks/useWizardStep";
+import { FC, useCallback } from "react";
+import { useForm } from "react-hook-form";
+import useMeQuery from "@/hooks/useMeQuery";
+import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router";
+import useNextWizardPath from "../hooks/use-next-wizard-path";
 
-const ThreePage: FC<{
-  onSubmit: (body: { meta: FieldValues }) => void;
-  pending: boolean;
-}> = ({ onSubmit, pending }) => {
-  const { form, handleSubmit } = useWizardStep({
-    formSchema,
-    onSubmit,
-    prepareBody: (body) => ({ birthday: body.birthday?.toISOString() }),
-    getDefaultValues: (data) => ({
+const ThreePage: FC = () => {
+  const { data } = useMeQuery();
+  const { mutate, isPending } = useUpdateMetaMutate();
+  const navigate = useNavigate();
+  const nextPath = useNextWizardPath();
+  const form = useForm<FormSchema>({
+    resolver: zodResolver(formSchema),
+    mode: "onBlur",
+    defaultValues: {
       birthday: data.meta?.birthday
         ? new Date(Date.parse(data.meta.birthday))
         : undefined,
-    }),
+    },
   });
+  const handleSuccess = useCallback(() => {
+    navigate(nextPath);
+  }, [nextPath, navigate]);
+
+  const handleSubmit = useCallback(
+    (body: FormSchema) => {
+      mutate(
+        {
+          headers: { "Content-type": "application/json" },
+          body: {
+            meta: {
+              ...(data.meta || {}),
+              ...{ birthday: body.birthday?.toISOString() },
+            },
+          },
+        },
+        {
+          onSuccess: handleSuccess,
+        }
+      );
+    },
+    [data.meta, handleSuccess, mutate]
+  );
 
   return (
     <WizardForm onSubmit={form.handleSubmit(handleSubmit)} {...form}>
@@ -80,7 +107,7 @@ const ThreePage: FC<{
           </FormItem>
         )}
       />
-      <WizardFormFooter valid={form.formState.isValid} pending={pending} />
+      <WizardFormFooter valid={form.formState.isValid} pending={isPending} />
     </WizardForm>
   );
 };

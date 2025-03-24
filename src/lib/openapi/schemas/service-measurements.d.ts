@@ -115,7 +115,9 @@ export interface components {
       /** @description Type of measurement */
       type: string;
       /** @description Additional metadata for the measurement */
-      meta?: Record<string, never>;
+      meta?: {
+        [key: string]: string | number;
+      };
     };
     MeasurementResponse: {
       success?: boolean;
