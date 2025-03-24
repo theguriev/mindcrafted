@@ -9,23 +9,21 @@ import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
 import { FC, useCallback } from "react";
 import WizardInput from "../components/wizard-input";
-import useMeQuery from "@/hooks/useMeQuery";
-import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import useNextWizardPath from "../hooks/use-next-wizard-path";
+import usePostMeasurementMutate from "@/hooks/use-post-measurement-mutate";
 
 const FivePage: FC = () => {
-  const { data } = useMeQuery();
-  const { mutate, isPending } = useUpdateMetaMutate();
+  const { mutate, isPending } = usePostMeasurementMutate();
   const navigate = useNavigate();
   const nextPath = useNextWizardPath();
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
-      weight: data.meta?.weight,
+      weight: "60",
     },
   });
   const handleSuccess = useCallback(() => {
@@ -34,22 +32,18 @@ const FivePage: FC = () => {
 
   const handleSubmit = useCallback(
     (body: FormSchema) => {
+      const weight = Number(body.weight);
       mutate(
         {
+          body: { type: "weight", meta: { value: weight } },
           headers: { "Content-type": "application/json" },
-          body: {
-            meta: {
-              ...(data.meta || {}),
-              ...body,
-            },
-          },
         },
         {
           onSuccess: handleSuccess,
         }
       );
     },
-    [data.meta, handleSuccess, mutate]
+    [handleSuccess, mutate]
   );
 
   return (
