@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { formSchema } from "./zod";
+import { FormSchema, formSchema } from "./zod";
 import {
   FormField,
   FormItem,
@@ -17,24 +17,51 @@ import {
 import { Calendar } from "@/components/ui/calendar";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
-import { FC } from "react";
-import { FieldValues } from "react-hook-form";
-import useWizardStep from "../hooks/useWizardStep";
+import { FC, useCallback } from "react";
+import useMeQuery from "@/hooks/useMeQuery";
+import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import useNextWizardPath from "../hooks/use-next-wizard-path";
 
-const NineteenPage: FC<{
-  onSubmit: (body: { meta: FieldValues }) => void;
-  pending: boolean;
-}> = ({ onSubmit, pending }) => {
-  const { form, handleSubmit } = useWizardStep({
-    formSchema,
-    onSubmit,
-    prepareBody: (body) => ({ gaveBirth: body.gaveBirth?.toISOString() }),
-    getDefaultValues: (data) => ({
+const NineteenPage: FC = () => {
+  const { data } = useMeQuery();
+  const { mutate, isPending } = useUpdateMetaMutate();
+  const navigate = useNavigate();
+  const nextPath = useNextWizardPath();
+  const form = useForm<FormSchema>({
+    resolver: zodResolver(formSchema),
+    mode: "onBlur",
+    defaultValues: {
       gaveBirth: data.meta?.gaveBirth
         ? new Date(Date.parse(data.meta.gaveBirth))
         : undefined,
-    }),
+    },
   });
+  const handleSuccess = useCallback(() => {
+    navigate(nextPath);
+  }, [nextPath, navigate]);
+
+  const handleSubmit = useCallback(
+    (body: FormSchema) => {
+      mutate(
+        {
+          headers: { "Content-type": "application/json" },
+          body: {
+            meta: {
+              ...(data.meta || {}),
+              ...{ gaveBirth: body.gaveBirth?.toISOString() },
+            },
+          },
+        },
+        {
+          onSuccess: handleSuccess,
+        }
+      );
+    },
+    [data.meta, handleSuccess, mutate]
+  );
 
   return (
     <WizardForm onSubmit={form.handleSubmit(handleSubmit)} {...form}>
@@ -80,7 +107,7 @@ const NineteenPage: FC<{
           </FormItem>
         )}
       />
-      <WizardFormFooter valid={form.formState.isValid} pending={pending} />
+      <WizardFormFooter valid={form.formState.isValid} pending={isPending} />
     </WizardForm>
   );
 };
