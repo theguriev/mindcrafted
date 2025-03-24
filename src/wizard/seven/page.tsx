@@ -4,25 +4,53 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import { formSchema } from "./zod";
+import { FormSchema, formSchema } from "./zod";
 import WizardForm from "../components/wizard-form";
 import WizardFormFooter from "../components/wizard-form-footer";
-import { FC } from "react";
-import { FieldValues } from "react-hook-form";
-import useWizardStep from "../hooks/useWizardStep";
+import { FC, useCallback } from "react";
 import WizardInput from "../components/wizard-input";
+import useMeQuery from "@/hooks/useMeQuery";
+import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
+import useNextWizardPath from "../hooks/use-next-wizard-path";
 
-const SevenPage: FC<{
-  onSubmit: (body: { meta: FieldValues }) => void;
-  pending: boolean;
-}> = ({ onSubmit, pending }) => {
-  const { form, handleSubmit } = useWizardStep({
-    formSchema,
-    onSubmit,
-    getDefaultValues: (data) => ({
+const SevenPage: FC = () => {
+  const { data } = useMeQuery();
+  const { mutate, isPending } = useUpdateMetaMutate();
+  const navigate = useNavigate();
+  const nextPath = useNextWizardPath();
+  const form = useForm<FormSchema>({
+    resolver: zodResolver(formSchema),
+    mode: "onBlur",
+    defaultValues: {
       shoulderVolumeMeasurement: data.meta?.shoulderVolumeMeasurement,
-    }),
+    },
   });
+  const handleSuccess = useCallback(() => {
+    navigate(nextPath);
+  }, [nextPath, navigate]);
+
+  const handleSubmit = useCallback(
+    (body: FormSchema) => {
+      mutate(
+        {
+          headers: { "Content-type": "application/json" },
+          body: {
+            meta: {
+              ...(data.meta || {}),
+              ...body,
+            },
+          },
+        },
+        {
+          onSuccess: handleSuccess,
+        }
+      );
+    },
+    [data.meta, handleSuccess, mutate]
+  );
 
   return (
     <WizardForm onSubmit={form.handleSubmit(handleSubmit)} {...form}>
@@ -36,7 +64,7 @@ const SevenPage: FC<{
                 <WizardInput
                   placeholder="Обхват плеча (см)"
                   type="number"
-                  disabled={pending}
+                  disabled={isPending}
                   {...field}
                 />
               </div>
@@ -45,7 +73,7 @@ const SevenPage: FC<{
           </FormItem>
         )}
       />
-      <WizardFormFooter valid={form.formState.isValid} pending={pending} />
+      <WizardFormFooter valid={form.formState.isValid} pending={isPending} />
     </WizardForm>
   );
 };
