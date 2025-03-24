@@ -22,9 +22,6 @@ const FivePage: FC = () => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
-    defaultValues: {
-      weight: "60",
-    },
   });
   const handleSuccess = useCallback(() => {
     navigate(nextPath);

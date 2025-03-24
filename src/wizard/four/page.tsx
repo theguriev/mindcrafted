@@ -23,9 +23,6 @@ const FourPage: FC = () => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
-    defaultValues: {
-      height: "170",
-    },
   });
   const handleSuccess = useCallback(() => {
     navigate(nextPath);
