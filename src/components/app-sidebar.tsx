@@ -20,7 +20,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import useMeQuery from "@/hooks/useMeQuery";
+import useMeQuery from "@/hooks/use-me-query";
 import { ComponentProps, useState, useMemo } from "react";
 
 // This is sample data

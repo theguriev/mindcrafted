@@ -13,8 +13,8 @@ import WizardFormFooter from "../components/wizard-form-footer";
 import { FC, useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import useMeQuery from "@/hooks/useMeQuery";
-import useUpdateMetaMutate from "@/hooks/useUpdateMetaMutate";
+import useMeQuery from "@/hooks/use-me-query";
+import useUpdateMetaMutate from "@/hooks/use-update-meta-mutate";
 import { useNavigate } from "react-router";
 import useNextWizardPath from "../hooks/use-next-wizard-path";
 
