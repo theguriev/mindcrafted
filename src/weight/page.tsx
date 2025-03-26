@@ -18,7 +18,7 @@ import {
 } from "recharts";
 import selectFirstMeasurementValue from "../utils/selectFirstMeasurementValue";
 import selectBodyMeasurement from "../utils/selectBodyMeasurement";
-import getBMICategory from "../utils/getBMICategory";
+import getBMICategory from "../utils/get-bmi-category";
 
 const WeightPage: FC = () => {
   const { data: height } = useMeasurementQuery({
