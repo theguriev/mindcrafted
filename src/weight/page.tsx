@@ -16,8 +16,8 @@ import {
   LineChart,
   ReferenceLine,
 } from "recharts";
-import selectFirstMeasurementValue from "../utils/selectFirstMeasurementValue";
-import selectBodyMeasurement from "../utils/selectBodyMeasurement";
+import selectFirstMeasurementValue from "../utils/select-first-measurement-value";
+import selectBodyMeasurement from "../utils/select-body-measurement";
 import getBMICategory from "../utils/get-bmi-category";
 
 const WeightPage: FC = () => {

@@ -1,6 +1,6 @@
 import { useMeasurementQuery } from "@/hooks/use-measurement-query";
 import { FC } from "react";
-import selectBodyMeasurement from "../utils/selectBodyMeasurement";
+import selectBodyMeasurement from "../utils/select-body-measurement";
 import WeightCard from "./weight-card";
 import createGoalWeightSelector from "../utils/create-goal-weight-selector";
 

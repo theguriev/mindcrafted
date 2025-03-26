@@ -1,7 +1,7 @@
 import { useMeasurementQuery } from "@/hooks/use-measurement-query";
 import { FC } from "react";
 import StepsCard from "./steps-card";
-import selectFirstMeasurementValue from "../utils/selectFirstMeasurementValue";
+import selectFirstMeasurementValue from "../utils/select-first-measurement-value";
 
 const StepsCardLoader: FC = () => {
   const { data: steps } = useMeasurementQuery({

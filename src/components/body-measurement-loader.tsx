@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { useMeasurementQuery } from "@/hooks/use-measurement-query";
-import selectBodyMeasurement from "../utils/selectBodyMeasurement";
+import selectBodyMeasurement from "../utils/select-body-measurement";
 import { BodyMeasurement } from "../types";
 
 const BodyMeasurementLoader: FC<{
