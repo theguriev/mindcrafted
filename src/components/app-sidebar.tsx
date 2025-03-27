@@ -2,9 +2,9 @@ import {
   LayoutDashboard,
   Utensils,
   Dumbbell,
-  CalendarDays,
+  Footprints,
+  Ruler,
   Users,
-  PersonStanding,
 } from "lucide-react";
 
 import NavUser from "./nav-user";
@@ -51,7 +51,7 @@ const data = {
     {
       title: "Кроки",
       url: "#",
-      icon: CalendarDays,
+      icon: Footprints,
       isActive: false,
     },
     {
@@ -63,37 +63,37 @@ const data = {
     {
       title: "Вага",
       url: "#",
-      icon: PersonStanding,
+      icon: Ruler,
       isActive: false,
     },
     {
       title: "Обхват плеча",
       url: "#",
-      icon: Utensils,
+      icon: Ruler,
       isActive: false,
     },
     {
       title: "Обхват грудей",
       url: "#",
-      icon: Utensils,
+      icon: Ruler,
       isActive: false,
     },
     {
       title: "Обхват талії",
       url: "#",
-      icon: Utensils,
+      icon: Ruler,
       isActive: false,
     },
     {
       title: "Обхват стегон",
       url: "#",
-      icon: Utensils,
+      icon: Ruler,
       isActive: false,
     },
     {
       title: "Обхват стегна",
       url: "#",
-      icon: Utensils,
+      icon: Ruler,
       isActive: false,
     },
   ],
