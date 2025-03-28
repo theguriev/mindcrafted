@@ -38,7 +38,7 @@ const data = {
     },
     {
       title: "Харчування",
-      url: "#",
+      url: "/nutrition",
       icon: Utensils,
       isActive: false,
     },
