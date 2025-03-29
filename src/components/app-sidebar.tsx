@@ -1,11 +1,12 @@
+import { Link } from "react-router";
 import {
   LayoutDashboard,
   Utensils,
   Dumbbell,
   Footprints,
   Ruler,
-  Users,
 } from "lucide-react";
+import { useLocation } from "react-router";
 
 import NavUser from "./nav-user";
 import {
@@ -20,91 +21,74 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import useMeQuery from "@/hooks/use-me-query";
-import { ComponentProps, useState, useMemo } from "react";
+import { ComponentProps, useMemo } from "react";
 
-// This is sample data
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+const data = [
+  {
+    title: "Головна",
+    url: "/",
+    icon: LayoutDashboard,
+    isActive: true,
   },
-  navMain: [
-    {
-      title: "Головна",
-      url: "#",
-      icon: LayoutDashboard,
-      isActive: true,
-    },
-    {
-      title: "Харчування",
-      url: "/nutrition",
-      icon: Utensils,
-      isActive: false,
-    },
-    {
-      title: "Вправи",
-      url: "#",
-      icon: Dumbbell,
-      isActive: false,
-    },
-    {
-      title: "Кроки",
-      url: "#",
-      icon: Footprints,
-      isActive: false,
-    },
-    {
-      title: "Clients",
-      url: "#",
-      icon: Users,
-      isActive: false,
-    },
-    {
-      title: "Вага",
-      url: "#",
-      icon: Ruler,
-      isActive: false,
-    },
-    {
-      title: "Обхват плеча",
-      url: "#",
-      icon: Ruler,
-      isActive: false,
-    },
-    {
-      title: "Обхват грудей",
-      url: "#",
-      icon: Ruler,
-      isActive: false,
-    },
-    {
-      title: "Обхват талії",
-      url: "#",
-      icon: Ruler,
-      isActive: false,
-    },
-    {
-      title: "Обхват стегон",
-      url: "#",
-      icon: Ruler,
-      isActive: false,
-    },
-    {
-      title: "Обхват стегна",
-      url: "#",
-      icon: Ruler,
-      isActive: false,
-    },
-  ],
-};
+  {
+    title: "Харчування",
+    url: "/nutrition",
+    icon: Utensils,
+    isActive: false,
+  },
+  {
+    title: "Вправи",
+    url: "/exercise",
+    icon: Dumbbell,
+    isActive: false,
+  },
+  {
+    title: "Кроки",
+    url: "/steps",
+    icon: Footprints,
+    isActive: false,
+  },
+  {
+    title: "Вага",
+    url: "/weight",
+    icon: Ruler,
+    isActive: false,
+  },
+  {
+    title: "Обхват плеча",
+    url: "/shoulder",
+    icon: Ruler,
+    isActive: false,
+  },
+  {
+    title: "Обхват грудей",
+    url: "/chest",
+    icon: Ruler,
+    isActive: false,
+  },
+  {
+    title: "Обхват талії",
+    url: "/waist",
+    icon: Ruler,
+    isActive: false,
+  },
+  {
+    title: "Обхват стегон",
+    url: "/hips",
+    icon: Ruler,
+    isActive: false,
+  },
+  {
+    title: "Обхват стегна",
+    url: "/hip",
+    icon: Ruler,
+    isActive: false,
+  },
+];
 
 const AppSidebar = ({ ...props }: ComponentProps<typeof Sidebar>) => {
-  // Note: I'm using state to show active item.
-  // IRL you should use the url/router.
-  const [activeItem, setActiveItem] = useState(data.navMain[0]);
-
   const { data: me } = useMeQuery();
+  const location = useLocation();
 
   const user = useMemo(
     () => ({
@@ -140,21 +124,21 @@ const AppSidebar = ({ ...props }: ComponentProps<typeof Sidebar>) => {
         <SidebarGroup>
           <SidebarGroupContent className="px-1.5 md:px-0">
             <SidebarMenu>
-              {data.navMain.map((item) => (
+              {data.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     tooltip={{
                       children: item.title,
                       hidden: false,
                     }}
-                    onClick={() => {
-                      setActiveItem(item);
-                    }}
-                    isActive={activeItem.title === item.title}
                     className="px-2.5 md:px-2"
+                    asChild
+                    isActive={location.pathname === item.url}
                   >
-                    <item.icon />
-                    <span>{item.title}</span>
+                    <Link to={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
