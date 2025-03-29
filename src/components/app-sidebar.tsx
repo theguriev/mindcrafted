@@ -120,7 +120,7 @@ const AppSidebar = ({ ...props }: ComponentProps<typeof Sidebar>) => {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild className="md:h-8 md:p-0">
+            <SidebarMenuButton size="lg" asChild>
               <a href="#">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 text-sidebar-primary-foreground">
                   <Dumbbell className="size-4" />
