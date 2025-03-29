@@ -19,6 +19,8 @@ import {
 import selectFirstMeasurementValue from "../utils/select-first-measurement-value";
 import selectBodyMeasurement from "../utils/select-body-measurement";
 import getBMICategory from "../utils/get-bmi-category";
+import { flow } from "es-toolkit/compat";
+import selectNumber from "@/utils/select-number";
 
 const WeightPage: FC = () => {
   const { data: height } = useMeasurementQuery({
@@ -27,7 +29,7 @@ const WeightPage: FC = () => {
       query: { type: "height", limit: 1, offset: 0 },
     },
     queryOptions: {
-      select: selectFirstMeasurementValue,
+      select: flow(selectFirstMeasurementValue, selectNumber),
     },
   });
 
