@@ -64,13 +64,15 @@ const createRequest = <Paths>({ getBaseUrl }: { getBaseUrl: () => string }) => {
       ])
     ) as unknown as RequestInit;
 
-    return (await fetch(
+    const request = await fetch(
       `${getBaseUrl()}${replacePathParameters(
         path.toString(),
         pathParams
       )}?${new URLSearchParams(query)}`,
       fetchParameters
-    )) as unknown as Promise<FancyResponse>;
+    );
+    const response: Promise<FancyResponse> = await request.json();
+    return response;
   };
 };
 

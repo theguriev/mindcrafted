@@ -1,4 +1,4 @@
-import createRequest from "./createRequest";
+import createRequest from "./create-request";
 import { Paths } from "./types";
 
 export const api = {
