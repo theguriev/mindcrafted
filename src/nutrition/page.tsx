@@ -1,10 +1,11 @@
-import { Check, Plus } from "lucide-react";
+import { Check, Plus, Scale } from "lucide-react";
 import { FC, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -202,6 +203,15 @@ const NutritionPage: FC = () => {
             <Progress value={progress} className="h-2" />
           </div>
         </CardContent>
+        <CardFooter className="bg-muted/30 border-t pt-6">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Scale className="h-4 w-4" />
+            <span>
+              Всі ваги вказані для сирих продуктів. Не перевищуйте рекомендовані
+              порції.
+            </span>
+          </div>
+        </CardFooter>
       </Card>
 
       <div className="grid gap-4">
