@@ -1,11 +1,11 @@
 import AppSidebar from "@/components/app-sidebar";
 import { FC, PropsWithChildren } from "react";
 import { SidebarProvider, SidebarInset, SidebarTrigger } from "./ui/sidebar";
+import BackTrigger from "./back-trigger";
 
-const MainLayout: FC<PropsWithChildren<{ title: string }>> = ({
-  children,
-  title,
-}) => {
+const MainLayout: FC<
+  PropsWithChildren<{ title: string; backTrigger?: boolean }>
+> = ({ children, title, backTrigger }) => {
   return (
     <SidebarProvider
       style={
@@ -17,6 +17,7 @@ const MainLayout: FC<PropsWithChildren<{ title: string }>> = ({
       <AppSidebar />
       <SidebarInset>
         <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
+          {backTrigger && <BackTrigger />}
           <SidebarTrigger className="-ml-1" />
           <h1 className="text-xl font-semibold">{title}</h1>
         </header>

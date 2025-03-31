@@ -2,7 +2,6 @@ import { FC, lazy } from "react";
 import { BrowserRouter, Routes, Navigate, Route } from "react-router";
 import Providers from "./providers";
 import MainLayout from "./components/main-layout";
-import SimpleLayout from "./components/simple-page-layout";
 import PrivateBoundary from "./components/private-boundary";
 import routes from "./constants/routes";
 
@@ -40,9 +39,9 @@ const RoutingSystem: FC = () => {
             path="/steps"
             element={
               <PrivateBoundary>
-                <SimpleLayout title="Кроки">
+                <MainLayout title="Кроки" backTrigger>
                   <StepsPage />
-                </SimpleLayout>
+                </MainLayout>
               </PrivateBoundary>
             }
           />
@@ -50,9 +49,9 @@ const RoutingSystem: FC = () => {
             path="/weight"
             element={
               <PrivateBoundary>
-                <SimpleLayout title="Вага">
+                <MainLayout title="Вага" backTrigger>
                   <WeightPage />
-                </SimpleLayout>
+                </MainLayout>
               </PrivateBoundary>
             }
           />
@@ -60,9 +59,9 @@ const RoutingSystem: FC = () => {
             path="/shoulder"
             element={
               <PrivateBoundary>
-                <SimpleLayout title="Обхват плеча">
+                <MainLayout title="Обхват плеча" backTrigger>
                   <ShoulderPage />
-                </SimpleLayout>
+                </MainLayout>
               </PrivateBoundary>
             }
           />
@@ -70,9 +69,9 @@ const RoutingSystem: FC = () => {
             path="/chest"
             element={
               <PrivateBoundary>
-                <SimpleLayout title="Обхват грудей">
+                <MainLayout title="Обхват грудей" backTrigger>
                   <ChestPage />
-                </SimpleLayout>
+                </MainLayout>
               </PrivateBoundary>
             }
           />
@@ -80,9 +79,9 @@ const RoutingSystem: FC = () => {
             path="/waist"
             element={
               <PrivateBoundary>
-                <SimpleLayout title="Обхват талії">
+                <MainLayout title="Обхват талії" backTrigger>
                   <WaistPage />
-                </SimpleLayout>
+                </MainLayout>
               </PrivateBoundary>
             }
           />
@@ -90,9 +89,9 @@ const RoutingSystem: FC = () => {
             path="/hips"
             element={
               <PrivateBoundary>
-                <SimpleLayout title="Обхват стегон">
+                <MainLayout title="Обхват стегон" backTrigger>
                   <HipsPage />
-                </SimpleLayout>
+                </MainLayout>
               </PrivateBoundary>
             }
           />
@@ -100,9 +99,9 @@ const RoutingSystem: FC = () => {
             path="/hip"
             element={
               <PrivateBoundary>
-                <SimpleLayout title="Обхват стегна">
+                <MainLayout title="Обхват стегна" backTrigger>
                   <HipPage />
-                </SimpleLayout>
+                </MainLayout>
               </PrivateBoundary>
             }
           />
@@ -110,9 +109,9 @@ const RoutingSystem: FC = () => {
             path="/nutrition"
             element={
               <PrivateBoundary>
-                <SimpleLayout title="Харчування">
+                <MainLayout title="Харчування" backTrigger>
                   <NutritionPage />
-                </SimpleLayout>
+                </MainLayout>
               </PrivateBoundary>
             }
           />
@@ -120,9 +119,9 @@ const RoutingSystem: FC = () => {
             path="/exercise"
             element={
               <PrivateBoundary>
-                <SimpleLayout title="Тренування">
+                <MainLayout title="Тренування" backTrigger>
                   <ExercisePage />
-                </SimpleLayout>
+                </MainLayout>
               </PrivateBoundary>
             }
           />
