@@ -1,5 +1,5 @@
-import { Check, Plus, Scale } from "lucide-react";
-import { FC, useState } from "react";
+import { Check, ChevronsUpDown, Scale, X } from "lucide-react";
+import { type FC, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,12 +12,24 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
-import { Input } from "@/components/ui/input";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 type Selection = {
-  a: { item: string; grams: number } | null;
-  b: { item: string; grams: number } | null;
-  c: { item: string; grams: number } | null;
+  a: { item: string; grams: number; portion: "whole" | "half" } | null;
+  b: { item: string; grams: number; portion: "whole" | "half" } | null;
+  c: { item: string; grams: number; portion: "whole" | "half" } | null;
 };
 
 type Meal = {
@@ -90,9 +102,9 @@ const NutritionPage: FC = () => {
       id: 1,
       name: "Прийом їжі 1",
       selections: {
-        a: { item: "Цільнозерновий хліб", grams: 50 },
-        b: { item: "Кефір 1%", grams: 135 },
-        c: { item: "Закуски", grams: 70 },
+        a: { item: "Цільнозерновий хліб", grams: 50, portion: "whole" },
+        b: { item: "Кефір 1%", grams: 135, portion: "whole" },
+        c: { item: "Закуски", grams: 70, portion: "whole" },
       },
     },
     {
@@ -112,7 +124,9 @@ const NutritionPage: FC = () => {
     },
   ]);
 
-  const [, setTempGrams] = useState<{ [key: string]: number }>({});
+  const [openPopover, setOpenPopover] = useState<{ [key: string]: boolean }>(
+    {}
+  );
 
   const isMealComplete = (selections: Selection) => {
     return (
@@ -129,10 +143,12 @@ const NutritionPage: FC = () => {
   const handleSelectItem = (
     mealId: number,
     category: "a" | "b" | "c",
-    item: IngredientInfo
+    item: IngredientInfo,
+    portion: "whole" | "half" = "whole"
   ) => {
-    const tempKey = `${mealId}-${category}-${item.name}`;
-    setTempGrams((prev) => ({ ...prev, [tempKey]: item.recommendedGrams }));
+    const baseGrams = item.recommendedGrams;
+    const newGrams =
+      portion === "whole" ? baseGrams : Math.round(baseGrams * 0.5);
 
     setMeals(
       meals.map((meal) =>
@@ -141,33 +157,22 @@ const NutritionPage: FC = () => {
               ...meal,
               selections: {
                 ...meal.selections,
-                [category]: { item: item.name, grams: item.recommendedGrams },
+                [category]: {
+                  item: item.name,
+                  grams: newGrams,
+                  portion: portion,
+                },
               },
             }
           : meal
       )
     );
-  };
 
-  const handleUpdateGrams = (
-    mealId: number,
-    category: "a" | "b" | "c",
-    item: string,
-    grams: number
-  ) => {
-    setMeals(
-      meals.map((meal) =>
-        meal.id === mealId
-          ? {
-              ...meal,
-              selections: {
-                ...meal.selections,
-                [category]: { item, grams },
-              },
-            }
-          : meal
-      )
-    );
+    // Close the popover after selection
+    setOpenPopover({
+      ...openPopover,
+      [`${mealId}-${category}`]: false,
+    });
   };
 
   const resetMealSelections = (mealId: number) => {
@@ -181,6 +186,28 @@ const NutritionPage: FC = () => {
           : meal
       )
     );
+  };
+
+  const clearSelection = (mealId: number, category: "a" | "b" | "c") => {
+    setMeals(
+      meals.map((meal) =>
+        meal.id === mealId
+          ? {
+              ...meal,
+              selections: {
+                ...meal.selections,
+                [category]: null,
+              },
+            }
+          : meal
+      )
+    );
+  };
+
+  const getPortionText = (portion: "whole" | "half") => {
+    return portion === "whole"
+      ? "Повна порція (100%)"
+      : "Половина порції (50%)";
   };
 
   return (
@@ -242,21 +269,24 @@ const NutritionPage: FC = () => {
                       <span className="font-medium">
                         {meal.selections.a?.item}
                       </span>{" "}
-                      ({meal.selections.a?.grams}г)
+                      ({meal.selections.a?.grams}г -{" "}
+                      {getPortionText(meal.selections.a?.portion || "whole")})
                     </div>
                     <div className="text-sm">
                       Категорія B:{" "}
                       <span className="font-medium">
                         {meal.selections.b?.item}
                       </span>{" "}
-                      ({meal.selections.b?.grams}г)
+                      ({meal.selections.b?.grams}г -{" "}
+                      {getPortionText(meal.selections.b?.portion || "whole")})
                     </div>
                     <div className="text-sm">
                       Категорія C:{" "}
                       <span className="font-medium">
                         {meal.selections.c?.item}
                       </span>{" "}
-                      ({meal.selections.c?.grams}г)
+                      ({meal.selections.c?.grams}г -{" "}
+                      {getPortionText(meal.selections.c?.portion || "whole")})
                     </div>
                   </div>
                 </CardDescription>
@@ -265,83 +295,232 @@ const NutritionPage: FC = () => {
             <CardContent>
               {!isMealComplete(meal.selections) ? (
                 <div className="space-y-4">
-                  {mealCategories.map((category) => (
-                    <div key={category.id}>
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="font-medium">
-                          Категорія {category.id.toUpperCase()} -{" "}
-                          {category.description}
-                        </h3>
-                        {meal.selections[category.id] && (
-                          <Badge variant="secondary">
-                            Обрано: {meal.selections[category.id]?.item} (
-                            {meal.selections[category.id]?.grams}г)
-                          </Badge>
-                        )}
-                      </div>
-                      <div className="grid gap-2">
-                        {category.items.map((item) => {
-                          const isSelected =
-                            meal.selections[category.id]?.item === item.name;
+                  {mealCategories.map((category) => {
+                    const categoryKey = `${meal.id}-${category.id}`;
+                    const selection =
+                      meal.selections[category.id as keyof Selection];
 
-                          return (
-                            <div
-                              key={item.name}
-                              className="flex items-center gap-2"
+                    return (
+                      <div key={category.id}>
+                        <div className="flex items-center justify-between mb-2">
+                          <h3 className="font-medium">
+                            Категорія {category.id.toUpperCase()} -{" "}
+                            {category.description}
+                          </h3>
+                          {selection && (
+                            <Badge variant="secondary">
+                              Обрано: {selection.item} ({selection.grams}г)
+                            </Badge>
+                          )}
+                        </div>
+
+                        {selection ? (
+                          <div className="flex items-center justify-between gap-2">
+                            <Popover
+                              open={openPopover[categoryKey]}
+                              onOpenChange={(open) => {
+                                setOpenPopover({
+                                  ...openPopover,
+                                  [categoryKey]: open,
+                                });
+                              }}
                             >
-                              <Button
-                                variant={isSelected ? "default" : "outline"}
-                                className="justify-start h-auto py-2 px-3 text-left flex-1"
-                                onClick={() =>
-                                  handleSelectItem(
-                                    meal.id,
-                                    category.id as "a" | "b" | "c",
-                                    item
-                                  )
-                                }
-                              >
-                                {isSelected ? (
-                                  <Check className="h-4 w-4 mr-2 flex-shrink-0" />
-                                ) : (
-                                  <Plus className="h-4 w-4 mr-2 flex-shrink-0" />
-                                )}
-                                <span>{item.name}</span>
-                                <span className="ml-auto text-muted-foreground">
-                                  (рекомендовано: {item.recommendedGrams}г)
-                                </span>
-                              </Button>
-                              {isSelected && (
-                                <div className="flex items-center gap-2">
-                                  <Input
-                                    type="number"
-                                    value={
-                                      meal.selections[category.id]?.grams || ""
+                              <PopoverTrigger asChild>
+                                <div
+                                  className="flex-1 p-3 border rounded-md bg-muted/50 hover:bg-muted cursor-pointer transition-colors flex items-center justify-between"
+                                  role="button"
+                                  tabIndex={0}
+                                  onClick={() =>
+                                    setOpenPopover({
+                                      ...openPopover,
+                                      [categoryKey]: true,
+                                    })
+                                  }
+                                  onKeyDown={(e) => {
+                                    if (e.key === "Enter" || e.key === " ") {
+                                      setOpenPopover({
+                                        ...openPopover,
+                                        [categoryKey]: true,
+                                      });
+                                      e.preventDefault();
                                     }
-                                    onChange={(e) => {
-                                      const value =
-                                        Number.parseInt(e.target.value) || 0;
-                                      handleUpdateGrams(
-                                        meal.id,
-                                        category.id as "a" | "b" | "c",
-                                        item.name,
-                                        value
-                                      );
-                                    }}
-                                    className="w-24"
-                                    min="0"
-                                  />
-                                  <span className="text-sm text-muted-foreground">
-                                    г
-                                  </span>
+                                  }}
+                                >
+                                  <div>
+                                    <div className="font-medium">
+                                      {selection.item}
+                                    </div>
+                                    <div className="text-sm text-muted-foreground">
+                                      {selection.grams}г -{" "}
+                                      {getPortionText(selection.portion)}
+                                    </div>
+                                  </div>
+                                  <ChevronsUpDown className="h-4 w-4 opacity-50" />
                                 </div>
-                              )}
-                            </div>
-                          );
-                        })}
+                              </PopoverTrigger>
+                              <PopoverContent className="w-[300px] p-0">
+                                <Command>
+                                  <CommandInput
+                                    placeholder={`Пошук ${category.description.toLowerCase()}...`}
+                                  />
+                                  <CommandList>
+                                    <CommandEmpty>
+                                      Інгредієнт не знайдено.
+                                    </CommandEmpty>
+                                    <CommandGroup heading="Повні порції (100%)">
+                                      {category.items.map((item) => (
+                                        <CommandItem
+                                          key={`${item.name}-whole`}
+                                          value={`${item.name}-whole`}
+                                          onSelect={() =>
+                                            handleSelectItem(
+                                              meal.id,
+                                              category.id as "a" | "b" | "c",
+                                              item,
+                                              "whole"
+                                            )
+                                          }
+                                          className="flex justify-between"
+                                        >
+                                          <span>{item.name}</span>
+                                          <span className="text-muted-foreground">
+                                            {item.recommendedGrams}г
+                                          </span>
+                                        </CommandItem>
+                                      ))}
+                                    </CommandGroup>
+                                    <CommandGroup heading="Половинні порції (50%)">
+                                      {category.items.map((item) => (
+                                        <CommandItem
+                                          key={`${item.name}-half`}
+                                          value={`${item.name}-half`}
+                                          onSelect={() =>
+                                            handleSelectItem(
+                                              meal.id,
+                                              category.id as "a" | "b" | "c",
+                                              item,
+                                              "half"
+                                            )
+                                          }
+                                          className="flex justify-between"
+                                        >
+                                          <span>{item.name}</span>
+                                          <span className="text-muted-foreground">
+                                            {Math.round(
+                                              item.recommendedGrams * 0.5
+                                            )}
+                                            г
+                                          </span>
+                                        </CommandItem>
+                                      ))}
+                                    </CommandGroup>
+                                  </CommandList>
+                                </Command>
+                              </PopoverContent>
+                            </Popover>
+
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() =>
+                                clearSelection(
+                                  meal.id,
+                                  category.id as "a" | "b" | "c"
+                                )
+                              }
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ) : (
+                          <Popover
+                            open={openPopover[categoryKey]}
+                            onOpenChange={(open) => {
+                              setOpenPopover({
+                                ...openPopover,
+                                [categoryKey]: open,
+                              });
+                            }}
+                          >
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                aria-expanded={openPopover[categoryKey]}
+                                className="w-full justify-between"
+                              >
+                                {selection
+                                  ? selection.item
+                                  : `Оберіть ${category.description.toLowerCase()}`}
+                                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-full p-0">
+                              <Command>
+                                <CommandInput
+                                  placeholder={`Пошук ${category.description.toLowerCase()}...`}
+                                />
+                                <CommandList>
+                                  <CommandEmpty>
+                                    Інгредієнт не знайдено.
+                                  </CommandEmpty>
+                                  <CommandGroup heading="Повні порції (100%)">
+                                    {category.items.map((item) => (
+                                      <CommandItem
+                                        key={`${item.name}-whole`}
+                                        value={`${item.name}-whole`}
+                                        onSelect={() =>
+                                          handleSelectItem(
+                                            meal.id,
+                                            category.id as "a" | "b" | "c",
+                                            item,
+                                            "whole"
+                                          )
+                                        }
+                                        className="flex justify-between"
+                                      >
+                                        <span>{item.name}</span>
+                                        <span className="text-muted-foreground">
+                                          {item.recommendedGrams}г
+                                        </span>
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                  <CommandGroup heading="Половинні порції (50%)">
+                                    {category.items.map((item) => (
+                                      <CommandItem
+                                        key={`${item.name}-half`}
+                                        value={`${item.name}-half`}
+                                        onSelect={() =>
+                                          handleSelectItem(
+                                            meal.id,
+                                            category.id as "a" | "b" | "c",
+                                            item,
+                                            "half"
+                                          )
+                                        }
+                                        className="flex justify-between"
+                                      >
+                                        <span>{item.name}</span>
+                                        <span className="text-muted-foreground">
+                                          {Math.round(
+                                            item.recommendedGrams * 0.5
+                                          )}
+                                          г
+                                        </span>
+                                      </CommandItem>
+                                    ))}
+                                  </CommandGroup>
+                                </CommandList>
+                              </Command>
+                            </PopoverContent>
+                          </Popover>
+                        )}
+
+                        {category.id !== "c" && <Separator className="my-4" />}
                       </div>
-                      {category.id !== "c" && <Separator className="my-4" />}
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ) : (
                 <Button
