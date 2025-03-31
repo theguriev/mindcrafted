@@ -29,6 +29,8 @@ const WeightCardLoader: FC = () => {
     },
   });
 
+  console.log("log: change", change, current, goal, progress);
+
   return (
     <WeightCard
       change={change}
