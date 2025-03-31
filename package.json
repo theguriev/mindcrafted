@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "prepare": "husky",
     "copy-paste-check": "jscpd  --ignore 'node_modules,.vscode,src/lib/openapi/schemas' .",
-    "generate": "node ./src/lib/openapi/scripts/index.js"
+    "generate": "node ./src/lib/openapi/scripts/index.js",
+    "test": "tsc"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
