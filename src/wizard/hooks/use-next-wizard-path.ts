@@ -1,6 +1,6 @@
 import { routesMap, ignoreForMaleRoutes } from "@/constants/routes";
 import { useLocation } from "react-router";
-import useMeQuery from "../../hooks/useMeQuery";
+import useMeQuery from "../../hooks/use-me-query";
 import { useMemo } from "react";
 
 const useNextWizardPath = () => {

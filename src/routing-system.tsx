@@ -4,12 +4,12 @@ import Providers from "./providers";
 import MainLayout from "./components/main-layout";
 import SimpleLayout from "./components/simple-page-layout";
 import PrivateBoundary from "./components/private-boundary";
+import routes from "./constants/routes";
 
 const LoginPage = lazy(() => import("./login/page"));
 const DashboardPage = lazy(() => import("./page"));
 const StepsPage = lazy(() => import("./steps/page"));
 const ErrorPage = lazy(() => import("./error/page"));
-const WizardRoutes = lazy(() => import("./wizard-routes"));
 const WelcomePage = lazy(() => import("./welcome/page"));
 const WeightPage = lazy(() => import("./weight/page"));
 const ShoulderPage = lazy(() => import("./shoulder/page"));
@@ -135,7 +135,24 @@ const RoutingSystem: FC = () => {
               </PrivateBoundary>
             }
           />
-          <Route path="/*" element={<WizardRoutes />} />
+          <Route
+            path="/*"
+            element={
+              <Routes>
+                {routes.map(([path, Component]) => (
+                  <Route
+                    key={String(path)}
+                    path={String(path)}
+                    element={
+                      <PrivateBoundary>
+                        <Component />
+                      </PrivateBoundary>
+                    }
+                  />
+                ))}
+              </Routes>
+            }
+          />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Providers>
