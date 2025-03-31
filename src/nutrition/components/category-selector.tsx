@@ -1,0 +1,256 @@
+import type React from "react";
+
+import { ChevronsUpDown, X } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import type { CategoryInfo, IngredientInfo } from "./types";
+
+interface CategorySelectorProps {
+  mealId: number;
+  category: CategoryInfo;
+  selection: { item: string; grams: number; portion: "whole" | "half" } | null;
+  openPopover: { [key: string]: boolean };
+  setOpenPopover: React.Dispatch<
+    React.SetStateAction<{ [key: string]: boolean }>
+  >;
+  onSelectItem: (
+    mealId: number,
+    category: "a" | "b" | "c",
+    item: IngredientInfo,
+    portion: "whole" | "half"
+  ) => void;
+  onClearSelection: (mealId: number, category: "a" | "b" | "c") => void;
+}
+
+export function CategorySelector({
+  mealId,
+  category,
+  selection,
+  openPopover,
+  setOpenPopover,
+  onSelectItem,
+  onClearSelection,
+}: CategorySelectorProps) {
+  const categoryKey = `${mealId}-${category.id}`;
+
+  const getPortionText = (portion: "whole" | "half") => {
+    return portion === "whole"
+      ? "Повна порція (100%)"
+      : "Половина порції (50%)";
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="font-medium">
+          Категорія {category.id.toUpperCase()} - {category.description}
+        </h3>
+        {selection && (
+          <Badge variant="secondary">
+            Обрано: {selection.item} ({selection.grams}г)
+          </Badge>
+        )}
+      </div>
+
+      {selection ? (
+        <SelectedItem
+          categoryKey={categoryKey}
+          selection={selection}
+          category={category}
+          openPopover={openPopover}
+          setOpenPopover={setOpenPopover}
+          onSelectItem={(item, portion) =>
+            onSelectItem(mealId, category.id as "a" | "b" | "c", item, portion)
+          }
+          onClearSelection={() =>
+            onClearSelection(mealId, category.id as "a" | "b" | "c")
+          }
+          getPortionText={getPortionText}
+        />
+      ) : (
+        <ItemSelector
+          categoryKey={categoryKey}
+          category={category}
+          openPopover={openPopover}
+          setOpenPopover={setOpenPopover}
+          onSelectItem={(item, portion) =>
+            onSelectItem(mealId, category.id as "a" | "b" | "c", item, portion)
+          }
+        />
+      )}
+
+      {category.id !== "c" && <Separator className="my-4" />}
+    </div>
+  );
+}
+
+interface SelectedItemProps {
+  categoryKey: string;
+  selection: { item: string; grams: number; portion: "whole" | "half" };
+  category: CategoryInfo;
+  openPopover: { [key: string]: boolean };
+  setOpenPopover: React.Dispatch<
+    React.SetStateAction<{ [key: string]: boolean }>
+  >;
+  onSelectItem: (item: IngredientInfo, portion: "whole" | "half") => void;
+  onClearSelection: () => void;
+  getPortionText: (portion: "whole" | "half") => string;
+}
+
+function SelectedItem({
+  categoryKey,
+  selection,
+  category,
+  openPopover,
+  setOpenPopover,
+  onSelectItem,
+  onClearSelection,
+  getPortionText,
+}: SelectedItemProps) {
+  return (
+    <div className="flex items-center justify-between gap-2">
+      <Popover
+        open={openPopover[categoryKey]}
+        onOpenChange={(open) => {
+          setOpenPopover({ ...openPopover, [categoryKey]: open });
+        }}
+      >
+        <PopoverTrigger asChild>
+          <div
+            className="flex-1 p-3 border rounded-md bg-muted/50 hover:bg-muted cursor-pointer transition-colors flex items-center justify-between"
+            role="button"
+            tabIndex={0}
+            onClick={() =>
+              setOpenPopover({ ...openPopover, [categoryKey]: true })
+            }
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                setOpenPopover({ ...openPopover, [categoryKey]: true });
+                e.preventDefault();
+              }
+            }}
+          >
+            <div>
+              <div className="font-medium">{selection.item}</div>
+              <div className="text-sm text-muted-foreground">
+                {selection.grams}г - {getPortionText(selection.portion)}
+              </div>
+            </div>
+            <ChevronsUpDown className="h-4 w-4 opacity-50" />
+          </div>
+        </PopoverTrigger>
+        <PopoverContent className="w-[300px] p-0">
+          <ItemCommandMenu category={category} onSelectItem={onSelectItem} />
+        </PopoverContent>
+      </Popover>
+
+      <Button variant="ghost" size="icon" onClick={onClearSelection}>
+        <X className="h-4 w-4" />
+      </Button>
+    </div>
+  );
+}
+
+interface ItemSelectorProps {
+  categoryKey: string;
+  category: CategoryInfo;
+  openPopover: { [key: string]: boolean };
+  setOpenPopover: React.Dispatch<
+    React.SetStateAction<{ [key: string]: boolean }>
+  >;
+  onSelectItem: (item: IngredientInfo, portion: "whole" | "half") => void;
+}
+
+function ItemSelector({
+  categoryKey,
+  category,
+  openPopover,
+  setOpenPopover,
+  onSelectItem,
+}: ItemSelectorProps) {
+  return (
+    <Popover
+      open={openPopover[categoryKey]}
+      onOpenChange={(open) => {
+        setOpenPopover({ ...openPopover, [categoryKey]: open });
+      }}
+    >
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={openPopover[categoryKey]}
+          className="w-full justify-between"
+        >
+          {`Оберіть ${category.description.toLowerCase()}`}
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-full p-0">
+        <ItemCommandMenu category={category} onSelectItem={onSelectItem} />
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+interface ItemCommandMenuProps {
+  category: CategoryInfo;
+  onSelectItem: (item: IngredientInfo, portion: "whole" | "half") => void;
+}
+
+function ItemCommandMenu({ category, onSelectItem }: ItemCommandMenuProps) {
+  return (
+    <Command>
+      <CommandInput
+        placeholder={`Пошук ${category.description.toLowerCase()}...`}
+      />
+      <CommandList>
+        <CommandEmpty>Інгредієнт не знайдено.</CommandEmpty>
+        <CommandGroup heading="Повні порції (100%)">
+          {category.items.map((item) => (
+            <CommandItem
+              key={`${item.name}-whole`}
+              value={`${item.name}-whole`}
+              onSelect={() => onSelectItem(item, "whole")}
+              className="flex justify-between"
+            >
+              <span>{item.name}</span>
+              <span className="text-muted-foreground">
+                {item.recommendedGrams}г
+              </span>
+            </CommandItem>
+          ))}
+        </CommandGroup>
+        <CommandGroup heading="Половинні порції (50%)">
+          {category.items.map((item) => (
+            <CommandItem
+              key={`${item.name}-half`}
+              value={`${item.name}-half`}
+              onSelect={() => onSelectItem(item, "half")}
+              className="flex justify-between"
+            >
+              <span>{item.name}</span>
+              <span className="text-muted-foreground">
+                {Math.round(item.recommendedGrams * 0.5)}г
+              </span>
+            </CommandItem>
+          ))}
+        </CommandGroup>
+      </CommandList>
+    </Command>
+  );
+}
