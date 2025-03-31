@@ -82,3 +82,8 @@ export type ExtractSuccessfulHTTPResponse<T> =
   | ExtractKey<T, 207>
   | ExtractKey<T, 208>
   | ExtractKey<T, 226>;
+
+export type ExtraParams = {
+  authorization?: boolean;
+  raw?: boolean;
+};

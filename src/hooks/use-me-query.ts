@@ -9,6 +9,7 @@ const useMeQuery = () =>
     queryFn: async () => {
       const request = await api.telegramAuthorization("/", "get", {
         headers: { "Content-type": "application/json" },
+        raw: true,
       });
 
       if (request.status === 200) {

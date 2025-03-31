@@ -5,6 +5,7 @@ import type {
   Parameters as EndpointParameters,
   ExtractContentJson,
   ExtractResponses,
+  ExtraParams,
 } from "./types";
 import omit from "../omit";
 import stringifyOrUndefinedBody from "./stringifyOrUndefinedBody";
@@ -27,13 +28,11 @@ const createRequest = <Paths>({ getBaseUrl }: { getBaseUrl: () => string }) => {
     path: Path,
     method: Method = "get" as Method,
     parameters: EndpointParameters<Paths[Path][Method]> &
-      Omit<RequestInit, "body"> & {
-        authorization?: boolean;
-      } = {} as EndpointParameters<Paths[Path][Method]> &
-      Omit<RequestInit, "body"> & {
-        authorization?: boolean;
-      }
-  ): Promise<FancyResponse> => {
+      Omit<RequestInit, "body"> &
+      ExtraParams = {} as EndpointParameters<Paths[Path][Method]> &
+      Omit<RequestInit, "body"> &
+      ExtraParams
+  ) => {
     const body = "body" in parameters ? parameters.body : undefined;
     const cookie = "cookie" in parameters ? parameters.cookie : undefined;
     const query =
@@ -71,6 +70,9 @@ const createRequest = <Paths>({ getBaseUrl }: { getBaseUrl: () => string }) => {
       )}?${new URLSearchParams(query)}`,
       fetchParameters
     );
+    if (parameters.raw) {
+      return request;
+    }
     const response: Promise<FancyResponse> = await request.json();
     return response;
   };

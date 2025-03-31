@@ -21,7 +21,7 @@ const CircularProgress: FC<{ value: number }> = ({ value }) => {
           className="text-primary transition-all duration-300 ease-in-out"
           strokeWidth="8"
           strokeDasharray={strokeDasharray}
-          strokeDashoffset={strokeDashoffset}
+          strokeDashoffset={isNaN(strokeDashoffset) ? 0 : strokeDashoffset}
           strokeLinecap="round"
           stroke="currentColor"
           fill="transparent"
