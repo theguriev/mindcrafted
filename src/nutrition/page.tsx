@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NutritionProgress } from "./components/nutrition-progress";
-import { MealCard } from "./components/meal-card";
+import { MealAccordion } from "./components/meal-accordion";
 import type { Selection, Meal, IngredientInfo } from "./components/types";
 
 const NutritionPage = () => {
@@ -172,21 +172,16 @@ const NutritionPage = () => {
         progress={progress}
       />
 
-      <div className="grid gap-4">
-        {meals.map((meal) => (
-          <MealCard
-            key={meal.id}
-            meal={meal}
-            mealCategories={mealCategories}
-            isMealComplete={isMealComplete(meal.selections)}
-            openPopover={openPopover}
-            setOpenPopover={setOpenPopover}
-            onSelectItem={handleSelectItem}
-            onClearSelection={clearSelection}
-            onResetMeal={resetMealSelections}
-          />
-        ))}
-      </div>
+      <MealAccordion
+        meals={meals}
+        mealCategories={mealCategories}
+        isMealComplete={isMealComplete}
+        openPopover={openPopover}
+        setOpenPopover={setOpenPopover}
+        onSelectItem={handleSelectItem}
+        onClearSelection={clearSelection}
+        onResetMeal={resetMealSelections}
+      />
     </div>
   );
 };

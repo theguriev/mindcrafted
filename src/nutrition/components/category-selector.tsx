@@ -1,9 +1,7 @@
 import type React from "react";
 
-import { ChevronsUpDown, X } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
@@ -17,6 +15,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { Button } from "@/components/ui/button";
 import type { CategoryInfo, IngredientInfo } from "./types";
 
 interface CategorySelectorProps {
@@ -43,7 +42,6 @@ export function CategorySelector({
   openPopover,
   setOpenPopover,
   onSelectItem,
-  onClearSelection,
 }: CategorySelectorProps) {
   const categoryKey = `${mealId}-${category.id}`;
 
@@ -55,15 +53,10 @@ export function CategorySelector({
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-2">
+      <div className="mb-2">
         <h3 className="font-medium">
           Категорія {category.id.toUpperCase()} - {category.description}
         </h3>
-        {selection && (
-          <Badge variant="secondary">
-            Обрано: {selection.item} ({selection.grams}г)
-          </Badge>
-        )}
       </div>
 
       {selection ? (
@@ -75,9 +68,6 @@ export function CategorySelector({
           setOpenPopover={setOpenPopover}
           onSelectItem={(item, portion) =>
             onSelectItem(mealId, category.id as "a" | "b" | "c", item, portion)
-          }
-          onClearSelection={() =>
-            onClearSelection(mealId, category.id as "a" | "b" | "c")
           }
           getPortionText={getPortionText}
         />
@@ -107,7 +97,6 @@ interface SelectedItemProps {
     React.SetStateAction<{ [key: string]: boolean }>
   >;
   onSelectItem: (item: IngredientInfo, portion: "whole" | "half") => void;
-  onClearSelection: () => void;
   getPortionText: (portion: "whole" | "half") => string;
 }
 
@@ -118,50 +107,43 @@ function SelectedItem({
   openPopover,
   setOpenPopover,
   onSelectItem,
-  onClearSelection,
   getPortionText,
 }: SelectedItemProps) {
   return (
-    <div className="flex items-center justify-between gap-2">
-      <Popover
-        open={openPopover[categoryKey]}
-        onOpenChange={(open) => {
-          setOpenPopover({ ...openPopover, [categoryKey]: open });
-        }}
-      >
-        <PopoverTrigger asChild>
-          <div
-            className="flex-1 p-3 border rounded-md bg-muted/50 hover:bg-muted cursor-pointer transition-colors flex items-center justify-between"
-            role="button"
-            tabIndex={0}
-            onClick={() =>
-              setOpenPopover({ ...openPopover, [categoryKey]: true })
+    <Popover
+      open={openPopover[categoryKey]}
+      onOpenChange={(open) => {
+        setOpenPopover({ ...openPopover, [categoryKey]: open });
+      }}
+    >
+      <PopoverTrigger asChild>
+        <div
+          className="w-full p-3 border rounded-md bg-muted/50 hover:bg-muted cursor-pointer transition-colors flex items-center justify-between"
+          role="button"
+          tabIndex={0}
+          onClick={() =>
+            setOpenPopover({ ...openPopover, [categoryKey]: true })
+          }
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              setOpenPopover({ ...openPopover, [categoryKey]: true });
+              e.preventDefault();
             }
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                setOpenPopover({ ...openPopover, [categoryKey]: true });
-                e.preventDefault();
-              }
-            }}
-          >
-            <div>
-              <div className="font-medium">{selection.item}</div>
-              <div className="text-sm text-muted-foreground">
-                {selection.grams}г - {getPortionText(selection.portion)}
-              </div>
-            </div>
-            <ChevronsUpDown className="h-4 w-4 opacity-50" />
+          }}
+        >
+          <div className="flex items-center gap-2 truncate">
+            <span className="font-medium truncate">{selection.item}</span>
+            <span className="text-sm text-muted-foreground whitespace-nowrap">
+              {selection.grams}г - {getPortionText(selection.portion)}
+            </span>
           </div>
-        </PopoverTrigger>
-        <PopoverContent className="w-[300px] p-0">
-          <ItemCommandMenu category={category} onSelectItem={onSelectItem} />
-        </PopoverContent>
-      </Popover>
-
-      <Button variant="ghost" size="icon" onClick={onClearSelection}>
-        <X className="h-4 w-4" />
-      </Button>
-    </div>
+          <ChevronsUpDown className="h-4 w-4 opacity-50 flex-shrink-0 ml-2" />
+        </div>
+      </PopoverTrigger>
+      <PopoverContent className="w-[300px] p-0">
+        <ItemCommandMenu category={category} onSelectItem={onSelectItem} />
+      </PopoverContent>
+    </Popover>
   );
 }
 
