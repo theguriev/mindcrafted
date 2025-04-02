@@ -10,7 +10,7 @@ import type {
 import omit from "../omit";
 import stringifyOrUndefinedBody from "./stringifyOrUndefinedBody";
 import objectifyOrUndefinedCookie from "./objectifyOrUndefinedCookie";
-import getAccessToken from "./getAccessToken";
+import getAccessToken from "./get-access-token";
 
 const createRequest = <Paths>({ getBaseUrl }: { getBaseUrl: () => string }) => {
   return async <
