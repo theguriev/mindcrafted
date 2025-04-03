@@ -9,7 +9,7 @@ import type {
 } from "./types";
 import omit from "../omit";
 import stringifyOrUndefinedBody from "./stringifyOrUndefinedBody";
-import objectifyOrUndefinedCookie from "./objectifyOrUndefinedCookie";
+import objectifyOrUndefinedCookie from "./objectify-or-undefined-cookie";
 import getAccessToken from "./get-access-token";
 
 const createRequest = <Paths>({ getBaseUrl }: { getBaseUrl: () => string }) => {
