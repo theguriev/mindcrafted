@@ -1,4 +1,4 @@
-import { api } from "@/lib/openapi/apiClient";
+import { api } from "@/lib/openapi/api-client";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 export type UseMeQueryData = ReturnType<typeof useMeQuery>["data"];

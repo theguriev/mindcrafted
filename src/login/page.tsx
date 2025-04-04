@@ -3,7 +3,7 @@ import TelegramLoginButton from "./components/telegram-bot-button";
 import { useNavigate } from "react-router";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
-import { api } from "@/lib/openapi/apiClient";
+import { api } from "@/lib/openapi/api-client";
 
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);

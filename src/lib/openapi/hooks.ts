@@ -6,7 +6,7 @@ import {
   UseQueryOptions,
   useSuspenseQuery,
 } from "@tanstack/react-query";
-import { api } from "./apiClient";
+import { api } from "./api-client";
 import {
   ExtractResponses,
   ExtractSchema,
